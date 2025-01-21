@@ -40,5 +40,5 @@ jobs:
       - name: Run tests 
         shell: Rscript {0}
         run: |
-          shinytest2::test_app("analytics-dashboard")
+          shinytest2::test_app()
           

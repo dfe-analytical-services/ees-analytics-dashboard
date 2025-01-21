@@ -7,10 +7,6 @@ shhh(library(shiny))
 shhh(library(bsicons))
 shhh(library(shinyWidgets))
 
-# Google analytics
-shhh(library(googleAnalyticsR))
-shhh(library(googleAuthR))
-
 # Data processing
 shhh(library(lubridate))
 shhh(library(dplyr))
@@ -27,10 +23,6 @@ shhh(library(anytime))
 shhh(library(arrow))
 shhh(library(dfeR))
 
-# Scrapey scrapey
-shhh(library(rvest))
-shhh(library(httr))
-
 # Database connection
 shhh(library(dbplyr))
 shhh(library(DBI))
@@ -39,6 +31,15 @@ shhh(library(odbc))
 
 # Data vis
 shhh(library(plotly))
+
+# Pre-commit hooks and CI
+if ("meaning of life" == "42") {
+  library(lintr)
+  library(styler)
+  library(git2r)
+  library(rsconnect)
+  library(shinytest2)
+}
 
 message("...library calls done, setting up global variables...")
 

@@ -1,14 +1,16 @@
 # Explore education statistics analytics - dashboard
 
-This is an R Shiny dashboard that is deployed via the DfE POSIT Connect subscription internally. There are three environments, all accessible to DfE AD:
+This is an R Shiny dashboard that visualises analytics data collected on our explore education statistics platform.
+
+It is deployed via the DfE POSIT Connect subscription internally. There are three environments, all accessible to DfE AD:
 
 * Production - https://rsconnect/rsc/ees-analytics/
 * Pre-production - https://rsconnect-pp/rsc/ees-analytics/
 * Development - https://rsconnect-pp/rsc/dev-ees-analytics/
 
-### Data updates
+## Data processing and update pipelines
 
-Source data for this dashboard is created and managed separately in the `data-updates/` folder.
+Code used to extract source data, process it, and save a permanent store for usage by the analytics dashboard, as well as ad hoc analysis scripts are in a separate GitHub repository - https://github.com/dfe-analytical-services/explore-education-statistics-analytics.
 
 ## Requirements
 
@@ -36,12 +38,38 @@ Package control is handled using [renv](https://rstudio.github.io/renv/articles/
 1. Clone or download the repo
 2. Open the R project in R Studio
 3. Run `renv::restore()` to install dependencies
-4. Run `shiny::runApp("analytics-dashboard")` to run the dashboard locally
+4. Run `shiny::runApp()` to run the dashboard locally
 
 ### Tests
 
-Tests can be run locally by using `shinytest2::test_app("analytics-dashboard")`. You should do this regularly to check that the tests are passing against the code you are working on.
+Tests can be run locally by using `shinytest2::test_app()`. You should do this regularly to check that the tests are passing against the code you are working on.
 
-The tests use data in the `analytics-dashboard/test/testdata/` folder, to regenerate this data look at the `analytics-dashboard/tests/testdata-generator.R` script.
+The tests use data in the `tests/testdata/` folder, to regenerate this data look at the `tests/testdata-generator.R` script.
 
 GitHub Actions provide CI by running the automated tests on every pull request into the main branch using the `.github/workflows/dashboard-tests.yml` workflow.
+
+### Flagging issues
+
+If you spot any issues with the application, please flag it in the "Issues" tab of this repository, and label as a bug. Include as much detail as possible to help us diagnose the issue and prepare a suitable remedy.
+
+### Making suggestions
+
+You can also use the "Issues" tab in GitHub to suggest new features, changes or additions. Include as much detail on why you're making the suggestion and any thinking towards a solution that you have already done.
+
+### Navigation
+
+In general all `.R` files will have a usable outline, so make use of that for navigation if in RStudio: `Ctrl-Shift-O`.
+
+### Code styling 
+
+The function `styler::style_dir()` will tidy code according to tidyverse styling using the styler package. Run this regularly as our pre-commit hooks will prevent you committing code that isn't tidied. This function also helps to test the running of the code and for basic syntax errors such as missing commas and brackets.
+
+You should also run `lintr::lint_dir()` regularly as lintr will check all pull requests for the styling of the code, it does not style the code for you like styler, but is slightly stricter and checks for long lines, variables not using snake case, commented out code and undefined objects amongst other things.
+
+### Pre-commit hooks
+
+We have some pre-commit hooks set up to help with code quality. These are controlled by the `.hooks/pre-commit.R` file.
+
+## Contact
+
+explore.statistics@education.gov.uk

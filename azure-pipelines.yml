@@ -8,12 +8,6 @@ trigger:
     include:
     - main
 
-  paths:
-    include:
-    - analytics-dashboard/*
-    - azure-pipelines.yml
-    - renv.lock
-    
 resources:
   repositories:
     - repository: posit-deploy

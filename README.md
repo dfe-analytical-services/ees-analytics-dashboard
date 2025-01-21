@@ -38,6 +38,7 @@ Package control is handled using [renv](https://rstudio.github.io/renv/articles/
 1. Clone or download the repo
 2. Open the R project in R Studio
 3. Run `renv::restore()` to install dependencies
+4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks.
 4. Run `shiny::runApp()` to run the dashboard locally
 
 ### Tests

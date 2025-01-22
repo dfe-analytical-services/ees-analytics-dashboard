@@ -22,7 +22,7 @@ extends:
     - name: Pre-Production
       appId: 973
     - name: Production
-      appId: none
+      appId: 397
     approvers: |
      cameron.race@education.gov.uk
      laura.selby@education.gov.uk

@@ -1,4 +1,4 @@
-name: explore-education-statistics-analytics-$(rev:r)
+name: ees-analytics-dashboard$(rev:r)
 
 pool:
   name: RSConnect

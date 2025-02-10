@@ -6,6 +6,7 @@ default:
     uid: ""
     pwd: ""
     trusted: "Yes"
+    sql_warehouse_id: !expr Sys.getenv("DATABRICKS_SQL_WAREHOUSE_ID")
 
 production:
   db_connection:
@@ -15,3 +16,4 @@ production:
     uid: !expr Sys.getenv("SDT_UID")
     pwd: !expr Sys.getenv("SDT_PWD")
     trusted: "No"
+    sql_warehouse_id: !expr Sys.getenv("DATABRICKS_SQL_WAREHOUSE_ID")

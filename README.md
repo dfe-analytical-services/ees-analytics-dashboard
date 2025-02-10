@@ -26,8 +26,22 @@ Code used to extract source data, process it, and save a permanent store for usa
 
 ### iii. Access requirements
 
-To run the dashboard locally:
+Old data:
 - Access to the MA_SDT_NS_DATA database
+
+Latest data:
+- Access the statistics services area of the unity catalog
+
+To set up access to the app, and understand how the app itself is connected to the SQL warehouse on the server, look at:
+- [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
+- [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
+
+If you don't have access to the source data, you can still run the dashboard using:
+```r
+# This makes the app think it's in test mode and will read in the test data in the repo
+# instead of connecting to the databases
+withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
+```
 
 ## Contributing to the dashboard
 

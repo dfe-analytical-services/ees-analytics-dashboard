@@ -5,9 +5,9 @@
 
 # Trim data ===================================================================
 datasets <- list(
-  "joined_data" = joined_data1,
-  "publication_aggregation" = pub_agg1,
-  "combined_data" = combined_data1
+  "joined_data" = page_data,
+  "publication_aggregation" = publication_data,
+  "combined_data" = service_data
 )
 
 # filter above data sets using lapply so the date is from the 1st august to the 8th august

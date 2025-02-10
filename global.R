@@ -25,9 +25,8 @@ shhh(library(dfeR))
 
 # Database connection
 shhh(library(dbplyr))
-shhh(library(DBI))
-shhh(library(config))
 shhh(library(odbc))
+shhh(library(pool))
 
 # Data vis
 shhh(library(plotly))
@@ -39,9 +38,29 @@ if ("meaning of life" == "42") {
   library(git2r)
   library(rsconnect)
   library(shinytest2)
+  # we should never run library(config)
+  # their own docs recommend only calling using config::
+  # this is due to function / namespace clashes and masking
+  library(config)
 }
 
-message("...library calls done, setting up global variables...")
+message("...library calls done, setting up database connection...")
+
+# Load data ====================================================================
+if (Sys.getenv("TESTTHAT") == "") {
+  config <- config::get("db_connection")
+
+  pool <- pool::dbPool(
+    drv = odbc::databricks(),
+    httpPath = config$sql_warehouse_id
+  )
+
+  onStop(function() {
+    pool::poolClose(pool)
+  })
+
+  message("...connected to database...")
+}
 
 # Global variables ============================================================
 link_guidance <- tags$a(
@@ -79,63 +98,4 @@ all_time_date <- "2020-04-03"
 # Custom functions ============================================================
 source("R/utils.R")
 
-message("...global variables set, loading data...")
-
-# Load in data ================================================================
-
-# File paths are relative to analytics-dashboard/ directory
-
-if (Sys.getenv("TEST_MODE") == "") {
-  config <- config::get("db_connection")
-  connection <- dbConnect(odbc::odbc(),
-    Driver = config$driver,
-    Server = config$server,
-    Database = config$database,
-    UID = config$uid,
-    PWD = config$pwd,
-    Trusted_Connection = config$trusted,
-    encoding = "UTF-8"
-  )
-
-  message("...connected to database...")
-
-  joined_data1 <- tbl(connection, "ees_analytics_page_data") %>%
-    as.data.frame()
-
-  message("...page data loaded, loading publication aggregations...")
-
-  pub_agg1 <- tbl(connection, "ees_analytics_publication_agg") %>%
-    as.data.frame()
-
-  message("...publication aggregations loaded, loading service data...")
-
-  combined_data1 <- tbl(connection, "ees_analytics_service_data") %>%
-    as.data.frame()
-
-  message("...service data loaded, loading publication spine...")
-
-  pubs1 <- read_csv("data/pubs.csv", show_col_types = FALSE)
-
-  message("Complete!")
-} else if (Sys.getenv("TEST_MODE") == "TRUE") {
-  message("...in test mode...")
-
-  joined_data1 <- arrow::read_parquet(
-    "tests/testdata/joined_data_0.parquet"
-  )
-
-  pub_agg1 <- arrow::read_parquet(
-    "tests/testdata/publication_aggregation_0.parquet"
-  )
-  combined_data1 <- arrow::read_parquet(
-    "tests/testdata/combined_data_0.parquet"
-  )
-
-  pubs1 <- arrow::read_parquet(
-    "tests/testdata/pub_spine_0.parquet"
-  )
-
-  message("Complete!")
-} else {
-  message("...no data loaded. TEST_MODE = ", Sys.getenv("TEST_MODE"))
-}
+message("...global variables set!")

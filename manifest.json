@@ -94,17 +94,7 @@
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "RSPM",
         "Date/Publication": "2024-06-02 21:50:02 UTC",
-<<<<<<< HEAD
-        "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "DBI",
-        "RemoteRef": "DBI",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
-        "RemoteSha": "1.2.3"
-=======
         "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows"
->>>>>>> e905690 (add rhistory to git ignore)
       }
     },
     "DT": {
@@ -158,9 +148,10 @@
         "Packaged": "2024-06-13 08:23:32 UTC; ripley",
         "Author": "Brian Ripley [aut, cre, cph],\n  Bill Venables [aut, cph],\n  Douglas M. Bates [ctb],\n  Kurt Hornik [trl] (partial port ca 1998),\n  Albrecht Gebhardt [trl] (partial port ca 1998),\n  David Firth [ctb] (support functions for polr)",
         "Maintainer": "Brian Ripley <ripley@stats.ox.ac.uk>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-06-13 10:23:32",
-        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:49:22 UTC; windows",
+        "Encoding": "UTF-8",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-06-14 04:36:42 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -194,7 +185,7 @@
         "Maintainer": "Martin Maechler <mmaechler+Matrix@gmail.com>",
         "Repository": "CRAN",
         "Date/Publication": "2024-10-18 18:10:02 UTC",
-        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:49:54 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-11-19 02:38:41 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -1012,9 +1003,10 @@
         "License": "GPL",
         "NeedsCompilation": "no",
         "Packaged": "2024-03-31 18:18:09 UTC; luke",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-03-31 20:10:06 UTC",
-        "Built": "R 4.4.2; ; 2024-10-31 16:57:50 UTC; windows"
+        "Encoding": "UTF-8",
+        "Built": "R 4.4.0; ; 2024-04-25 19:49:30 UTC; windows"
       }
     },
     "colorspace": {
@@ -1525,13 +1517,7 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-11-17 16:50:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:33:28 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "dplyr",
-        "RemoteRef": "dplyr",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
-        "RemoteSha": "1.1.4"
+        "Archs": "x64"
       }
     },
     "emoji": {
@@ -2571,7 +2557,8 @@
         "RemotePkgRef": "lubridate",
         "RemoteRef": "lubridate",
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "1.9.4"
       }
     },
@@ -2757,10 +2744,17 @@
         "Packaged": "2024-08-14 04:26:18 UTC; hornik",
         "Author": "José Pinheiro [aut] (S version),\n  Douglas Bates [aut] (up to 2007),\n  Saikat DebRoy [ctb] (up to 2002),\n  Deepayan Sarkar [ctb] (up to 2005),\n  EISPACK authors [ctb] (src/rs.f),\n  Siem Heisterkamp [ctb] (Author fixed sigma),\n  Bert Van Willigen [ctb] (Programmer fixed sigma),\n  Johannes Ranke [ctb] (varConstProp()),\n  R Core Team [aut, cre]",
         "Maintainer": "R Core Team <R-core@R-project.org>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-08-14 06:36:33 UTC",
-        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:55:56 UTC; windows",
-        "Archs": "x64"
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-08-15 04:17:34 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "nlme",
+        "RemoteRef": "nlme",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "3.1-166"
       }
     },
     "odbc": {
@@ -3410,9 +3404,9 @@
         "Packaged": "2024-10-11 18:36:11 UTC; kevin",
         "Author": "Kevin Ushey [aut, cre] (<https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-10-12 07:30:02 UTC",
-        "Built": "R 4.4.2; ; 2025-02-08 19:36:11 UTC; windows"
+        "Built": "R 4.4.2; ; 2024-12-21 01:50:00 UTC; windows"
       }
     },
     "rex": {
@@ -3959,7 +3953,8 @@
         "RemotePkgRef": "testthat",
         "RemoteRef": "testthat",
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "3.2.3"
       }
     },
@@ -4432,13 +4427,7 @@
         "Maintainer": "Lionel Henry <lionel@posit.co>",
         "Repository": "RSPM",
         "Date/Publication": "2024-10-28 13:30:02 UTC",
-        "Built": "R 4.4.0; ; 2024-10-29 04:34:54 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "withr",
-        "RemoteRef": "withr",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
-        "RemoteSha": "3.0.2"
+        "Built": "R 4.4.0; ; 2024-10-29 04:34:54 UTC; windows"
       }
     },
     "xfun": {
@@ -4653,11 +4642,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-<<<<<<< HEAD
-      "checksum": "61d524b7764292100d5d7c8a9b24f648"
-=======
-      "checksum": "87e30a4b2bdfb633ca99d40de3f042c7"
->>>>>>> e905690 (add rhistory to git ignore)
+      "checksum": "ce8dc9786caa71f3d535c8bf658ddc5c"
     },
     "azure-pipelines.yml": {
       "checksum": "7e46ab01f45eca56ea4b1880a66b8f9e"

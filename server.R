@@ -17,6 +17,8 @@ server <- function(input, output, session) {
     })
 
     last_updated_date <- reactive({
+      message("Last updated date: ", last_updated_table() |> pull(last_updated))
+
       last_updated_table() |>
         pull(last_updated)
     })
@@ -26,8 +28,12 @@ server <- function(input, output, session) {
     })
 
     ## Top level service data -------------------------------------------------
+    # Initial load from databricks is slow, so caching the full table as we
+    # need it anyway
     service_data <- reactive({
       message("Requesting service data from databricks")
+      message(input$date_choice)
+
       pool |>
         dplyr::tbl(
           DBI::Id(
@@ -36,10 +42,9 @@ server <- function(input, output, session) {
             table = "ees_service"
           )
         ) |>
-        filter_on_date(input$date_choice) |>
         collect()
     }) |>
-      bindCache(last_updated_date(), input$date_choice)
+      bindCache(last_updated_date())
 
     ## Publication data -------------------------------------------------------
     # publication_data <- reactive({
@@ -62,13 +67,17 @@ server <- function(input, output, session) {
       paste0("Latest available data: ", "2024-08-08")
     })
 
-    # publication_data <- reactive({
-    #   arrow::read_parquet("tests/testdata/publication_aggregation_0.parquet")
-    # })
+    last_updated_date <- reactive({
+      "2024-08-08"
+    })
 
     service_data <- reactive({
       arrow::read_parquet("tests/testdata/combined_data_0.parquet")
     })
+
+    # publication_data <- reactive({
+    #   arrow::read_parquet("tests/testdata/publication_aggregation_0.parquet")
+    # })
 
     message("...data loaded!")
   } else {
@@ -77,6 +86,11 @@ server <- function(input, output, session) {
       Sys.getenv("TESTTHAT")
     )
   }
+
+  service_by_date <- reactive({
+    service_data() |>
+      filter_on_date(input$date_choice)
+  })
 
   # # Dropdown options ==========================================================
   # publications <- reactive({
@@ -99,44 +113,48 @@ server <- function(input, output, session) {
   output$num_sessions <- renderText({
     paste0(
       dfeR::comma_sep(
-        service_data() %>%
+        service_by_date() %>%
           as.data.frame() %>%
           summarise(sum(sessions))
       )
     )
-  })
+  }) |>
+    bindCache(last_updated_date(), input$date_choice)
 
   output$num_pageviews <- renderText({
     paste0(
       dfeR::comma_sep(
-        service_data() %>%
+        service_by_date() %>%
           as.data.frame() %>%
           summarise(sum(pageviews))
       )
     )
-  })
+  }) |>
+    bindCache(last_updated_date(), input$date_choice)
 
   output$S <- renderPlot({
     ggplot(
-      service_data(),
+      service_by_date(),
       aes(x = date, y = sessions)
     ) +
       geom_line(color = "steelblue") +
       xlab("") +
       theme_minimal() +
       theme(legend.position = "top")
-  })
+  }) |>
+    bindCache(last_updated_date(), input$date_choice)
 
   output$PV <- renderPlot({
     ggplot(
-      service_data(),
+      service_by_date(),
       aes(x = date, y = pageviews)
     ) +
       geom_line(color = "steelblue") +
       xlab("") +
       theme_minimal() +
       theme(legend.position = "top")
-  })
+  }) |>
+    bindCache(last_updated_date(), input$date_choice)
 
   # output$P_num_sessions <- renderText({
   #   paste0(

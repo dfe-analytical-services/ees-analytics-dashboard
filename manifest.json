@@ -94,6 +94,7 @@
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "RSPM",
         "Date/Publication": "2024-06-02 21:50:02 UTC",
+<<<<<<< HEAD
         "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows",
         "RemoteType": "standard",
         "RemotePkgRef": "DBI",
@@ -101,6 +102,9 @@
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "1.2.3"
+=======
+        "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows"
+>>>>>>> e905690 (add rhistory to git ignore)
       }
     },
     "DT": {
@@ -4649,7 +4653,11 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
+<<<<<<< HEAD
       "checksum": "61d524b7764292100d5d7c8a9b24f648"
+=======
+      "checksum": "87e30a4b2bdfb633ca99d40de3f042c7"
+>>>>>>> e905690 (add rhistory to git ignore)
     },
     "azure-pipelines.yml": {
       "checksum": "7e46ab01f45eca56ea4b1880a66b8f9e"

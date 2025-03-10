@@ -894,39 +894,40 @@
       }
     },
     "chromote": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "Source": "github",
+      "Repository": null,
       "description": {
         "Package": "chromote",
         "Title": "Headless Chrome Web Browser Interface",
-        "Version": "0.3.1",
+        "Version": "0.4.0.9000",
         "Authors@R": "c(\n    person(\"Winston\", \"Chang\", , \"winston@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Barret\", \"Schloerke\", , \"barret@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Garrick\", \"Aden-Buie\", , \"garrick@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-7111-0077\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
         "Description": "An implementation of the 'Chrome DevTools Protocol', for\n    controlling a headless Chrome web browser.",
         "License": "GPL-2",
         "URL": "https://rstudio.github.io/chromote/,\nhttps://github.com/rstudio/chromote",
         "BugReports": "https://github.com/rstudio/chromote/issues",
-        "Imports": "curl, fastmap, jsonlite, later (>= 1.1.0), magrittr, processx,\npromises (>= 1.1.1), R6, rlang, utils, websocket (>= 1.2.0)",
-        "Suggests": "showimage, testthat (>= 3.0.0)",
+        "Imports": "cli,\ncurl,\nfastmap,\njsonlite,\nlater (>= 1.1.0),\nmagrittr,\nprocessx,\npromises (>= 1.1.1),\nR6,\nrlang (>= 1.1.0),\nutils,\nwebsocket (>= 1.2.0),\nwithr,\nzip",
+        "Suggests": "showimage,\ntestthat (>= 3.0.0)",
         "Config/Needs/website": "tidyverse/tidytemplate",
         "Config/testthat/edition": "3",
         "Encoding": "UTF-8",
         "Language": "en-US",
+        "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.3.2",
         "SystemRequirements": "Google Chrome or other Chromium-based browser.\nchromium: chromium (rpm) or chromium-browser (deb)",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-08-29 17:52:08 UTC; garrick",
         "Author": "Winston Chang [aut, cre],\n  Barret Schloerke [aut] (<https://orcid.org/0000-0001-9986-114X>),\n  Garrick Aden-Buie [aut] (<https://orcid.org/0000-0002-7111-0077>),\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Winston Chang <winston@posit.co>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-08-30 07:10:02 UTC",
-        "Built": "R 4.4.0; ; 2024-08-31 04:43:37 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "chromote",
-        "RemoteRef": "chromote",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.3.1"
+        "Built": "R 4.4.2; ; 2025-03-10 18:40:47 UTC; windows",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteUsername": "rstudio",
+        "RemoteRepo": "chromote",
+        "RemoteRef": "main",
+        "RemoteSha": "58df8f6dcd3f2578e3daaf0e703e397e5bdbcafd",
+        "GithubHost": "api.github.com",
+        "GithubRepo": "chromote",
+        "GithubUsername": "rstudio",
+        "GithubRef": "main",
+        "GithubSHA1": "58df8f6dcd3f2578e3daaf0e703e397e5bdbcafd"
       }
     },
     "cli": {
@@ -4642,7 +4643,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "ce8dc9786caa71f3d535c8bf658ddc5c"
+      "checksum": "9fbc8c4280ee6e1fd27ee6211b7bcea8"
     },
     "azure-pipelines.yml": {
       "checksum": "7e46ab01f45eca56ea4b1880a66b8f9e"
@@ -4666,7 +4667,7 @@
       "checksum": "1facf86937b5f6b156e4aca392003e69"
     },
     "renv.lock": {
-      "checksum": "efc87cdba29807bfb81d109a63383be0"
+      "checksum": "1fc19d996bc01ad33fc148d49877c761"
     },
     "server.R": {
       "checksum": "0b7629ade84b978c662c817afd7286ec"

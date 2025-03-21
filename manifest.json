@@ -4427,10 +4427,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "0e80eb62003415d9b0058e4213fe5fca"
-    },
-    "analytics-dashboard/tests/testdata/ees_service_summary_0.parquet": {
-      "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
+      "checksum": "15acfe7c3e644f258a73e1f97e37a771"
     },
     "azure-pipelines.yml": {
       "checksum": "7e46ab01f45eca56ea4b1880a66b8f9e"
@@ -4439,13 +4436,10 @@
       "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "dfe3f4c660e4ea8613afface4e4da699"
+      "checksum": "d531e658d601d1c5a3f3f708e10385fc"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
-    },
-    "R/pages/publication_views.R": {
-      "checksum": "e75f2826385899bda80a7b7e2ffcd5c2"
     },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"
@@ -4460,7 +4454,7 @@
       "checksum": "8bfc3ab1dde85b921300410ca4108ef2"
     },
     "server.R": {
-      "checksum": "c0de0df12343f6e837febc150db1514d"
+      "checksum": "da79bdc54f401029c1abc9a3b30d6565"
     },
     "tests/testdata-generator.R": {
       "checksum": "bc363ecb0b47e70ca3ce651fe7398948"
@@ -4469,7 +4463,7 @@
       "checksum": "ff78a325059c0980c070cb8db6bae564"
     },
     "tests/testdata/ees_release_pageviews_0.parquet": {
-      "checksum": "d1ba1a35dc61a3e9e4f9687242c6c58e"
+      "checksum": "561b15b8393eb17afdd067fcb1fb5656"
     },
     "tests/testdata/ees_service_summary_0.parquet": {
       "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
@@ -4484,7 +4478,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "0af20266562096ae73b571063c604959"
+      "checksum": "c31b9334efc6eeae96b4324bdf053fa6"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

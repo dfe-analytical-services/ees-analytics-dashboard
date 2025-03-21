@@ -14,6 +14,7 @@ shhh(library(duckplyr))
 shhh(library(arrow))
 shhh(library(dfeR))
 shhh(library(dbplyr))
+shhh(library(stringr))
 
 # Database connection
 shhh(library(odbc))

@@ -55,11 +55,11 @@ Package control is handled using [renv](https://rstudio.github.io/renv/articles/
 4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks.
 4. Run `shiny::runApp()` to run the dashboard locally
 
-### Tests
+### Tests and test data
 
 Tests can be run locally by using `shinytest2::test_app()`. You should do this regularly to check that the tests are passing against the code you are working on.
 
-The tests use data in the `tests/testdata/` folder, to regenerate this data look at the `tests/testdata-generator.R` script.
+The tests use data in the `tests/testdata/` folder, to regenerate this data look at the `tests/testdata-generator.R` script. Whenever a new database table is added for the app, add this into the generator script so then the tests will have a copy to use.
 
 GitHub Actions provide CI by running the automated tests on every pull request into the main branch using the `.github/workflows/dashboard-tests.yml` workflow.
 

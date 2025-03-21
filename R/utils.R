@@ -90,7 +90,7 @@ aggregate_total <- function(data, metric) {
 #' @param data data set
 #' @param x x axis data
 #' @param y y axis data
-simple_bar_chart <- function(data, x, y) { # Changed function name
+simple_bar_chart <- function(data, x, y) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -103,7 +103,8 @@ simple_bar_chart <- function(data, x, y) { # Changed function name
           x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y))
         )
       ),
-      fill = af_colour_values["dark-blue"]
+      fill = af_colour_values["dark-blue"],
+      hover_nearest = TRUE
     ) +
     theme_af() +
     scale_y_continuous(labels = comma) +
@@ -112,5 +113,13 @@ simple_bar_chart <- function(data, x, y) { # Changed function name
       y = NULL
     )
 
-  girafe(ggobj = p)
+  g <- girafe(
+    ggobj = p,
+    options = list(
+      opts_hover(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;"),
+      opts_hover_inv(css = "opacity:0.3;")
+    )
+  )
+
+  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
 }

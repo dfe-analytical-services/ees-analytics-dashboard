@@ -1,35 +1,61 @@
 # Quick script to make the test files
+# Library calls ===============================================================
+library(dbplyr)
+library(dplyr)
+library(odbc)
+library(pool)
 
-# Load source data ============================================================
-# 1. Use the global and R/load_data files to load all the data in
+# Connect to database =========================================================
+config <- config::get("db_connection")
 
-# Trim data ===================================================================
-datasets <- list(
-  "joined_data" = page_data,
-  "publication_aggregation" = publication_data,
-  "combined_data" = service_data
+pool <- pool::dbPool(
+  drv = odbc::databricks(),
+  httpPath = config$sql_warehouse_id
 )
 
-# filter above data sets using lapply so the date is from the 1st august to the 8th august
+# List out data sets ==========================================================
+datasets <- c(
+  "ees_service_summary"
+)
+
+# Load source data ============================================================
+pull_from_database <- function(table_name) {
+  pool |>
+    dplyr::tbl(
+      DBI::Id(
+        catalog = config$catalog,
+        schema = config$schema,
+        table = table_name
+      )
+    )
+}
+
+# Filter and write out data sets ==============================================
 datasets <- lapply(datasets, function(x) {
-  x %>%
-    filter(date >= "2024-08-01" & date <= "2024-08-08")
+  message("Processing ", x)
+
+  pull_from_database(x) |>
+    filter(date >= "2024-08-01" & date <= "2024-08-08") |>
+    collect() |>
+    arrow::write_dataset(
+      "tests/testdata/",
+      format = "parquet",
+      basename_template = paste0(x, "_{i}.parquet")
+    )
 })
 
-# Save test data ==============================================================
-lapply(names(datasets), function(name) {
-  arrow::write_dataset(
-    datasets[[name]],
-    "analytics-dashboard/tests/testdata/",
-    format = "parquet",
-    basename_template = paste0(name, "_{i}.parquet")
-  )
-})
+# Close the pool connection ===================================================
+pool::poolClose(pool)
 
-# Write scrape spine out separate for now
+# Create a last updated date file =============================================
+last_updated_table <- data.frame(
+  last_updated = "2024-08-08 19:17:42.666",
+  latest_data = "2024-08-08"
+)
+
 arrow::write_dataset(
-  pubs1,
-  "analytics-dashboard/tests/testdata/",
+  last_updated_table,
+  "tests/testdata/",
   format = "parquet",
-  basename_template = "pub_spine_{i}.parquet"
+  basename_template = "ees__last_updated_{i}.parquet"
 )

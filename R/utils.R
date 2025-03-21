@@ -39,3 +39,36 @@ filter_on_date_pub <- function(data, period, page) {
     filter(date >= first_date & date <= latest_date) %>%
     filter(publication == page)
 }
+
+#' Read in table from delta lake
+#'
+#' This relies on already having a pool connection set up, or using the test
+#' flag to read in local data from the repo.
+#'
+#' @param table_name name of table in delta lake
+#' @param lazy whether to return lazily loaded table or collect into memory
+#' @param test_mode override flag that will load test data from repo
+read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
+  if (test_mode == TRUE) {
+    lazy_table <- duckplyr::read_parquet(
+      paste0("tests/testdata/", table_name, "_0.parquet")
+    )
+  } else if (test_mode == "") {
+    lazy_table <- pool |>
+      dplyr::tbl(
+        DBI::Id(
+          catalog = config$catalog,
+          schema = config$schema,
+          table = table_name
+        )
+      )
+  } else {
+    warning("There was an issue with the test_mode argument:", test_mode)
+  }
+
+  if (lazy) {
+    return(lazy_table)
+  } else {
+    return(dplyr::collect(lazy_table))
+  }
+}

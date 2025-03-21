@@ -8,6 +8,7 @@ shhh(library(bsicons))
 shhh(library(shinyWidgets))
 
 # Data processing
+shhh(library(duckplyr))
 shhh(library(lubridate))
 shhh(library(dplyr))
 shhh(library(stringr))
@@ -96,6 +97,6 @@ one_year_date <- latest_date - 365
 all_time_date <- "2020-04-03"
 
 # Custom functions ============================================================
-source("R/utils.R")
+lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)
 
 message("...global variables set!")

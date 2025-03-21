@@ -430,6 +430,13 @@
       ],
       "Hash": "61e097f35917d342622f21cdc79c256e"
     },
+    "collections": {
+      "Package": "collections",
+      "Version": "0.3.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "90a0eda114ab0bef170ddbf5ef0cd93f"
+    },
     "colorspace": {
       "Package": "colorspace",
       "Version": "2.1-1",
@@ -656,6 +663,45 @@
         "vctrs"
       ],
       "Hash": "fedd9d00c2944ff00a0e2696ccf048ec"
+    },
+    "duckdb": {
+      "Package": "duckdb",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DBI",
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "b66f884e1b805c4a3c318c9465ddeb01"
+    },
+    "duckplyr": {
+      "Package": "duckplyr",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DBI",
+        "R",
+        "cli",
+        "collections",
+        "dplyr",
+        "duckdb",
+        "glue",
+        "jsonlite",
+        "lifecycle",
+        "magrittr",
+        "memoise",
+        "pillar",
+        "rlang",
+        "tibble",
+        "tidyselect",
+        "utils",
+        "vctrs"
+      ],
+      "Hash": "c0a2dd6a9f8cc4fa70dddccff398d0dd"
     },
     "emoji": {
       "Package": "emoji",
@@ -1246,12 +1292,11 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.9.0",
+      "Version": "1.10.1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "cli",
-        "fansi",
         "glue",
         "lifecycle",
         "rlang",
@@ -1259,7 +1304,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "15da5a8412f317beeee6175fbc76f4bb"
+      "Hash": "8b16b6097daef84cd3c40a6a7c5c9d86"
     },
     "pingr": {
       "Package": "pingr",

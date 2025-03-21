@@ -7,6 +7,8 @@ default:
     pwd: ""
     trusted: "Yes"
     sql_warehouse_id: !expr Sys.getenv("DATABRICKS_SQL_WAREHOUSE_ID")
+    catalog: "catalog_40_copper_statistics_services"
+    schema: "analytics_app"
 
 production:
   db_connection:
@@ -17,3 +19,5 @@ production:
     pwd: !expr Sys.getenv("SDT_PWD")
     trusted: "No"
     sql_warehouse_id: !expr Sys.getenv("DATABRICKS_SQL_WAREHOUSE_ID")
+    catalog: "catalog_40_copper_statistics_services"
+    schema: "analytics_app"

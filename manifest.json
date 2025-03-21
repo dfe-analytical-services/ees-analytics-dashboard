@@ -94,7 +94,13 @@
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "RSPM",
         "Date/Publication": "2024-06-02 21:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows"
+        "Built": "R 4.4.0; ; 2024-06-03 04:43:08 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "DBI",
+        "RemoteRef": "DBI",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "1.2.3"
       }
     },
     "DT": {
@@ -148,10 +154,9 @@
         "Packaged": "2024-06-13 08:23:32 UTC; ripley",
         "Author": "Brian Ripley [aut, cre, cph],\n  Bill Venables [aut, cph],\n  Douglas M. Bates [ctb],\n  Kurt Hornik [trl] (partial port ca 1998),\n  Albrecht Gebhardt [trl] (partial port ca 1998),\n  David Firth [ctb] (support functions for polr)",
         "Maintainer": "Brian Ripley <ripley@stats.ox.ac.uk>",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-06-13 10:23:32",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-06-14 04:36:42 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:49:22 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -185,7 +190,7 @@
         "Maintainer": "Martin Maechler <mmaechler+Matrix@gmail.com>",
         "Repository": "CRAN",
         "Date/Publication": "2024-10-18 18:10:02 UTC",
-        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-11-19 02:38:41 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:49:54 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -1004,10 +1009,43 @@
         "License": "GPL",
         "NeedsCompilation": "no",
         "Packaged": "2024-03-31 18:18:09 UTC; luke",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-03-31 20:10:06 UTC",
+        "Built": "R 4.4.2; ; 2024-10-31 16:57:50 UTC; windows"
+      }
+    },
+    "collections": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "collections",
+        "Title": "High Performance Container Data Types",
+        "Version": "0.3.7",
+        "Date": "2023-01-03",
+        "Authors@R": "\n    c(person(given = \"Randy\",\n             family = \"Lai\",\n             role = c(\"aut\", \"cre\"),\n             email = \"randy.cs.lai@gmail.com\"),\n      person(given = \"Andrea\",\n             family = \"Mazzoleni\",\n             role = \"cph\",\n             comment = \"tommy hash table library\"),\n      person(given = \"Yann\",\n             family = \"Collet\",\n             role = \"cph\",\n             comment = \"xxhash algorithm\"))",
+        "Description": "Provides high performance container data types such\n    as queues, stacks, deques, dicts and ordered dicts. Benchmarks\n    <https://randy3k.github.io/collections/articles/benchmark.html> have\n    shown that these containers are asymptotically more efficient than\n    those offered by other packages.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/randy3k/collections/",
+        "Suggests": "testthat (>= 2.3.1)",
+        "ByteCompile": "yes",
         "Encoding": "UTF-8",
-        "Built": "R 4.4.0; ; 2024-04-25 19:49:30 UTC; windows"
+        "NeedsCompilation": "yes",
+        "RoxygenNote": "7.1.0",
+        "Packaged": "2023-01-03 21:20:24 UTC; randylai",
+        "Author": "Randy Lai [aut, cre],\n  Andrea Mazzoleni [cph] (tommy hash table library),\n  Yann Collet [cph] (xxhash algorithm)",
+        "Maintainer": "Randy Lai <randy.cs.lai@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2023-01-05 21:50:53 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 18:55:10 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "collections",
+        "RemoteRef": "collections",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "0.3.7"
       }
     },
     "colorspace": {
@@ -1518,7 +1556,90 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-11-17 16:50:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:33:28 UTC; windows",
-        "Archs": "x64"
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "dplyr",
+        "RemoteRef": "dplyr",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "1.1.4"
+      }
+    },
+    "duckdb": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "duckdb",
+        "Title": "DBI Package for the DuckDB Database Management System",
+        "Version": "1.2.1",
+        "Authors@R": "c(\n    person(\"Hannes\", \"Mühleisen\", , \"hannes@cwi.nl\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-8552-0029\")),\n    person(\"Mark\", \"Raasveldt\", , \"mark.raasveldt@cwi.nl\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-5005-6844\")),\n    person(\"Kirill\", \"Müller\", , \"kirill@cynkra.com\", role = \"cre\",\n           comment = c(ORCID = \"0000-0002-1416-3412\")),\n    person(\"Stichting DuckDB Foundation\", role = \"cph\"),\n    person(\"Apache Software Foundation\", role = \"cph\"),\n    person(\"PostgreSQL Global Development Group\", role = \"cph\"),\n    person(\"The Regents of the University of California\", role = \"cph\"),\n    person(\"Cameron Desrochers\", role = \"cph\"),\n    person(\"Victor Zverovich\", role = \"cph\"),\n    person(\"RAD Game Tools\", role = \"cph\"),\n    person(\"Valve Software\", role = \"cph\"),\n    person(\"Rich Geldreich\", role = \"cph\"),\n    person(\"Tenacious Software LLC\", role = \"cph\"),\n    person(\"The RE2 Authors\", role = \"cph\"),\n    person(\"Google Inc.\", role = \"cph\"),\n    person(\"Facebook Inc.\", role = \"cph\"),\n    person(\"Steven G. Johnson\", role = \"cph\"),\n    person(\"Jiahao Chen\", role = \"cph\"),\n    person(\"Tony Kelman\", role = \"cph\"),\n    person(\"Jonas Fonseca\", role = \"cph\"),\n    person(\"Lukas Fittl\", role = \"cph\"),\n    person(\"Salvatore Sanfilippo\", role = \"cph\"),\n    person(\"Art.sy, Inc.\", role = \"cph\"),\n    person(\"Oran Agra\", role = \"cph\"),\n    person(\"Redis Labs, Inc.\", role = \"cph\"),\n    person(\"Melissa O'Neill\", role = \"cph\"),\n    person(\"PCG Project contributors\", role = \"cph\")\n  )",
+        "Description": "The DuckDB project is an embedded analytical data management\n    system with support for the Structured Query Language (SQL). This\n    package includes all of DuckDB and an R Database Interface (DBI)\n    connector.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://r.duckdb.org/, https://github.com/duckdb/duckdb-r",
+        "BugReports": "https://github.com/duckdb/duckdb-r/issues",
+        "Depends": "DBI, R (>= 3.6.0)",
+        "Imports": "methods, utils",
+        "Suggests": "adbcdrivermanager, arrow (>= 13.0.0), bit64, callr, clock,\nDBItest, dbplyr, dplyr, rlang, testthat, tibble, vctrs, withr",
+        "Config/build/compilation-database": "true",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2.9000",
+        "SystemRequirements": "xz (for building from source)",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-03-14 07:05:03 UTC; kirill",
+        "Author": "Hannes Mühleisen [aut] (<https://orcid.org/0000-0001-8552-0029>),\n  Mark Raasveldt [aut] (<https://orcid.org/0000-0001-5005-6844>),\n  Kirill Müller [cre] (<https://orcid.org/0000-0002-1416-3412>),\n  Stichting DuckDB Foundation [cph],\n  Apache Software Foundation [cph],\n  PostgreSQL Global Development Group [cph],\n  The Regents of the University of California [cph],\n  Cameron Desrochers [cph],\n  Victor Zverovich [cph],\n  RAD Game Tools [cph],\n  Valve Software [cph],\n  Rich Geldreich [cph],\n  Tenacious Software LLC [cph],\n  The RE2 Authors [cph],\n  Google Inc. [cph],\n  Facebook Inc. [cph],\n  Steven G. Johnson [cph],\n  Jiahao Chen [cph],\n  Tony Kelman [cph],\n  Jonas Fonseca [cph],\n  Lukas Fittl [cph],\n  Salvatore Sanfilippo [cph],\n  Art.sy, Inc. [cph],\n  Oran Agra [cph],\n  Redis Labs, Inc. [cph],\n  Melissa O'Neill [cph],\n  PCG Project contributors [cph]",
+        "Maintainer": "Kirill Müller <kirill@cynkra.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-03-14 13:40:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2025-03-18 10:40:46 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "duckdb",
+        "RemoteRef": "duckdb",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.2.1"
+      }
+    },
+    "duckplyr": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "duckplyr",
+        "Title": "A 'DuckDB'-Backed Version of 'dplyr'",
+        "Version": "1.0.1",
+        "Authors@R": "c(\n    person(\"Hannes\", \"Mühleisen\", role = \"aut\",\n           comment = c(ORCID = \"0000-0001-8552-0029\")),\n    person(\"Kirill\", \"Müller\", , \"kirill@cynkra.com\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-1416-3412\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "A drop-in replacement for 'dplyr', powered by 'DuckDB' for\n    performance.  Offers convenient utilities for working with in-memory and\n    larger-than-memory data while retaining full 'dplyr' compatibility.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://duckplyr.tidyverse.org,\nhttps://github.com/tidyverse/duckplyr",
+        "BugReports": "https://github.com/tidyverse/duckplyr/issues",
+        "Depends": "R (>= 4.0.0), dplyr (>= 1.1.4)",
+        "Imports": "cli, collections, DBI, duckdb (>= 1.2.0), glue, jsonlite,\nlifecycle, magrittr, memoise, pillar (>= 1.10.1), rlang (>=\n1.0.6), tibble, tidyselect, utils, vctrs (>= 0.6.3)",
+        "Suggests": "arrow, brio, callr, conflicted, constructive (>= 1.0.0),\ncurl, dbplyr, hms, knitr, lobstr, lubridate, nycflights13,\npalmerpenguins, prettycode, purrr, readr, rmarkdown, testthat\n(>= 3.1.5), usethis, withr",
+        "Enhances": "qs, reprex, rstudioapi",
+        "Config/Needs/check": "anthonynorth/roxyglobals",
+        "Config/Needs/website": "tidyverse/tidytemplate, dbplyr, rmarkdown",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Config/testthat/start-first": "rel_api, tpch, as_duckplyr_df,\ndplyr-mutate, dplyr-filter, dplyr-count-tally",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2.9000",
+        "VignetteBuilder": "knitr",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-02-27 14:02:47 UTC; kirill",
+        "Author": "Hannes Mühleisen [aut] (<https://orcid.org/0000-0001-8552-0029>),\n  Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Kirill Müller <kirill@cynkra.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-02-27 14:30:08 UTC",
+        "Built": "R 4.4.0; ; 2025-02-28 04:44:34 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "duckplyr",
+        "RemoteRef": "duckplyr",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.0.1"
       }
     },
     "emoji": {
@@ -2558,8 +2679,7 @@
         "RemotePkgRef": "lubridate",
         "RemoteRef": "lubridate",
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "1.9.4"
       }
     },
@@ -2745,17 +2865,10 @@
         "Packaged": "2024-08-14 04:26:18 UTC; hornik",
         "Author": "José Pinheiro [aut] (S version),\n  Douglas Bates [aut] (up to 2007),\n  Saikat DebRoy [ctb] (up to 2002),\n  Deepayan Sarkar [ctb] (up to 2005),\n  EISPACK authors [ctb] (src/rs.f),\n  Siem Heisterkamp [ctb] (Author fixed sigma),\n  Bert Van Willigen [ctb] (Programmer fixed sigma),\n  Johannes Ranke [ctb] (varConstProp()),\n  R Core Team [aut, cre]",
         "Maintainer": "R Core Team <R-core@R-project.org>",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-08-14 06:36:33 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-08-15 04:17:34 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "nlme",
-        "RemoteRef": "nlme",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "3.1-166"
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:55:56 UTC; windows",
+        "Archs": "x64"
       }
     },
     "odbc": {
@@ -2870,17 +2983,17 @@
       "description": {
         "Package": "pillar",
         "Title": "Coloured Formatting for Columns",
-        "Version": "1.9.0",
+        "Version": "1.10.1",
         "Authors@R": "\n    c(person(given = \"Kirill\",\n             family = \"M\\u00fcller\",\n             role = c(\"aut\", \"cre\"),\n             email = \"kirill@cynkra.com\",\n             comment = c(ORCID = \"0000-0002-1416-3412\")),\n      person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = \"aut\"),\n      person(given = \"RStudio\",\n             role = \"cph\"))",
         "Description": "Provides 'pillar' and 'colonnade' generics designed\n    for formatting columns of data using the full range of colours\n    provided by modern terminals.",
         "License": "MIT + file LICENSE",
         "URL": "https://pillar.r-lib.org/, https://github.com/r-lib/pillar",
         "BugReports": "https://github.com/r-lib/pillar/issues",
-        "Imports": "cli (>= 2.3.0), fansi, glue, lifecycle, rlang (>= 1.0.2), utf8\n(>= 1.1.0), utils, vctrs (>= 0.5.0)",
+        "Imports": "cli (>= 2.3.0), glue, lifecycle, rlang (>= 1.0.2), utf8 (>=\n1.1.0), utils, vctrs (>= 0.5.0)",
         "Suggests": "bit64, DBI, debugme, DiagrammeR, dplyr, formattable, ggplot2,\nknitr, lubridate, nanotime, nycflights13, palmerpenguins,\nrmarkdown, scales, stringi, survival, testthat (>= 3.1.1),\ntibble, units (>= 0.7.2), vdiffr, withr",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.2.3",
+        "RoxygenNote": "7.3.2.9000",
         "Config/testthat/edition": "3",
         "Config/testthat/parallel": "true",
         "Config/testthat/start-first": "format_multi_fuzz, format_multi_fuzz_2,\nformat_multi, ctl_colonnade, ctl_colonnade_1, ctl_colonnade_2",
@@ -2889,12 +3002,19 @@
         "Config/gha/extra-packages": "DiagrammeR=?ignore-before-r=3.5.0",
         "Config/Needs/website": "tidyverse/tidytemplate",
         "NeedsCompilation": "no",
-        "Packaged": "2023-03-21 08:42:46 UTC; kirill",
+        "Packaged": "2025-01-07 10:10:11 UTC; kirill",
         "Author": "Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),\n  Hadley Wickham [aut],\n  RStudio [cph]",
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "RSPM",
-        "Date/Publication": "2023-03-22 08:10:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 20:17:40 UTC; windows"
+        "Date/Publication": "2025-01-07 11:10:06 UTC",
+        "Built": "R 4.4.0; ; 2025-01-08 04:54:22 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "pillar",
+        "RemoteRef": "pillar",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.10.1"
       }
     },
     "pingr": {
@@ -3405,9 +3525,9 @@
         "Packaged": "2024-10-11 18:36:11 UTC; kevin",
         "Author": "Kevin Ushey [aut, cre] (<https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-10-12 07:30:02 UTC",
-        "Built": "R 4.4.2; ; 2024-12-21 01:50:00 UTC; windows"
+        "Built": "R 4.4.2; ; 2025-02-08 19:36:11 UTC; windows"
       }
     },
     "rex": {
@@ -3954,8 +4074,7 @@
         "RemotePkgRef": "testthat",
         "RemoteRef": "testthat",
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "3.2.3"
       }
     },
@@ -4428,7 +4547,13 @@
         "Maintainer": "Lionel Henry <lionel@posit.co>",
         "Repository": "RSPM",
         "Date/Publication": "2024-10-28 13:30:02 UTC",
-        "Built": "R 4.4.0; ; 2024-10-29 04:34:54 UTC; windows"
+        "Built": "R 4.4.0; ; 2024-10-29 04:34:54 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "withr",
+        "RemoteRef": "withr",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
+        "RemoteSha": "3.0.2"
       }
     },
     "xfun": {
@@ -4643,43 +4768,49 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "1362662613545f59aed83de866c144f9"
+      "checksum": "389528da6e018489bc77214430de66a1"
+    },
+    "analytics-dashboard/tests/testdata/ees_service_summary_0.parquet": {
+      "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
     },
     "azure-pipelines.yml": {
       "checksum": "7e46ab01f45eca56ea4b1880a66b8f9e"
     },
     "config.yml": {
-      "checksum": "31f7af16db9d15027eaae1f80b087d6a"
-    },
-    "data/pubs.csv": {
-      "checksum": "856ea96a67b0c09dcd4bc36f50e0bc12"
+      "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "7e8d7bcbec59bc0a7994235794196712"
+      "checksum": "3850c89f32b760bba041eab7ce2f8f29"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
+    "R/pages/publication_views.R": {
+      "checksum": "e75f2826385899bda80a7b7e2ffcd5c2"
+    },
+    "R/pages/service_summary.R": {
+      "checksum": "6b99989509451a6a3e790bc17241462d"
+    },
     "R/utils.R": {
-      "checksum": "7b3ddd6c1603c889bdb594194593a2b4"
+      "checksum": "a69e2d96404f5171f3c07a8f87a6835d"
     },
     "README.md": {
       "checksum": "1facf86937b5f6b156e4aca392003e69"
     },
     "renv.lock": {
-      "checksum": "1fc19d996bc01ad33fc148d49877c761"
+      "checksum": "722f1dd293bca01e4bdc2a4a565db89f"
     },
     "server.R": {
-      "checksum": "ab69883962ade6d993a5df1ae6aaa6c5"
+      "checksum": "f79f3b5876707fde3e1c268fd32c9558"
     },
     "tests/testdata-generator.R": {
-      "checksum": "6eb60b2aafaefb2b5a6b9ee88aa090c1"
+      "checksum": "ac5028ab834467233fc3cd9dba9587c5"
     },
-    "tests/testdata/combined_data_0.parquet": {
-      "checksum": "325858f2c7a7587ab613e5c9111b1dcf"
+    "tests/testdata/ees__last_updated_0.parquet": {
+      "checksum": "ff78a325059c0980c070cb8db6bae564"
     },
-    "tests/testdata/publication_aggregation_0.parquet": {
-      "checksum": "6e15f51395a7c1bd7ace0b811008aa37"
+    "tests/testdata/ees_service_summary_0.parquet": {
+      "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
@@ -4691,7 +4822,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "cd7f0d4c7cfdc254996c977c2f4caf04"
+      "checksum": "2ef7f34d9461e96dc816ec7a9415970c"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

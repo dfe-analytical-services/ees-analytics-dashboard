@@ -2,7 +2,9 @@ ui <- page_navbar(
   title = "Explore education statistics analytics",
   bg = "#0062cc",
 
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Service summary",
     layout_sidebar(

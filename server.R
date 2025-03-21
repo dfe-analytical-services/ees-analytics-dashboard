@@ -14,7 +14,9 @@ server <- function(input, output, session) {
     paste0("Latest available data: ", last_updated_table() |> pull(latest_data))
   })
 
-  # Read in data ------------------------------------------------------------
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Service summary ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   service_summary_data <- reactive({
     message("Reading service by date")
 
@@ -22,14 +24,12 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date)
 
-  # Filter data -------------------------------------------------------------
   service_by_date <- reactive({
     service_summary_data() |>
       filter_on_date(input$date_choice)
   })
 
-  # Create outputs ----------------------------------------------------------
-  ## Value boxes ------------------------------------------------------------
+  # Value boxes ---------------------------------------------------------------
   output$service_total_sessions_box <- renderText({
     aggregate_total(
       data = service_by_date(),
@@ -46,7 +46,7 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 
-  ## Plots ------------------------------------------------------------------
+  # Plots ---------------------------------------------------------------------
   output$service_sessions_plot <- renderGirafe({
     simple_bar_chart(
       data = service_by_date(),

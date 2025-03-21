@@ -4427,7 +4427,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "d2ba058387c69ce72cfdfed35a4eef51"
+      "checksum": "b0d08997e0452d85b20cd0c0b262a322"
     },
     "analytics-dashboard/tests/testdata/ees_service_summary_0.parquet": {
       "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
@@ -4460,7 +4460,7 @@
       "checksum": "8bfc3ab1dde85b921300410ca4108ef2"
     },
     "server.R": {
-      "checksum": "a648a533b3d8fbb293d186ac1b274ceb"
+      "checksum": "522c5b3e504b32dda58d068aa9cb08fb"
     },
     "tests/testdata-generator.R": {
       "checksum": "ac5028ab834467233fc3cd9dba9587c5"
@@ -4481,7 +4481,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "f9433db0dc328ef33b466db7ecfb649a"
+      "checksum": "79bec789b66756f7ef27dd3339b79ef0"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

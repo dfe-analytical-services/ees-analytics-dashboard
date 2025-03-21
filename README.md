@@ -2,11 +2,10 @@
 
 This is an R Shiny dashboard that visualises analytics data collected on our explore education statistics platform.
 
-It is deployed via the DfE POSIT Connect subscription internally. There are three environments, all accessible to DfE AD:
+It is deployed via the DfE POSIT Connect subscription internally. There are two environments, both only accessible to DfE AD:
 
 * Production - https://rsconnect/rsc/ees-analytics/
 * Pre-production - https://rsconnect-pp/rsc/ees-analytics/
-* Development - https://rsconnect-pp/rsc/dev-ees-analytics/
 
 ## Data processing and update pipelines
 
@@ -26,22 +25,19 @@ Code used to extract source data, process it, and save a permanent store for usa
 
 ### iii. Access requirements
 
-Old data:
-- Access to the MA_SDT_NS_DATA database
-
-Latest data:
-- Access the statistics services area of the unity catalog
-
-To set up access to the app, and understand how the app itself is connected to the SQL warehouse on the server, look at:
-- [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
-- [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
-
-If you don't have access to the source data, you can still run the dashboard using:
+If you don't have access to the source data, you can still run the dashboard using the test data:
 ```r
 # This makes the app think it's in test mode and will read in the test data in the repo
 # instead of connecting to the databases
 withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
 ```
+
+Data storage:
+- Access the statistics services area of the unity catalog in the delta lake
+
+To set up access to the app, and understand how the app itself is connected to the SQL warehouse on the server, look at:
+- [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
+- [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
 
 ## Contributing to the dashboard
 

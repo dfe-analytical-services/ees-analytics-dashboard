@@ -15,7 +15,7 @@ pool <- pool::dbPool(
 
 # List out data sets ==========================================================
 datasets <- c(
-  "ees_service_summary"
+  "ees_service_summary", "ees_release_pageviews"
 )
 
 # Load source data ============================================================

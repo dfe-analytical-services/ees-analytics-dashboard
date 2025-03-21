@@ -4427,7 +4427,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "b0d08997e0452d85b20cd0c0b262a322"
+      "checksum": "d2b95553ae92937d93d3cab797d918b7"
     },
     "analytics-dashboard/tests/testdata/ees_service_summary_0.parquet": {
       "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
@@ -4460,13 +4460,16 @@
       "checksum": "8bfc3ab1dde85b921300410ca4108ef2"
     },
     "server.R": {
-      "checksum": "522c5b3e504b32dda58d068aa9cb08fb"
+      "checksum": "98c45030a31f7bd0d599d5990b5d0884"
     },
     "tests/testdata-generator.R": {
-      "checksum": "ac5028ab834467233fc3cd9dba9587c5"
+      "checksum": "bc363ecb0b47e70ca3ce651fe7398948"
     },
     "tests/testdata/ees__last_updated_0.parquet": {
       "checksum": "ff78a325059c0980c070cb8db6bae564"
+    },
+    "tests/testdata/ees_release_pageviews_0.parquet": {
+      "checksum": "3e28ea0aacc6db9d41c2832f10a4f885"
     },
     "tests/testdata/ees_service_summary_0.parquet": {
       "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"

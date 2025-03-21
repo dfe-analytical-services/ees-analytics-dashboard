@@ -90,13 +90,27 @@ aggregate_total <- function(data, metric) {
 #' @param data data set
 #' @param x x axis data
 #' @param y y axis data
-single_line_chart <- function(data, x, y) {
-  ggplot(
-    data,
-    aes(x = !!sym(x), y = !!sym(y))
-  ) +
-    geom_line(color = "steelblue") +
-    xlab("") +
-    theme_minimal() +
-    theme(legend.position = "top")
+simple_bar_chart <- function(data, x, y) { # Changed function name
+  x_var <- as.character(rlang::as_name(x))
+  y_var <- as.character(rlang::as_name(y))
+
+  p <- data |>
+    ggplot(aes(x = !!sym(x), y = !!sym(y))) +
+    geom_col_interactive(
+      aes(
+        data_id = seq_along(!!sym(x)),
+        tooltip = paste0(
+          x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y))
+        )
+      ),
+      fill = af_colour_values["dark-blue"]
+    ) +
+    theme_af() +
+    scale_y_continuous(labels = comma) +
+    labs(
+      x = NULL,
+      y = NULL
+    )
+
+  girafe(ggobj = p)
 }

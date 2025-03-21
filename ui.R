@@ -19,7 +19,7 @@ ui <- page_navbar(
             "one_year",
             "all_time"
           ),
-          selected = "six_month"
+          selected = "all_time"
         ),
       ),
       textOutput("latest_date"),
@@ -66,13 +66,13 @@ ui <- page_navbar(
               )
             )
           ),
-          plotOutput("service_sessions_plot")
+          girafeOutput("service_sessions_plot")
         ),
         card(
           card_header(
             "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
           ),
-          plotOutput("service_pageviews_plot"),
+          girafeOutput("service_pageviews_plot"),
           col_widths = c(6, 6)
         )
       )

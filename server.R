@@ -47,8 +47,8 @@ server <- function(input, output, session) {
     bindCache(last_updated_date(), input$date_choice)
 
   ## Plots ------------------------------------------------------------------
-  output$service_sessions_plot <- renderPlot({
-    single_line_chart(
+  output$service_sessions_plot <- renderGirafe({
+    simple_bar_chart(
       data = service_by_date(),
       x = "date",
       y = "sessions"
@@ -56,8 +56,8 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 
-  output$service_pageviews_plot <- renderPlot({
-    single_line_chart(
+  output$service_pageviews_plot <- renderGirafe({
+    simple_bar_chart(
       data = service_by_date(),
       x = "date",
       y = "screenPageViews"

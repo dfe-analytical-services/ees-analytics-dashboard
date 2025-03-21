@@ -88,7 +88,12 @@ link_posit <- tags$a(
   href = "https://posit.co", target = "_blank"
 )
 
-latest_date <- Sys.Date() - 1
+if (Sys.getenv("TESTTHAT") == "true") {
+  latest_date <- as.Date("2024-08-08")
+} else {
+  latest_date <- Sys.Date() - 1
+}
+
 week_date <- latest_date - 7
 four_week_date <- latest_date - 28
 since_4thsep_date <- "2024-09-02"

@@ -49,8 +49,8 @@ filter_on_date_pub <- function(data, period, page) {
 #' @param lazy whether to return lazily loaded table or collect into memory
 #' @param test_mode override flag that will load test data from repo
 read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
-  if (test_mode == TRUE) {
-    lazy_table <- duckplyr::read_parquet(
+  if (test_mode == "true") {
+    lazy_table <- duckplyr::read_parquet_duckdb(
       paste0("tests/testdata/", table_name, "_0.parquet")
     )
   } else if (test_mode == "") {
@@ -71,4 +71,32 @@ read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
   } else {
     return(dplyr::collect(lazy_table))
   }
+}
+
+#' Create headline aggregate total for value boxes
+#'
+#' @param data data set
+#' @param metric metric to sum
+aggregate_total <- function(data, metric) {
+  data |>
+    as.data.frame() |>
+    summarise(sum(!!sym(metric))) |>
+    dfeR::comma_sep() |>
+    paste0()
+}
+
+#' Create basic single line, line chart
+#'
+#' @param data data set
+#' @param x x axis data
+#' @param y y axis data
+single_line_chart <- function(data, x, y) {
+  ggplot(
+    data,
+    aes(x = !!sym(x), y = !!sym(y))
+  ) +
+    geom_line(color = "steelblue") +
+    xlab("") +
+    theme_minimal() +
+    theme(legend.position = "top")
 }

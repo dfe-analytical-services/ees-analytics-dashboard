@@ -31,49 +31,37 @@ server <- function(input, output, session) {
   # Create outputs ----------------------------------------------------------
   ## Value boxes ------------------------------------------------------------
   output$service_total_sessions_box <- renderText({
-    paste0(
-      dfeR::comma_sep(
-        service_by_date() %>%
-          as.data.frame() %>%
-          summarise(sum(sessions))
-      )
+    aggregate_total(
+      data = service_by_date(),
+      metric = "sessions"
     )
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 
   output$service_total_pageviews_box <- renderText({
-    paste0(
-      dfeR::comma_sep(
-        service_by_date() %>%
-          as.data.frame() %>%
-          summarise(sum(screenPageViews))
-      )
+    aggregate_total(
+      data = service_by_date(),
+      metric = "screenPageViews"
     )
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 
   ## Plots ------------------------------------------------------------------
   output$service_sessions_plot <- renderPlot({
-    ggplot(
-      service_by_date(),
-      aes(x = date, y = sessions)
-    ) +
-      geom_line(color = "steelblue") +
-      xlab("") +
-      theme_minimal() +
-      theme(legend.position = "top")
+    single_line_chart(
+      data = service_by_date(),
+      x = "date",
+      y = "sessions"
+    )
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 
   output$service_pageviews_plot <- renderPlot({
-    ggplot(
-      service_by_date(),
-      aes(x = date, y = screenPageViews)
-    ) +
-      geom_line(color = "steelblue") +
-      xlab("") +
-      theme_minimal() +
-      theme(legend.position = "top")
+    single_line_chart(
+      data = service_by_date(),
+      x = "date",
+      y = "screenPageViews"
+    )
   }) |>
     bindCache(last_updated_date(), input$date_choice)
 }

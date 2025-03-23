@@ -1,19 +1,13 @@
 # Date selections -------------------------------------------------------------
-date_options <- c(
-  "Last four weeks",
-  "Since 2nd Sept",
-  "Last year",
-  "All time"
+date_options <- list(
+  "Last four weeks" = latest_date - 28,
+  "Since 2nd Sept" = as.Date("2024-09-02"),
+  "Last year" = latest_date - 365,
+  "All time" = as.Date("2020-04-03")
 )
 
-filter_on_date <- function(data, selected_range, latest_date) {
-  first_date <- switch(selected_range,
-    "Last four weeks" = latest_date - 28,
-    "Since 2nd Sept" = as.Date("2024-09-02"),
-    "Last year" = latest_date - 365,
-    "All time" = as.Date("2020-04-03"),
-    as.Date("2020-04-03") # Default case
-  )
+filter_on_date <- function(data, selected_start_date, latest_date) {
+  first_date <- date_options[[selected_start_date]]
 
   data |>
     filter(date >= first_date & date <= latest_date)

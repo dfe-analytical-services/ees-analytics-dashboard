@@ -6,16 +6,16 @@ ui <- page_navbar(
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Service summary",
-    textOutput("latest_date"), # TODO: no longer working due to duplicate IDs
 
     # User selections ---------------------------------------------------------
     layout_columns(
       fill = FALSE,
-      textOutput("service_latest_date"),
+      textOutput("service_latest_date") |>
+        withSpinner(),
       selectInput(
         "date_choice",
         "Choose date range",
-        date_choices,
+        names(date_options),
         selected = "All time"
       ),
       selectInput(
@@ -128,7 +128,7 @@ ui <- page_navbar(
       selectInput(
         "pub_date_choice",
         "Choose date range",
-        date_choices,
+        names(date_options),
         selected = "All time"
       ),
     ),
@@ -177,7 +177,9 @@ ui <- page_navbar(
                   "as two sessions."
                 )
               )
-            )
+            ),
+            girafeOutput("publication_sessions_plot") |>
+              withSpinner()
           ),
           card(
             card_header(

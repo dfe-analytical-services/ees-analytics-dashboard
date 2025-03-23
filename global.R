@@ -73,16 +73,6 @@ options(
   spinner.color = afcharts::af_colour_values[["dark-blue"]]
 )
 
-# This is used across the side panel date filters
-date_choices <- c(
-  "week",
-  "four_week",
-  "since_2ndsep",
-  "six_month",
-  "one_year",
-  "all_time"
-)
-
 # Custom functions ============================================================
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)
 

@@ -3,7 +3,7 @@ server <- function(input, output, session) {
   last_updated_table <- reactive({
     message("Checking last updated")
 
-    read_delta_lake("ees__last_updated", test_mode = Sys.getenv("TESTTHAT"))
+    read_delta_lake("ees__last_updated", Sys.getenv("TESTTHAT"))
   })
 
   last_updated_date <- reactive({
@@ -24,17 +24,13 @@ server <- function(input, output, session) {
   service_summary_data <- reactive({
     message("Reading service by date")
 
-    read_delta_lake(
-      "ees_service_summary",
-      test_mode = Sys.getenv("TESTTHAT"),
-      lazy = TRUE
-    )
+    read_delta_lake("ees_service_summary", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date)
 
   service_by_date <- reactive({
     service_summary_data() |>
-      filter_on_date(input$date_choice, latest_date) |>
+      filter_on_date(input$date_choice) |>
       collect()
   }) # caching not needed here as the plots themselves are cached
 
@@ -81,11 +77,7 @@ server <- function(input, output, session) {
   release_pageviews_data <- reactive({
     message("Reading publication pageviews")
 
-    read_delta_lake(
-      "ees_release_pageviews",
-      test_mode = Sys.getenv("TESTTHAT"),
-      lazy = TRUE
-    )
+    read_delta_lake("ees_release_pageviews", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
 
@@ -110,7 +102,7 @@ server <- function(input, output, session) {
   release_pageviews_by_date <- reactive({
     release_pageviews_data() |>
       filter(publication == input$pub_name_choice) |>
-      filter_on_date(input$pub_date_choice, latest_date) |>
+      filter_on_date(input$pub_date_choice) |>
       collect()
   }) |>
     bindCache(last_updated_date(), input$pub_date_choice, input$pub_name_choice)

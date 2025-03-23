@@ -41,9 +41,9 @@ if ("meaning of life" == "42") {
   library(config)
 }
 
-message("...library calls done, setting up database connection...")
+message("...library calls done...")
 
-# Load data ====================================================================
+# Database connection =========================================================
 if (Sys.getenv("TESTTHAT") == "") {
   message("Connecting to SQL warehouse...")
   config <- config::get("db_connection")
@@ -63,10 +63,17 @@ if (Sys.getenv("TESTTHAT") == "") {
 
 # Global variables ============================================================
 if (Sys.getenv("TESTTHAT") == "true") {
-  latest_date <- as.Date("2024-08-08")
+  yesterday <- as.Date("2024-08-08")
 } else {
-  latest_date <- Sys.Date() - 1
+  yesterday <- Sys.Date() - 1
 }
+
+date_options <- list(
+  "Last four weeks" = yesterday - 28,
+  "Since 2nd Sept" = as.Date("2024-09-02"),
+  "Last year" = yesterday - 365,
+  "All time" = as.Date("2020-04-03")
+)
 
 options(
   spinner.type = 7,

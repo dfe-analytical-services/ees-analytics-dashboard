@@ -1514,6 +1514,21 @@
       ],
       "Hash": "6a293995a66e12c48d13aa1f957d09c7"
     },
+    "shinycssloaders": {
+      "Package": "shinycssloaders",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "glue",
+        "grDevices",
+        "htmltools",
+        "shiny"
+      ],
+      "Hash": "2b45a467a30d6a88a1892a738c0900cf"
+    },
     "shinytest2": {
       "Package": "shinytest2",
       "Version": "0.3.2",

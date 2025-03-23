@@ -5,6 +5,7 @@ shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 shhh(library(shiny))
 shhh(library(bslib))
 shhh(library(bsicons))
+shhh(library(shinycssloaders))
 
 # Database connection
 shhh(library(odbc))
@@ -66,6 +67,11 @@ if (Sys.getenv("TESTTHAT") == "true") {
 } else {
   latest_date <- Sys.Date() - 1
 }
+
+options(
+  spinner.type = 7,
+  spinner.color = afcharts::af_colour_values[["dark-blue"]]
+)
 
 # Custom functions ============================================================
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)

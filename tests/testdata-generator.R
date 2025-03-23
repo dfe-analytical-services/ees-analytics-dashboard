@@ -30,8 +30,6 @@ pull_filtered_data <- function(table_name, pool, config) {
     )
 
   message("... ", table_name, " generated!")
-
-  return(invisible())
 }
 
 create_last_updated <- function() {
@@ -46,9 +44,6 @@ create_last_updated <- function() {
   )
 
   message("... _last_updated generated!")
-
-
-  return(invisible())
 }
 
 # Execute =====================================================================

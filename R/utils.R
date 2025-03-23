@@ -45,13 +45,13 @@ filter_on_date_pub <- function(data, period, page) {
 #' This relies on already having a pool connection set up, or using the test
 #' flag to read in local data from the repo.
 #'
-#' @param table_name name of table in delta lake
+#' @param table_name name of table in delta lake / local test data
 #' @param lazy whether to return lazily loaded table or collect into memory
 #' @param test_mode override flag that will load test data from repo
 read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
   if (test_mode == "true") {
     lazy_table <- duckplyr::read_parquet_duckdb(
-      paste0("tests/testdata/", table_name, "_0.parquet")
+      paste0("tests/testdata/", table_name, ".parquet")
     )
   } else if (test_mode == "") {
     lazy_table <- pool |>
@@ -67,9 +67,9 @@ read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
   }
 
   if (lazy) {
-    return(lazy_table)
+    return(lazy_table |> duckplyr::as_duckdb_tibble())
   } else {
-    return(dplyr::collect(lazy_table))
+    return(lazy_table |> collect())
   }
 }
 

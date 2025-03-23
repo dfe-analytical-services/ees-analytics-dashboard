@@ -25,10 +25,10 @@ Code used to extract source data, process it, and save a permanent store for usa
 
 ### iii. Access requirements
 
-If you don't have access to the source data, you can still run the dashboard using the test data:
+If you don't have access to the source data, you can run the dashboard using local test data instead.
+
+This will set the same environment variable used in shinytest2, and make all of the data functions switch to local instead of database:
 ```r
-# This makes the app think it's in test mode and will read in the test data in the repo
-# instead of connecting to the databases
 withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
 ```
 
@@ -55,7 +55,13 @@ Package control is handled using [renv](https://rstudio.github.io/renv/articles/
 
 Tests can be run locally by using `shinytest2::test_app()`. You should do this regularly to check that the tests are passing against the code you are working on.
 
-The tests use data in the `tests/testdata/` folder, to regenerate this data look at the `tests/testdata-generator.R` script. Whenever a new database table is added for the app, add this into the generator script so then the tests will have a copy to use.
+The tests use data in the `tests/testdata/` folder, to regenerate this data use the `tests/testdata-generator.R` script. 
+
+``` r
+source("tests/testdata-generator.R")
+```
+
+Whenever a new database table is added for the app, add this into the generator script so then the tests will have a copy to use. The list of files in the `tests/testdata` folder should always match the list of database tables that the app requires.
 
 GitHub Actions provide CI by running the automated tests on every pull request into the main branch using the `.github/workflows/dashboard-tests.yml` workflow.
 

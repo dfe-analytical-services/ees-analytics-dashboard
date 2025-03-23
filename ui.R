@@ -1,161 +1,221 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
-  bg = "#0062cc",
+  bg = "#000",
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Service summary",
-    layout_sidebar(
-      sidebar = sidebar(
-        title = "Options",
-        radioButtons(
-          "date_choice",
-          "Choose date range",
-          date_options,
-          selected = "Last four weeks"
-        ),
+    textOutput("latest_date"), # TODO: no longer working due to duplicate IDs
+
+    # User selections ---------------------------------------------------------
+    layout_columns(
+      fill = FALSE,
+      textOutput("service_latest_date"),
+      selectInput(
+        "date_choice",
+        "Choose date range",
+        date_choices,
+        selected = "All time"
       ),
-      textOutput("latest_date"), # TODO: no longer working due to duplicate IDs
-      layout_columns(
-        bslib::value_box(
-          title = tooltip(
-            span(
-              "Number of sessions",
-              bsicons::bs_icon("question-circle-fill")
-            ),
-            paste(
-              "The total number of sessions. This is only applicable to the service as",
-              "a whole - sessions are only counted for entry pages in the Google Analytics",
-              "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
-              "as two sessions."
-            ),
-            placement = "bottom"
-          ),
-          value = textOutput("service_total_sessions_box") |>
-            withSpinner()
-        ),
-        bslib::value_box(
-          title = tooltip(
-            span(
-              "Number of pageviews",
-              bsicons::bs_icon("question-circle-fill")
-            ),
-            "The total number of pageviews.",
-            placement = "bottom"
-          ),
-          value = textOutput("service_total_pageviews_box") |>
-            withSpinner()
-        )
-      ),
-      layout_columns(
-        card(
-          card_header(
-            "Sessions",
-            tooltip(
-              bs_icon("info-circle"),
+      selectInput(
+        "metric_choice",
+        "Choose metric",
+        choices = c("Sessions", "Pageviews"),
+        selected = "Sessions"
+      )
+    ),
+    ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ## Overview ---------------------------------------------------------------
+    navset_underline(
+      nav_panel(
+        "Overview",
+        layout_columns(
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Number of sessions",
+                bsicons::bs_icon("question-circle-fill")
+              ),
               paste(
                 "The total number of sessions. This is only applicable to the service as",
                 "a whole - sessions are only counted for entry pages in the Google Analytics",
                 "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
                 "as two sessions."
-              )
-            )
+              ),
+              placement = "bottom"
+            ),
+            value = textOutput("service_total_sessions_box") |>
+              withSpinner()
           ),
-          girafeOutput("service_sessions_plot") |>
-            withSpinner()
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Number of pageviews",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The total number of pageviews.",
+              placement = "bottom"
+            ),
+            value = textOutput("service_total_pageviews_box") |>
+              withSpinner()
+          )
         ),
-        card(
-          card_header(
-            "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+        layout_columns(
+          card(
+            card_header(
+              "Sessions",
+              tooltip(
+                bs_icon("info-circle"),
+                paste(
+                  "The total number of sessions. This is only applicable to the service as",
+                  "a whole - sessions are only counted for entry pages in the Google Analytics",
+                  "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
+                  "as two sessions."
+                )
+              )
+            ),
+            girafeOutput("service_sessions_plot") |>
+              withSpinner()
           ),
-          girafeOutput("service_pageviews_plot") |>
-            withSpinner(),
+          card(
+            card_header(
+              "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+            ),
+            girafeOutput("service_pageviews_plot") |>
+              withSpinner()
+          ),
           col_widths = c(6, 6)
         )
-      )
-    )
-  ),
+      ),
 
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Devices ===============================================================
+      nav_panel(
+        "Devices",
+        "Some devices"
+      ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Referrals =============================================================
+      nav_panel(
+        "Referrals",
+        "Some referrals"
+      ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Page types ============================================================
+      nav_panel(
+        "Page types",
+        "Some breakdowns by page type"
+      )
+    ) # of of underline tabset
+  ), # end of nav page
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summary =======================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
-    title = "Publication summary",
-    layout_sidebar(
-      sidebar = sidebar(
-        title = "Options",
-        selectInput(
-          "pub_name_choice",
-          label = p(strong("Choose a publication")),
-          choices = "loading...",
-          selected = NULL
-        ),
-        radioButtons(
-          "pub_date_choice",
-          "Choose date range",
-          date_options,
-          selected = "Last four weeks"
-        ),
+    title = "Publication analytics",
+    layout_columns(
+      fill = FALSE,
+      textOutput("pub_latest_date"),
+      selectInput(
+        "pub_name_choice",
+        "Choose a publication",
+        choices = "loading...",
+        selected = NULL
       ),
-      textOutput("latest_date"),
-      layout_columns(
-        bslib::value_box(
-          title = tooltip(
-            span(
-              "Number of sessions",
-              bsicons::bs_icon("question-circle-fill")
-            ),
-            paste(
-              "The total number of sessions. This is only applicable to the service as",
-              "a whole - sessions are only counted for entry pages in the Google Analytics",
-              "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
-              "as two sessions."
-            ),
-            placement = "bottom"
-          ),
-          value = textOutput("publication_total_sessions_box") |>
-            withSpinner()
-        ),
-        bslib::value_box(
-          title = tooltip(
-            span(
-              "Number of pageviews",
-              bsicons::bs_icon("question-circle-fill")
-            ),
-            "The total number of pageviews.",
-            placement = "bottom"
-          ),
-          value = textOutput("publication_total_pageviews_box") |>
-            withSpinner()
-        )
+      selectInput(
+        "pub_date_choice",
+        "Choose date range",
+        date_choices,
+        selected = "All time"
       ),
-      layout_columns(
-        card(
-          card_header(
-            "Sessions",
-            tooltip(
-              bs_icon("info-circle"),
+    ),
+    navset_underline(
+      nav_panel(
+        "Overview",
+        layout_columns(
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Number of sessions",
+                bsicons::bs_icon("question-circle-fill")
+              ),
               paste(
                 "The total number of sessions. This is only applicable to the service as",
                 "a whole - sessions are only counted for entry pages in the Google Analytics",
                 "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
                 "as two sessions."
+              ),
+              placement = "bottom"
+            ),
+            value = textOutput("publication_total_sessions_box")
+          ),
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Number of pageviews",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The total number of pageviews.",
+              placement = "bottom"
+            ),
+            value = textOutput("publication_total_pageviews_box")
+          )
+        ),
+        layout_columns(
+          card(
+            card_header(
+              "Sessions",
+              tooltip(
+                bs_icon("info-circle"),
+                paste(
+                  "The total number of sessions. This is only applicable to the service as",
+                  "a whole - sessions are only counted for entry pages in the Google Analytics",
+                  "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
+                  "as two sessions."
+                )
               )
             )
           ),
-          girafeOutput("publication_sessions_plot") |>
-            withSpinner()
-        ),
-        card(
-          card_header(
-            "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+          card(
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+            ),
+            girafeOutput("publication_pageviews_plot") |>
+              withSpinner()
           ),
-          girafeOutput("publication_pageviews_plot") |>
-            withSpinner(),
           col_widths = c(6, 6)
         )
+      ),
+      nav_panel(
+        "Content",
+        "Some stuff on content"
+      ),
+      nav_panel(
+        "Searches and referrals",
+        "Some referrals"
+      ),
+      nav_panel(
+        "Tables",
+        "Something about tables"
       )
-    )
+    ) # end of underline tabset
+  ), # end of nav page
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Downloads =================================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  nav_panel(
+    title = "Downloads",
+    "Some downloads"
+  ),
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Technical notes ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  nav_panel(
+    title = "Technical notes",
+    "Some technical notes"
   )
 )

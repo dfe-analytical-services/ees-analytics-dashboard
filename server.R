@@ -10,7 +10,11 @@ server <- function(input, output, session) {
     last_updated_table() |> pull(last_updated)
   })
 
-  output$latest_date <- renderText({
+  output$service_latest_date <- renderText({
+    paste0("Latest available data: ", last_updated_table() |> pull(latest_data))
+  })
+
+  output$pub_latest_date <- renderText({
     paste0("Latest available data: ", last_updated_table() |> pull(latest_data))
   })
 

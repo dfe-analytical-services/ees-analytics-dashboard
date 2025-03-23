@@ -67,7 +67,7 @@ aggregate_total <- function(data, metric) {
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create basic single bar chart
+#' Create basic bar chart
 #'
 #' @param data data set
 #' @param x x axis data

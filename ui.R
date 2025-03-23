@@ -5,7 +5,6 @@ ui <- page_navbar(
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
-    autoWaiter(),
     title = "Service summary",
     layout_sidebar(
       sidebar = sidebar(

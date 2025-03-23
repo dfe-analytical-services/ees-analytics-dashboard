@@ -2,14 +2,16 @@
 
 This is an R Shiny dashboard that visualises analytics data collected on our explore education statistics platform.
 
-It is deployed via the DfE POSIT Connect subscription internally. There are two environments, both only accessible to DfE AD:
+It is deployed via the DfE POSIT Connect subscription internally. There are two environments, both only accessible to on the DfE network:
 
 * Production - https://rsconnect/rsc/ees-analytics/
 * Pre-production - https://rsconnect-pp/rsc/ees-analytics/
 
 ## Data processing and update pipelines
 
-Code used to extract source data, process it, and save a permanent store for usage by the analytics dashboard, as well as ad hoc analysis scripts are in a separate GitHub repository - https://github.com/dfe-analytical-services/explore-education-statistics-analytics.
+This repository only contains code necessary for the dashboard itself.
+
+Code used to extract source data, process it, and save the database tables used in this analytics dashboard, as well as code for ad hoc analysis are kept in a sister GitHub repository ([ees-analytics-data](https://github.com/dfe-analytical-services/ees-analytics-data)).
 
 ## Requirements
 
@@ -25,19 +27,18 @@ Code used to extract source data, process it, and save a permanent store for usa
 
 ### iii. Access requirements
 
-If you don't have access to the source data, you can still run the dashboard using the test data:
-```r
-# This makes the app think it's in test mode and will read in the test data in the repo
-# instead of connecting to the databases
-withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
-```
+To use the full data, you will need access the statistics services area of the unity catalog in the DfE delta lake, specifically the `analytics_app` schema.
 
-Data storage:
-- Access the statistics services area of the unity catalog in the delta lake
-
-To set up access to the app, and understand how the app itself is connected to the SQL warehouse on the server, look at:
+The following pages give guidance that will help you set up your connection:
 - [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
 - [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
+
+If you don't have access to the source data, you can still run the dashboard using local test data instead.
+
+You can use the following line to run the app with the same environment variable used in `shinytest2::test_app()`, and make all of the data functions switch to local instead of database:
+```r
+withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
+```
 
 ## Contributing to the dashboard
 
@@ -46,40 +47,38 @@ To set up access to the app, and understand how the app itself is connected to t
 Package control is handled using [renv](https://rstudio.github.io/renv/articles/renv.html) at the top level of the repository.
 
 1. Clone or download the repo
-2. Open the R project in R Studio
+2. Open the R project in R Studio or your IDE of choice
 3. Run `renv::restore()` to install dependencies
-4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks.
-4. Run `shiny::runApp()` to run the dashboard locally
+4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks
+5. Run `shiny::runApp()` to run the dashboard locally
+
+It's also worth checking that you can run the automated tests using `shinytest2::test_app()`, so you can be confident you have everything set up correctly before you start developing.
+
+### Adding new data
+
+All data is pulled from our unity catalog area under the `analytics_app` schema. Each table used in the app also has a local parquet file equivalent for use in automated tests and for development in case you can't access the main database.
+
+If you're adding any new data into the dashboard, make sure to update the `tests/testdata-generator.R` script to add in any new tables, and then use that script to regenerate the test data.
 
 ### Tests and test data
 
 Tests can be run locally by using `shinytest2::test_app()`. You should do this regularly to check that the tests are passing against the code you are working on.
 
-The tests use data in the `tests/testdata/` folder, to regenerate this data look at the `tests/testdata-generator.R` script. Whenever a new database table is added for the app, add this into the generator script so then the tests will have a copy to use.
+The tests use data in the `tests/testdata/` folder, to regenerate this data use the `tests/testdata-generator.R` script. 
+
+``` r
+source("tests/testdata-generator.R")
+```
+
+Whenever a new database table is added for the app, add this into the generator script so then the tests will have a copy to use. The list of files in the `tests/testdata` folder should always match the list of database tables that the app requires.
 
 GitHub Actions provide CI by running the automated tests on every pull request into the main branch using the `.github/workflows/dashboard-tests.yml` workflow.
 
-### Flagging issues
+### Code styling and pre-commit hooks
 
-If you spot any issues with the application, please flag it in the "Issues" tab of this repository, and label as a bug. Include as much detail as possible to help us diagnose the issue and prepare a suitable remedy.
-
-### Making suggestions
-
-You can also use the "Issues" tab in GitHub to suggest new features, changes or additions. Include as much detail on why you're making the suggestion and any thinking towards a solution that you have already done.
-
-### Navigation
-
-In general all `.R` files will have a usable outline, so make use of that for navigation if in RStudio: `Ctrl-Shift-O`.
-
-### Code styling 
-
-The function `styler::style_dir()` will tidy code according to tidyverse styling using the styler package. Run this regularly as our pre-commit hooks will prevent you committing code that isn't tidied. This function also helps to test the running of the code and for basic syntax errors such as missing commas and brackets.
+The function `styler::style_dir()` will tidy code according to tidyverse styling using the styler package. Run this regularly as our pre-commit hooks (set in the `.hooks/pre-commit.R` file) will prevent you committing code that isn't tidied. This function also helps to test the running of the code and for basic syntax errors such as missing commas and brackets.
 
 You should also run `lintr::lint_dir()` regularly as lintr will check all pull requests for the styling of the code, it does not style the code for you like styler, but is slightly stricter and checks for long lines, variables not using snake case, commented out code and undefined objects amongst other things.
-
-### Pre-commit hooks
-
-We have some pre-commit hooks set up to help with code quality. These are controlled by the `.hooks/pre-commit.R` file.
 
 ## Contact
 

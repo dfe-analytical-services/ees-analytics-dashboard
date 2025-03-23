@@ -1,7 +1,6 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
   bg = "#0062cc",
-
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,15 +12,8 @@ ui <- page_navbar(
         radioButtons(
           "date_choice",
           "Choose date range",
-          c(
-            "week",
-            "four_week",
-            "since_2ndsep",
-            "six_month",
-            "one_year",
-            "all_time"
-          ),
-          selected = "all_time"
+          date_options,
+          selected = "Last four weeks"
         ),
       ),
       textOutput("latest_date"), # TODO: no longer working due to duplicate IDs
@@ -40,7 +32,8 @@ ui <- page_navbar(
             ),
             placement = "bottom"
           ),
-          value = textOutput("service_total_sessions_box")
+          value = textOutput("service_total_sessions_box") |>
+            withSpinner()
         ),
         bslib::value_box(
           title = tooltip(
@@ -51,7 +44,8 @@ ui <- page_navbar(
             "The total number of pageviews.",
             placement = "bottom"
           ),
-          value = textOutput("service_total_pageviews_box")
+          value = textOutput("service_total_pageviews_box") |>
+            withSpinner()
         )
       ),
       layout_columns(
@@ -68,13 +62,15 @@ ui <- page_navbar(
               )
             )
           ),
-          girafeOutput("service_sessions_plot")
+          girafeOutput("service_sessions_plot") |>
+            withSpinner()
         ),
         card(
           card_header(
             "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
           ),
-          girafeOutput("service_pageviews_plot"),
+          girafeOutput("service_pageviews_plot") |>
+            withSpinner(),
           col_widths = c(6, 6)
         )
       )
@@ -96,19 +92,10 @@ ui <- page_navbar(
           selected = NULL
         ),
         radioButtons(
-          # TODO: Hate that this is duplicating
-          # should refactor to make a single date switcher?
           "pub_date_choice",
           "Choose date range",
-          c(
-            "week",
-            "four_week",
-            "since_2ndsep",
-            "six_month",
-            "one_year",
-            "all_time"
-          ),
-          selected = "all_time"
+          date_options,
+          selected = "Last four weeks"
         ),
       ),
       textOutput("latest_date"),
@@ -127,7 +114,8 @@ ui <- page_navbar(
             ),
             placement = "bottom"
           ),
-          value = textOutput("publication_total_sessions_box")
+          value = textOutput("publication_total_sessions_box") |>
+            withSpinner()
         ),
         bslib::value_box(
           title = tooltip(
@@ -138,7 +126,8 @@ ui <- page_navbar(
             "The total number of pageviews.",
             placement = "bottom"
           ),
-          value = textOutput("publication_total_pageviews_box")
+          value = textOutput("publication_total_pageviews_box") |>
+            withSpinner()
         )
       ),
       layout_columns(
@@ -155,13 +144,15 @@ ui <- page_navbar(
               )
             )
           ),
-          girafeOutput("publication_sessions_plot")
+          girafeOutput("publication_sessions_plot") |>
+            withSpinner()
         ),
         card(
           card_header(
             "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
           ),
-          girafeOutput("publication_pageviews_plot"),
+          girafeOutput("publication_pageviews_plot") |>
+            withSpinner(),
           col_widths = c(6, 6)
         )
       )

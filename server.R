@@ -30,7 +30,7 @@ server <- function(input, output, session) {
 
   service_by_date <- reactive({
     service_summary_data() |>
-      filter_on_date(input$date_choice) |>
+      filter_on_date(input$date_choice, latest_date) |>
       collect()
   }) # caching not needed here as the plots themselves are cached
 
@@ -106,7 +106,7 @@ server <- function(input, output, session) {
   release_pageviews_by_date <- reactive({
     release_pageviews_data() |>
       filter(publication == input$pub_name_choice) |>
-      filter_on_date(input$pub_date_choice) |>
+      filter_on_date(input$pub_date_choice, latest_date) |>
       collect()
   }) |>
     bindCache(last_updated_date(), input$pub_date_choice, input$pub_name_choice)

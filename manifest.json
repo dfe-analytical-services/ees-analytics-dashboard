@@ -395,47 +395,6 @@
         "RemoteSha": "0.4.1"
       }
     },
-    "arrow": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "arrow",
-        "Title": "Integration to 'Apache' 'Arrow'",
-        "Version": "17.0.0.1",
-        "Authors@R": "c(\n    person(\"Neal\", \"Richardson\", email = \"neal.p.richardson@gmail.com\", role = c(\"aut\")),\n    person(\"Ian\", \"Cook\", email = \"ianmcook@gmail.com\", role = c(\"aut\")),\n    person(\"Nic\", \"Crane\", email = \"thisisnic@gmail.com\", role = c(\"aut\")),\n    person(\"Dewey\", \"Dunnington\", role = c(\"aut\"), email = \"dewey@fishandwhistle.net\", comment = c(ORCID = \"0000-0002-9415-4582\")),\n    person(\"Romain\", \"Fran\\u00e7ois\", role = c(\"aut\"), comment = c(ORCID = \"0000-0002-2444-4226\")),\n    person(\"Jonathan\", \"Keane\", email = \"jkeane@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Drago\\u0219\", \"Moldovan-Gr\\u00fcnfeld\", email = \"dragos.mold@gmail.com\", role = c(\"aut\")),\n    person(\"Jeroen\", \"Ooms\", email = \"jeroen@berkeley.edu\", role = c(\"aut\")),\n    person(\"Jacob\", \"Wujciak-Jens\", email = \"jacob@wujciak.de\", role = c(\"aut\")),\n    person(\"Javier\", \"Luraschi\", email = \"javier@rstudio.com\", role = c(\"ctb\")),\n    person(\"Karl\", \"Dunkle Werner\", email = \"karldw@users.noreply.github.com\", role = c(\"ctb\"), comment = c(ORCID = \"0000-0003-0523-7309\")),\n    person(\"Jeffrey\", \"Wong\", email = \"jeffreyw@netflix.com\", role = c(\"ctb\")),\n    person(\"Apache Arrow\", email = \"dev@arrow.apache.org\", role = c(\"aut\", \"cph\"))\n  )",
-        "Description": "'Apache' 'Arrow' <https://arrow.apache.org/> is a cross-language\n    development platform for in-memory data. It specifies a standardized\n    language-independent columnar memory format for flat and hierarchical data,\n    organized for efficient analytic operations on modern hardware. This\n    package provides an interface to the 'Arrow C++' library.",
-        "Depends": "R (>= 4.0)",
-        "License": "Apache License (>= 2.0)",
-        "URL": "https://github.com/apache/arrow/, https://arrow.apache.org/docs/r/",
-        "BugReports": "https://github.com/apache/arrow/issues",
-        "Encoding": "UTF-8",
-        "Language": "en-US",
-        "SystemRequirements": "C++17; for AWS S3 support on Linux, libcurl and\nopenssl (optional); cmake >= 3.16 (build-time only, and only\nfor full source build)",
-        "Biarch": "true",
-        "Imports": "assertthat, bit64 (>= 0.9-7), glue, methods, purrr, R6, rlang\n(>= 1.0.0), stats, tidyselect (>= 1.0.0), utils, vctrs",
-        "RoxygenNote": "7.3.1",
-        "Config/testthat/edition": "3",
-        "Config/build/bootstrap": "TRUE",
-        "Suggests": "blob, curl, cli, DBI, dbplyr, decor, distro, dplyr, duckdb\n(>= 0.2.8), hms, jsonlite, knitr, lubridate, pillar, pkgload,\nreticulate, rmarkdown, stringi, stringr, sys, testthat (>=\n3.1.0), tibble, tzdb, withr",
-        "LinkingTo": "cpp11 (>= 0.4.2)",
-        "Collate": "'arrowExports.R' 'enums.R' 'arrow-object.R' 'type.R'\n'array-data.R' 'arrow-datum.R' 'array.R' 'arrow-info.R'\n'arrow-package.R' 'arrow-tabular.R' 'buffer.R'\n'chunked-array.R' 'io.R' 'compression.R' 'scalar.R' 'compute.R'\n'config.R' 'csv.R' 'dataset.R' 'dataset-factory.R'\n'dataset-format.R' 'dataset-partition.R' 'dataset-scan.R'\n'dataset-write.R' 'dictionary.R' 'dplyr-across.R'\n'dplyr-arrange.R' 'dplyr-by.R' 'dplyr-collect.R'\n'dplyr-count.R' 'dplyr-datetime-helpers.R' 'dplyr-distinct.R'\n'dplyr-eval.R' 'dplyr-filter.R' 'dplyr-funcs-agg.R'\n'dplyr-funcs-augmented.R' 'dplyr-funcs-conditional.R'\n'dplyr-funcs-datetime.R' 'dplyr-funcs-doc.R'\n'dplyr-funcs-math.R' 'dplyr-funcs-simple.R'\n'dplyr-funcs-string.R' 'dplyr-funcs-type.R' 'expression.R'\n'dplyr-funcs.R' 'dplyr-glimpse.R' 'dplyr-group-by.R'\n'dplyr-join.R' 'dplyr-mutate.R' 'dplyr-select.R'\n'dplyr-slice.R' 'dplyr-summarize.R' 'dplyr-union.R'\n'record-batch.R' 'table.R' 'dplyr.R' 'duckdb.R' 'extension.R'\n'feather.R' 'field.R' 'filesystem.R' 'flight.R'\n'install-arrow.R' 'ipc-stream.R' 'json.R' 'memory-pool.R'\n'message.R' 'metadata.R' 'parquet.R' 'python.R'\n'query-engine.R' 'record-batch-reader.R'\n'record-batch-writer.R' 'reexports-bit64.R'\n'reexports-tidyselect.R' 'schema.R' 'udf.R' 'util.R'",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-08-18 21:45:07 UTC; jkeane",
-        "Author": "Neal Richardson [aut],\n  Ian Cook [aut],\n  Nic Crane [aut],\n  Dewey Dunnington [aut] (<https://orcid.org/0000-0002-9415-4582>),\n  Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>),\n  Jonathan Keane [aut, cre],\n  Dragoș Moldovan-Grünfeld [aut],\n  Jeroen Ooms [aut],\n  Jacob Wujciak-Jens [aut],\n  Javier Luraschi [ctb],\n  Karl Dunkle Werner [ctb] (<https://orcid.org/0000-0003-0523-7309>),\n  Jeffrey Wong [ctb],\n  Apache Arrow [aut, cph]",
-        "Maintainer": "Jonathan Keane <jkeane@gmail.com>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-08-21 12:20:06 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-08-28 05:16:01 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "arrow",
-        "RemoteRef": "arrow",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "17.0.0.1"
-      }
-    },
     "askpass": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -462,37 +421,6 @@
         "Date/Publication": "2024-10-04 07:20:03 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-10-05 04:37:27 UTC; windows",
         "Archs": "x64"
-      }
-    },
-    "assertthat": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "assertthat",
-        "Title": "Easy Pre and Post Assertions",
-        "Version": "0.2.1",
-        "Authors@R": "\n  person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", c(\"aut\", \"cre\"))",
-        "Description": "An extension to stopifnot() that makes it easy to declare \n    the pre and post conditions that you code should satisfy, while also \n    producing friendly error messages so that your users know what's gone\n    wrong.",
-        "License": "GPL-3",
-        "Imports": "tools",
-        "Suggests": "testthat, covr",
-        "RoxygenNote": "6.0.1",
-        "Collate": "'assert-that.r' 'on-failure.r' 'assertions-file.r'\n'assertions-scalar.R' 'assertions.r' 'base.r'\n'base-comparison.r' 'base-is.r' 'base-logical.r' 'base-misc.r'\n'utils.r' 'validate-that.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-03-21 13:11:01 UTC; hadley",
-        "Author": "Hadley Wickham [aut, cre]",
-        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Repository": "RSPM",
-        "Date/Publication": "2019-03-21 14:53:46 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; ; 2024-04-25 19:54:15 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "assertthat",
-        "RemoteRef": "assertthat",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.2.1"
       }
     },
     "backports": {
@@ -1246,46 +1174,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-08-30 17:00:22 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 22:00:15 UTC; windows"
-      }
-    },
-    "dbplyr": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Type": "Package",
-        "Package": "dbplyr",
-        "Title": "A 'dplyr' Back End for Databases",
-        "Version": "2.5.0",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Maximilian\", \"Girlich\", role = \"aut\"),\n    person(\"Edgar\", \"Ruiz\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "A 'dplyr' back end for databases that allows you to work with\n    remote database tables as if they are in-memory data frames.  Basic\n    features works with any database that has a 'DBI' back end; more\n    advanced features require 'SQL' translation to be provided by the\n    package author.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://dbplyr.tidyverse.org/, https://github.com/tidyverse/dbplyr",
-        "BugReports": "https://github.com/tidyverse/dbplyr/issues",
-        "Depends": "R (>= 3.6)",
-        "Imports": "blob (>= 1.2.0), cli (>= 3.6.1), DBI (>= 1.1.3), dplyr (>=\n1.1.2), glue (>= 1.6.2), lifecycle (>= 1.0.3), magrittr,\nmethods, pillar (>= 1.9.0), purrr (>= 1.0.1), R6 (>= 2.2.2),\nrlang (>= 1.1.1), tibble (>= 3.2.1), tidyr (>= 1.3.0),\ntidyselect (>= 1.2.1), utils, vctrs (>= 0.6.3), withr (>=\n2.5.0)",
-        "Suggests": "bit64, covr, knitr, Lahman, nycflights13, odbc (>= 1.4.2),\nRMariaDB (>= 1.2.2), rmarkdown, RPostgres (>= 1.4.5),\nRPostgreSQL, RSQLite (>= 2.3.1), testthat (>= 3.1.10)",
-        "VignetteBuilder": "knitr",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Config/testthat/parallel": "TRUE",
-        "Encoding": "UTF-8",
-        "Language": "en-gb",
-        "RoxygenNote": "7.3.1",
-        "Collate": "'db-sql.R' 'utils-check.R' 'import-standalone-types-check.R'\n'import-standalone-obj-type.R' 'utils.R' 'sql.R' 'escape.R'\n'translate-sql-cut.R' 'translate-sql-quantile.R'\n'translate-sql-string.R' 'translate-sql-paste.R'\n'translate-sql-helpers.R' 'translate-sql-window.R'\n'translate-sql-conditional.R' 'backend-.R' 'backend-access.R'\n'backend-hana.R' 'backend-hive.R' 'backend-impala.R'\n'verb-copy-to.R' 'backend-mssql.R' 'backend-mysql.R'\n'backend-odbc.R' 'backend-oracle.R' 'backend-postgres.R'\n'backend-postgres-old.R' 'backend-redshift.R'\n'backend-snowflake.R' 'backend-spark-sql.R' 'backend-sqlite.R'\n'backend-teradata.R' 'build-sql.R' 'data-cache.R'\n'data-lahman.R' 'data-nycflights13.R' 'db-escape.R' 'db-io.R'\n'db.R' 'dbplyr.R' 'explain.R' 'ident.R'\n'import-standalone-s3-register.R' 'join-by-compat.R'\n'join-cols-compat.R' 'lazy-join-query.R' 'lazy-ops.R'\n'lazy-query.R' 'lazy-select-query.R' 'lazy-set-op-query.R'\n'memdb.R' 'optimise-utils.R' 'pillar.R' 'progress.R'\n'sql-build.R' 'query-join.R' 'query-select.R'\n'query-semi-join.R' 'query-set-op.R' 'query.R' 'reexport.R'\n'remote.R' 'rows.R' 'schema.R' 'simulate.R' 'sql-clause.R'\n'sql-expr.R' 'src-sql.R' 'src_dbi.R' 'table-name.R'\n'tbl-lazy.R' 'tbl-sql.R' 'test-frame.R' 'testthat.R'\n'tidyeval-across.R' 'tidyeval.R' 'translate-sql.R'\n'utils-format.R' 'verb-arrange.R' 'verb-compute.R'\n'verb-count.R' 'verb-distinct.R' 'verb-do-query.R' 'verb-do.R'\n'verb-expand.R' 'verb-fill.R' 'verb-filter.R' 'verb-group_by.R'\n'verb-head.R' 'verb-joins.R' 'verb-mutate.R'\n'verb-pivot-longer.R' 'verb-pivot-wider.R' 'verb-pull.R'\n'verb-select.R' 'verb-set-ops.R' 'verb-slice.R'\n'verb-summarise.R' 'verb-uncount.R' 'verb-window.R' 'zzz.R'",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-03-15 17:27:18 UTC; hadleywickham",
-        "Author": "Hadley Wickham [aut, cre],\n  Maximilian Girlich [aut],\n  Edgar Ruiz [aut],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Hadley Wickham <hadley@posit.co>",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-03-19 17:00:05 UTC",
-        "Built": "R 4.4.1; ; 2024-07-09 02:34:31 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "dbplyr",
-        "RemoteRef": "dbplyr",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "2.5.0"
       }
     },
     "desc": {
@@ -3537,6 +3425,39 @@
         "RemoteSha": "1.9.1"
       }
     },
+    "shinycssloaders": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "shinycssloaders",
+        "Title": "Add Loading Animations to a 'shiny' Output While It's\nRecalculating",
+        "Version": "1.1.0",
+        "Authors@R": "c(\n    person(\"Dean\",\"Attali\",email=\"daattali@gmail.com\",role=c(\"aut\",\"cre\"),\n        comment = c(\"Maintainer/developer of shinycssloaders since 2019\", ORCID=\"0000-0002-5645-3493\")),\n    person(\"Andras\",\"Sali\",email=\"andras.sali@alphacruncher.hu\",role=c(\"aut\"),comment=\"Original creator of shinycssloaders package\"),\n    person(\"Luke\",\"Hass\",role=c(\"ctb\",\"cph\"),comment=\"Author of included CSS loader code\")\n    )",
+        "Description": "When a 'Shiny' output (such as a plot, table, map, etc.) is recalculating, it remains \n    visible but gets greyed out. Using 'shinycssloaders', you can add a loading animation (\"spinner\")\n    to outputs instead. By wrapping a 'Shiny' output in 'withSpinner()', a spinner will automatically\n    appear while the output is recalculating. You can also manually show and hide the spinner, or add\n    a full-page spinner to cover the entire page.\n    See the demo online at <https://daattali.com/shiny/shinycssloaders-demo/>.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/daattali/shinycssloaders,\nhttps://daattali.com/shiny/shinycssloaders-demo/",
+        "BugReports": "https://github.com/daattali/shinycssloaders/issues",
+        "Depends": "R (>= 3.1)",
+        "Imports": "digest, glue, grDevices, htmltools (>= 0.3.5), shiny",
+        "Suggests": "knitr, shinydisconnect, shinyjs",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-07-30 18:52:48 UTC; Dean",
+        "Author": "Dean Attali [aut, cre] (Maintainer/developer of shinycssloaders since\n    2019, <https://orcid.org/0000-0002-5645-3493>),\n  Andras Sali [aut] (Original creator of shinycssloaders package),\n  Luke Hass [ctb, cph] (Author of included CSS loader code)",
+        "Maintainer": "Dean Attali <daattali@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-07-30 22:30:02 UTC",
+        "Built": "R 4.4.1; ; 2024-08-02 01:54:02 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "shinycssloaders",
+        "RemoteRef": "shinycssloaders",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.1.0"
+      }
+    },
     "shinytest2": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3817,38 +3738,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-03-20 06:30:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:22:42 UTC; windows",
-        "Archs": "x64"
-      }
-    },
-    "tidyr": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "tidyr",
-        "Title": "Tidy Messy Data",
-        "Version": "1.3.1",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Maximilian\", \"Girlich\", role = \"aut\"),\n    person(\"Kevin\", \"Ushey\", , \"kevin@posit.co\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "Tools to help to create tidy data, where each column is a\n    variable, each row is an observation, and each cell contains a single\n    value.  'tidyr' contains tools for changing the shape (pivoting) and\n    hierarchy (nesting and 'unnesting') of a dataset, turning deeply\n    nested lists into rectangular data frames ('rectangling'), and\n    extracting values out of string columns. It also includes tools for\n    working with missing values (both implicit and explicit).",
-        "License": "MIT + file LICENSE",
-        "URL": "https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr",
-        "BugReports": "https://github.com/tidyverse/tidyr/issues",
-        "Depends": "R (>= 3.6)",
-        "Imports": "cli (>= 3.4.1), dplyr (>= 1.0.10), glue, lifecycle (>= 1.0.3),\nmagrittr, purrr (>= 1.0.1), rlang (>= 1.1.1), stringr (>=\n1.5.0), tibble (>= 2.1.1), tidyselect (>= 1.2.0), utils, vctrs\n(>= 0.5.2)",
-        "Suggests": "covr, data.table, knitr, readr, repurrrsive (>= 1.1.0),\nrmarkdown, testthat (>= 3.0.0)",
-        "LinkingTo": "cpp11 (>= 0.4.0)",
-        "VignetteBuilder": "knitr",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "7.3.0",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-01-23 14:27:23 UTC; hadleywickham",
-        "Author": "Hadley Wickham [aut, cre],\n  Davis Vaughan [aut],\n  Maximilian Girlich [aut],\n  Kevin Ushey [ctb],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Hadley Wickham <hadley@posit.co>",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-01-24 14:50:09 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 02:25:04 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -4427,7 +4316,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "c72a7f2d5e0e647285cb9742d9983efa"
+      "checksum": "edd3fd5c30a262e98bc51b13fbb14e35"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4436,7 +4325,7 @@
       "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "d531e658d601d1c5a3f3f708e10385fc"
+      "checksum": "fbbe260ad5be258c52d5a91cbd37f4f8"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
@@ -4445,28 +4334,28 @@
       "checksum": "6b99989509451a6a3e790bc17241462d"
     },
     "R/utils.R": {
-      "checksum": "548d8323c88b57a5e815dc9a33d27509"
+      "checksum": "9686fd76519b5697e813d2eda9f6ec2b"
     },
     "README.md": {
-      "checksum": "f95d3b503d27b04748a55dd45237f918"
+      "checksum": "933b821baf9f7f142cf982aed1a60c1f"
     },
     "renv.lock": {
-      "checksum": "8bfc3ab1dde85b921300410ca4108ef2"
+      "checksum": "477bcf84948d99b82a0916c0fa08cf84"
     },
     "server.R": {
-      "checksum": "da79bdc54f401029c1abc9a3b30d6565"
+      "checksum": "df3739f92d8b1500c451dca533619762"
     },
     "tests/testdata-generator.R": {
-      "checksum": "bc363ecb0b47e70ca3ce651fe7398948"
+      "checksum": "f82941f760e336920b26043bec9ca678"
     },
-    "tests/testdata/ees__last_updated_0.parquet": {
-      "checksum": "ff78a325059c0980c070cb8db6bae564"
+    "tests/testdata/ees__last_updated.parquet": {
+      "checksum": "e63263254e66f943b850489cb722c0df"
     },
-    "tests/testdata/ees_release_pageviews_0.parquet": {
-      "checksum": "561b15b8393eb17afdd067fcb1fb5656"
+    "tests/testdata/ees_release_pageviews.parquet": {
+      "checksum": "bb45b26a5c1ebfd4193ccf681bcbe34f"
     },
-    "tests/testdata/ees_service_summary_0.parquet": {
-      "checksum": "4ea9bfff3bfbea9fe71d15f52d711d01"
+    "tests/testdata/ees_service_summary.parquet": {
+      "checksum": "a4e3f4439bf7bfddfaea1b7ec0eb5ab0"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
@@ -4478,7 +4367,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "c31b9334efc6eeae96b4324bdf053fa6"
+      "checksum": "56c4c34fa117ca184cf9bb7c7ce4cb6c"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

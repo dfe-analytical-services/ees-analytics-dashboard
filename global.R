@@ -1,4 +1,5 @@
 message("Loading dependencies...")
+shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 
 # Standard app styling
 shhh(library(shiny))

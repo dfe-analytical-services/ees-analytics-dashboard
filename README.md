@@ -2,14 +2,16 @@
 
 This is an R Shiny dashboard that visualises analytics data collected on our explore education statistics platform.
 
-It is deployed via the DfE POSIT Connect subscription internally. There are two environments, both only accessible to DfE AD:
+It is deployed via the DfE POSIT Connect subscription internally. There are two environments, both only accessible to on the DfE network:
 
 * Production - https://rsconnect/rsc/ees-analytics/
 * Pre-production - https://rsconnect-pp/rsc/ees-analytics/
 
 ## Data processing and update pipelines
 
-Code used to extract source data, process it, and save the database tables used in this analytics dashboard, as well as code for ad hoc analysis are kept in a sister GitHub repository - [ees-analytics-data](https://github.com/dfe-analytical-services/ees-analytics-data). This repository only contains code necessary for the dashboard itself.
+This repository only contains code necessary for the dashboard itself.
+
+Code used to extract source data, process it, and save the database tables used in this analytics dashboard, as well as code for ad hoc analysis are kept in a sister GitHub repository ([ees-analytics-data](https://github.com/dfe-analytical-services/ees-analytics-data)).
 
 ## Requirements
 
@@ -25,19 +27,18 @@ Code used to extract source data, process it, and save the database tables used 
 
 ### iii. Access requirements
 
-Data storage:
-- Access the statistics services area of the unity catalog in the delta lake, specifically the `analytics_app` schema.
+To use the full data, you will need access the statistics services area of the unity catalog in the DfE delta lake, specifically the `analytics_app` schema.
 
-If you don't have access to the source data, you can run the dashboard using local test data instead.
+The following pages give guidance that will help you set up your connection:
+- [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
+- [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
 
-This will set the same environment variable used in shinytest2, and make all of the data functions switch to local instead of database:
+If you don't have access to the source data, you can still run the dashboard using local test data instead.
+
+You can use the following line to run the app with the same environment variable used in `shinytest2::test_app()`, and make all of the data functions switch to local instead of database:
 ```r
 withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
 ```
-
-To set up access to the app, and understand how the app itself is connected to the SQL warehouse on the server, look at:
-- [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
-- [R Shiny app databricks connection guide](https://rsconnect/rsc/posit-connect-guidance/_book/databricks-connections.html).
 
 ## Contributing to the dashboard
 
@@ -46,9 +47,9 @@ To set up access to the app, and understand how the app itself is connected to t
 Package control is handled using [renv](https://rstudio.github.io/renv/articles/renv.html) at the top level of the repository.
 
 1. Clone or download the repo
-2. Open the R project in R Studio
+2. Open the R project in R Studio or your IDE of choice
 3. Run `renv::restore()` to install dependencies
-4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks.
+4. Run `install.packages("git2r")` to install the git2r package, ignored by renv to help deployments but necessary for the pre-commit hooks
 5. Run `shiny::runApp()` to run the dashboard locally
 
 It's also worth checking that you can run the automated tests using `shinytest2::test_app()`, so you can be confident you have everything set up correctly before you start developing.

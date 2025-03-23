@@ -67,13 +67,6 @@ if (Sys.getenv("TESTTHAT") == "true") {
   latest_date <- Sys.Date() - 1
 }
 
-week_date <- latest_date - 7
-four_week_date <- latest_date - 28
-since_4thsep_date <- "2024-09-02"
-six_month_date <- latest_date - 183
-one_year_date <- latest_date - 365
-all_time_date <- "2020-04-03"
-
 # Custom functions ============================================================
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)
 

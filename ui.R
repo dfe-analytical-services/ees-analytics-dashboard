@@ -13,15 +13,8 @@ ui <- page_navbar(
         radioButtons(
           "date_choice",
           "Choose date range",
-          c(
-            "week",
-            "four_week",
-            "since_2ndsep",
-            "six_month",
-            "one_year",
-            "all_time"
-          ),
-          selected = "all_time"
+          date_options,
+          selected = "Last four weeks"
         ),
       ),
       textOutput("latest_date"), # TODO: no longer working due to duplicate IDs
@@ -96,19 +89,10 @@ ui <- page_navbar(
           selected = NULL
         ),
         radioButtons(
-          # TODO: Hate that this is duplicating
-          # should refactor to make a single date switcher?
           "pub_date_choice",
           "Choose date range",
-          c(
-            "week",
-            "four_week",
-            "since_2ndsep",
-            "six_month",
-            "one_year",
-            "all_time"
-          ),
-          selected = "all_time"
+          date_options,
+          selected = "Last four weeks"
         ),
       ),
       textOutput("latest_date"),

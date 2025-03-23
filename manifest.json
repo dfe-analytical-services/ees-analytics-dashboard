@@ -4283,7 +4283,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "cb755caa69850470a5f9d961f99d36f1"
+      "checksum": "9dedc50ab4d6fa2843faab01eef3299d"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4292,7 +4292,7 @@
       "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "d42eb2c969c318a72a5676230736cace"
+      "checksum": "eb1272214c8a47e6de7f028dd6fbbd20"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
@@ -4301,7 +4301,7 @@
       "checksum": "6b99989509451a6a3e790bc17241462d"
     },
     "R/utils.R": {
-      "checksum": "19b16a53cb7662d979d7d20788a55e72"
+      "checksum": "9686fd76519b5697e813d2eda9f6ec2b"
     },
     "README.md": {
       "checksum": "933b821baf9f7f142cf982aed1a60c1f"
@@ -4310,7 +4310,7 @@
       "checksum": "dcf93b50b15db92e3491b5b520b4d074"
     },
     "server.R": {
-      "checksum": "da79bdc54f401029c1abc9a3b30d6565"
+      "checksum": "df3739f92d8b1500c451dca533619762"
     },
     "tests/testdata-generator.R": {
       "checksum": "1023a7f1b41c99c89acaf3bf82aa6f2e"
@@ -4334,7 +4334,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "c31b9334efc6eeae96b4324bdf053fa6"
+      "checksum": "aa2e23424e5c11de97c6d69223e27ded"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

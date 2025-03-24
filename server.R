@@ -28,16 +28,16 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date)
 
-  service_by_date <- reactive({
+  service_summary_by_date <- reactive({
     service_summary_data() |>
       filter_on_date(input$date_choice) |>
       collect()
-  }) # caching not needed here as the plots themselves are cached
+  })
 
   # Value boxes ---------------------------------------------------------------
   output$service_total_sessions_box <- renderText({
     aggregate_total(
-      data = service_by_date(),
+      data = service_summary_by_date(),
       metric = "sessions"
     )
   }) |>
@@ -45,7 +45,7 @@ server <- function(input, output, session) {
 
   output$service_total_pageviews_box <- renderText({
     aggregate_total(
-      data = service_by_date(),
+      data = service_summary_by_date(),
       metric = "screenPageViews"
     )
   }) |>
@@ -54,7 +54,7 @@ server <- function(input, output, session) {
   # Plots ---------------------------------------------------------------------
   output$service_sessions_plot <- renderGirafe({
     simple_bar_chart(
-      data = service_by_date(),
+      data = service_summary_by_date(),
       x = "date",
       y = "sessions"
     )
@@ -63,7 +63,7 @@ server <- function(input, output, session) {
 
   output$service_pageviews_plot <- renderGirafe({
     simple_bar_chart(
-      data = service_by_date(),
+      data = service_summary_by_date(),
       x = "date",
       y = "screenPageViews"
     )
@@ -119,7 +119,7 @@ server <- function(input, output, session) {
   output$publication_total_pageviews_box <- renderText({
     aggregate_total(
       data = release_pageviews_by_date(),
-      metric = "screenPageViews"
+      metric = "pageviews"
     )
   }) |>
     bindCache(last_updated_date(), input$pub_date_choice, input$pub_name_choice)
@@ -138,8 +138,45 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = release_pageviews_by_date(),
       x = "date",
-      y = "screenPageViews"
+      y = "pageviews"
     )
   }) |>
     bindCache(last_updated_date(), input$pub_date_choice, input$pub_name_choice)
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Search console ============================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  search_console_data <- reactive({
+    message("Reading search console data")
+
+    read_delta_lake("ees_search_console_queries", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_search_console <- reactive({
+    search_console_data() |>
+      filter(publication == "Service") |>
+      filter(metric == input$service_search_console_metric) |>
+      select(-c(metric, publication))
+  }) |>
+    bindCache(last_updated_date(), input$service_search_console_metric)
+
+  publication_search_console <- reactive({
+    search_console_data() |>
+      filter(publication == input$pub_name_choice) |>
+      filter(metric == input$pub_search_console_metric) |>
+      select(-c(metric, publication))
+  }) |>
+    bindCache(last_updated_date(), input$pub_search_console_metric, input$pub_name_choice)
+
+  # Table outputs -------------------------------------------------------------
+  output$service_search_console_table <- renderReactable({
+    dfe_reactable(service_search_console())
+  }) |>
+    bindCache(service_search_console())
+
+  output$publication_search_console_table <- renderReactable({
+    dfe_reactable(publication_search_console())
+  }) |>
+    bindCache(publication_search_console())
 }

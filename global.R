@@ -25,6 +25,7 @@ shhh(library(ggplot2))
 shhh(library(afcharts))
 shhh(library(scales))
 shhh(library(ggiraph))
+shhh(library(reactable))
 
 # Pre-commit hooks and CI
 # We don't need the app to load these, they're just here for renv to track so
@@ -77,7 +78,8 @@ date_options <- list(
 
 options(
   spinner.type = 7,
-  spinner.color = afcharts::af_colour_values[["dark-blue"]]
+  spinner.color = afcharts::af_colour_values[["dark-blue"]],
+  spinner.proxy.height = "30px"
 )
 
 # Custom functions ============================================================

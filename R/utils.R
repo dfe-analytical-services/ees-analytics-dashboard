@@ -20,11 +20,11 @@ filter_on_date <- function(data, selected_start_date) {
 #' @param test_mode override flag that will load test data from repo
 read_delta_lake <- function(table_name, test_mode = "") {
   if (test_mode == "true") {
-    lazy_table <- duckplyr::read_parquet_duckdb(
+    duck_table <- duckplyr::read_parquet_duckdb(
       paste0("tests/testdata/", table_name, ".parquet")
     )
   } else {
-    lazy_table <- pool |>
+    duck_table <- pool |>
       dplyr::tbl(
         DBI::Id(
           catalog = config$catalog,
@@ -32,10 +32,11 @@ read_delta_lake <- function(table_name, test_mode = "") {
           table = table_name
         )
       ) |>
-      duckplyr::as_duckdb_tibble()
+      collect() |>
+      as_duckdb_tibble()
   }
 
-  return(lazy_table)
+  return(duck_table)
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,4 +90,31 @@ simple_bar_chart <- function(data, x, y) {
   )
 
   girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
+}
+
+#' Custom table styling
+#'
+#' @param data table
+#' @param row_style
+#' @param searchable
+#' @param default_page_size
+dfe_reactable <- function(data,
+                          row_style = NULL,
+                          sortable = FALSE,
+                          default_page_size = 10) {
+  reactable::reactable(
+    data,
+
+    # DfE styling
+    highlight = TRUE,
+    borderless = TRUE,
+    showSortIcon = FALSE,
+    style = list(fontSize = "16px", display = "block"),
+    defaultColDef = colDef(headerClass = "bar-sort-header"),
+
+    # Customiseable settings
+    sortable = sortable,
+    defaultPageSize = default_page_size,
+    searchable = FALSE
+  )
 }

@@ -12,18 +12,30 @@ for (pkg in pkgs) {
 }
 
 # Custom functions ============================================================
-pull_filtered_data <- function(table_name, pool, config) {
+#' Pull in data from delta lake and write test version
+#'
+#' @param table_name name of table in delta lake
+#' @param by_date whether to filter down by date
+#' @param pool pool for database connection
+#' @param config database config file
+pull_filtered_data <- function(table_name, by_date, pool, config) {
   message("Generating ", table_name, "...")
 
-  pool |>
+  data <- pool |>
     dplyr::tbl(
       DBI::Id(
         catalog = config$catalog,
         schema = config$schema,
         table = table_name
       )
-    ) |>
-    dplyr::filter(date >= "2024-08-01" & date <= "2024-08-08") |>
+    )
+
+  if (by_date) {
+    data <- data |>
+      dplyr::filter(date >= "2024-08-01" & date <= "2024-08-08")
+  }
+
+  data |>
     dplyr::collect() |>
     duckplyr::compute_parquet(
       paste0("tests/testdata/", table_name, ".parquet")
@@ -47,8 +59,12 @@ create_last_updated <- function() {
 }
 
 # Execute =====================================================================
-datasets <- c(
+by_date_datasets <- c(
   "ees_service_summary", "ees_release_pageviews"
+)
+
+no_date_datasets <- c(
+  "ees_search_console_queries"
 )
 
 config <- config::get("db_connection")
@@ -58,7 +74,8 @@ pool <- pool::dbPool(
   httpPath = config$sql_warehouse_id
 )
 
-lapply(datasets, pull_filtered_data, pool, config)
+lapply(by_date_datasets, pull_filtered_data, TRUE, pool, config)
+lapply(no_date_datasets, pull_filtered_data, FALSE, pool, config)
 
 pool::poolClose(pool)
 

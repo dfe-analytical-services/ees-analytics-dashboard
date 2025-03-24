@@ -1,6 +1,7 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
   bg = "#000",
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,7 +101,22 @@ ui <- page_navbar(
       # Referrals =============================================================
       nav_panel(
         "Referrals",
-        "Some referrals"
+        card(
+          card_header(
+            tagList(
+              tags$p("Top Google searches in the past year"),
+              radioButtons(
+                "service_search_console_metric",
+                label = NULL,
+                inline = TRUE,
+                choiceNames = c("Clicks", "Search appearances"),
+                choiceValues = c("clicks", "impressions")
+              )
+            )
+          ),
+          reactableOutput("service_search_console_table") |>
+            withSpinner()
+        )
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,7 +166,8 @@ ui <- page_navbar(
               ),
               placement = "bottom"
             ),
-            value = textOutput("publication_total_sessions_box")
+            value = textOutput("publication_total_sessions_box") |>
+              withSpinner()
           ),
           bslib::value_box(
             title = tooltip(
@@ -161,7 +178,8 @@ ui <- page_navbar(
               "The total number of pageviews.",
               placement = "bottom"
             ),
-            value = textOutput("publication_total_pageviews_box")
+            value = textOutput("publication_total_pageviews_box") |>
+              withSpinner()
           )
         ),
         layout_columns(
@@ -198,7 +216,22 @@ ui <- page_navbar(
       ),
       nav_panel(
         "Searches and referrals",
-        "Some referrals"
+        card(
+          card_header(
+            tagList(
+              tags$p("Top Google searches in the past year"),
+              radioButtons(
+                "pub_search_console_metric",
+                label = NULL,
+                inline = TRUE,
+                choiceNames = c("Clicks", "Search appearances"),
+                choiceValues = c("clicks", "impressions")
+              )
+            )
+          ),
+          reactableOutput("publication_search_console_table") |>
+            withSpinner()
+        )
       ),
       nav_panel(
         "Tables",

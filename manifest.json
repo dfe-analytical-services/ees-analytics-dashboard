@@ -727,6 +727,33 @@
         "Built": "R 4.4.0; ; 2024-04-25 19:43:36 UTC; windows"
       }
     },
+    "cellranger": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "cellranger",
+        "Title": "Translate Spreadsheet Cell Ranges to Rows and Columns",
+        "Version": "1.1.0",
+        "Authors@R": "c(\n    person(\"Jennifer\", \"Bryan\", , \"jenny@stat.ubc.ca\", c(\"cre\", \"aut\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", \"ctb\")\n  )",
+        "Description": "Helper functions to work with spreadsheets and the \"A1:D10\" style\n    of cell range specification.",
+        "Depends": "R (>= 3.0.0)",
+        "License": "MIT + file LICENSE",
+        "LazyData": "true",
+        "URL": "https://github.com/rsheets/cellranger",
+        "BugReports": "https://github.com/rsheets/cellranger/issues",
+        "Suggests": "covr, testthat (>= 1.0.0), knitr, rmarkdown",
+        "RoxygenNote": "5.0.1.9000",
+        "VignetteBuilder": "knitr",
+        "Imports": "rematch, tibble",
+        "NeedsCompilation": "no",
+        "Packaged": "2016-07-26 06:50:00 UTC; jenny",
+        "Author": "Jennifer Bryan [cre, aut],\n  Hadley Wickham [ctb]",
+        "Maintainer": "Jennifer Bryan <jenny@stat.ubc.ca>",
+        "Repository": "CRAN",
+        "Date/Publication": "2016-07-27 03:17:48",
+        "Built": "R 4.4.1; ; 2024-06-19 11:18:12 UTC; windows"
+      }
+    },
     "checkmate": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2560,6 +2587,38 @@
         "Archs": "x64"
       }
     },
+    "minty": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "minty",
+        "Title": "Minimal Type Guesser",
+        "Version": "0.0.5",
+        "Authors@R": "c(\n    person(\"Chung-hong\", \"Chan\", role = c(\"aut\", \"cre\"), email = \"chainsawtiney@gmail.com\", comment = c(ORCID = \"0000-0002-6232-7530\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\", comment = \"author of the ported code from readr\"),\n    person(\"Jim\", \"Hester\", role = \"aut\", comment = \"author of the ported code from readr\"),\n    person(\"Romain\", \"Francois\", role = \"ctb\", comment = \"author of the ported code from readr\"),\n    person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\"), comment = \"author of the ported code from readr\"),\n    person(\"Shelby\", \"Bearrows\", role = \"ctb\", comment = \"author of the ported code from readr\"),\n    person(\"Posit Software, PBC\", role = \"cph\", comment = \"copyright holder of readr\"),\n    person(\"David\", \"Olson\", role = \"aut\", comment = \"author of src/tzfile.h\")\n    )",
+        "Description": "Port the type guesser from 'readr' (so-called 'readr' first edition parsing engine, now superseded by 'vroom').",
+        "License": "MIT + file LICENSE",
+        "URL": "https://gesistsa.github.io/minty/,\nhttps://github.com/gesistsa/minty",
+        "BugReports": "https://github.com/gesistsa/minty/issues",
+        "Depends": "R (>= 3.6)",
+        "LinkingTo": "cpp11 (>= 0.5.0), tzdb (>= 0.1.1)",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.3.2",
+        "Imports": "tzdb",
+        "Suggests": "knitr, stringi, testthat, withr, hms, readr",
+        "Config/Needs/website": "gesistsa/tsatemplate",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-01-07 13:37:09 UTC; chainsawriot",
+        "Author": "Chung-hong Chan [aut, cre] (<https://orcid.org/0000-0002-6232-7530>),\n  Hadley Wickham [aut] (author of the ported code from readr),\n  Jim Hester [aut] (author of the ported code from readr),\n  Romain Francois [ctb] (author of the ported code from readr),\n  Jennifer Bryan [aut] (author of the ported code from readr),\n  Shelby Bearrows [ctb] (author of the ported code from readr),\n  Posit Software, PBC [cph] (copyright holder of readr),\n  David Olson [aut] (author of src/tzfile.h)",
+        "Maintainer": "Chung-hong Chan <chainsawtiney@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-01-07 14:30:07 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2025-03-17 16:15:17 UTC; windows",
+        "Archs": "x64"
+      }
+    },
     "munsell": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2935,6 +2994,31 @@
         "Built": "R 4.4.0; ; 2024-04-25 19:45:23 UTC; windows"
       }
     },
+    "prettyunits": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "prettyunits",
+        "Title": "Pretty, Human Readable Formatting of Quantities",
+        "Version": "1.2.0",
+        "Authors@R": "c(\n  person(\"Gabor\", \"Csardi\", email=\"csardi.gabor@gmail.com\", role=c(\"aut\", \"cre\")),\n  person(\"Bill\", \"Denney\", email=\"wdenney@humanpredictions.com\", role=c(\"ctb\"), comment=c(ORCID=\"0000-0002-5759-428X\")),\n  person(\"Christophe\", \"Regouby\", email=\"christophe.regouby@free.fr\", role=c(\"ctb\"))\n  )",
+        "Description": "Pretty, human readable formatting of quantities.\n    Time intervals: '1337000' -> '15d 11h 23m 20s'.\n    Vague time intervals: '2674000' -> 'about a month ago'.\n    Bytes: '1337' -> '1.34 kB'.\n    Rounding: '99' with 3 significant digits -> '99.0'\n    p-values: '0.00001' -> '<0.0001'.\n    Colors: '#FF0000' -> 'red'.\n    Quantities: '1239437' -> '1.24 M'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/prettyunits",
+        "BugReports": "https://github.com/r-lib/prettyunits/issues",
+        "Depends": "R(>= 2.10)",
+        "Suggests": "codetools, covr, testthat",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-09-24 10:53:19 UTC; gaborcsardi",
+        "Author": "Gabor Csardi [aut, cre],\n  Bill Denney [ctb] (<https://orcid.org/0000-0002-5759-428X>),\n  Christophe Regouby [ctb]",
+        "Maintainer": "Gabor Csardi <csardi.gabor@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-09-24 21:10:02 UTC",
+        "Built": "R 4.4.1; ; 2024-06-19 09:46:05 UTC; windows"
+      }
+    },
     "processx": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2962,6 +3046,34 @@
         "Date/Publication": "2024-03-16 14:50:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 19:42:07 UTC; windows",
         "Archs": "x64"
+      }
+    },
+    "progress": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "progress",
+        "Title": "Terminal Progress Bars",
+        "Version": "1.2.3",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Rich\", \"FitzJohn\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Configurable Progress bars, they may include percentage,\n    elapsed time, and/or the estimated completion time. They work in\n    terminals, in 'Emacs' 'ESS', 'RStudio', 'Windows' 'Rgui' and the\n    'macOS' 'R.app'. The package also provides a 'C++' 'API', that works\n    with or without 'Rcpp'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/progress#readme,\nhttp://r-lib.github.io/progress/",
+        "BugReports": "https://github.com/r-lib/progress/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "crayon, hms, prettyunits, R6",
+        "Suggests": "Rcpp, testthat (>= 3.0.0), withr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-12-05 09:33:10 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre],\n  Rich FitzJohn [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-06 10:30:02 UTC",
+        "Built": "R 4.4.1; ; 2024-06-19 11:11:47 UTC; windows"
       }
     },
     "promises": {
@@ -3147,6 +3259,100 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "0.4.4"
+      }
+    },
+    "readODS": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "readODS",
+        "Type": "Package",
+        "Title": "Read and Write ODS Files",
+        "Version": "2.3.2",
+        "Authors@R": "\n    c(person(\"Gerrit-Jan\", \"Schutten\", role = c(\"aut\"), email = \"phonixor@gmail.com\"),\n    person(\"Chung-hong\", \"Chan\", role = c(\"aut\", \"cre\"), email = \"chainsawtiney@gmail.com\", comment = c(ORCID = \"0000-0002-6232-7530\")),\n    person(\"Peter\", \"Brohan\", role = c(\"aut\"), email = \"peter.brohan@gmail.com\"),\n    person(\"Detlef\", \"Steuer\", role = c(\"aut\"), email = \"steuer@hsu-hh.de\", comment = c(ORCID = \"0000-0003-2676-5290\")),\n    person(\"Thomas J.\", \"Leeper\", role = c(\"aut\"), email = \"thosjleeper@gmail.com\", comment = c(ORCID = \"0000-0003-4097-6326\")),\n    person(\"John\", \"Foster\", role = c(\"ctb\"), email = \"john.x.foster@nab.com.au\"),\n    person(\"Sergio\", \"Oller\", role = c(\"ctb\")),\n    person(\"Jim\", \"Hester\", role = c(\"ctb\"), email = \"jim.hester@rstudio.com\", comment = c(ORCID = \"0000-0002-2739-7082\")),\n    person(\"Stephen\", \"Watts\", role = c(\"ctb\")),\n    person(\"Arthur\", \"Katossky\", role = c(\"ctb\")),\n    person(\"Stas\", \"Malavin\", role = c(\"ctb\")),\n    person(\"Duncan\", \"Garmonsway\", role = c(\"ctb\")),\n    person(\"Mehrad\", \"Mahmoudian\", role = c(\"ctb\")),\n    person(\"Matt\", \"Kerlogue\", role = c(\"ctb\")),\n    person(\"Michal\", \"Lauer\", role = c(\"ctb\"), email = \"michal.lauer.25@gmail.com\"),\n    person(\"Till\", \"Straube\", role = c(\"ctb\"), email = \"straube@geo.uni-frankfurt.de\"),\n    person(\"Marcin\", \"Kalicinski\", role = c(\"ctb\", \"cph\"), comment = \"Author of included RapidXML code\"))",
+        "Description": "Read ODS (OpenDocument Spreadsheet) into R as data frame. Also support writing data frame into ODS file.",
+        "URL": "https://docs.ropensci.org/readODS/,\nhttps://github.com/ropensci/readODS",
+        "BugReports": "https://github.com/ropensci/readODS/issues",
+        "Imports": "cellranger, minty (>= 0.0.5), stringi, tibble, vctrs (>=\n0.4.2), zip, tools",
+        "LinkingTo": "cpp11 (>= 0.5.0)",
+        "Suggests": "spelling, testthat, datasets, covr, knitr, rmarkdown, withr,\nreadr (>= 1.2.1)",
+        "License": "GPL-3",
+        "RoxygenNote": "7.3.2",
+        "Encoding": "UTF-8",
+        "VignetteBuilder": "knitr",
+        "Depends": "R (>= 4.0)",
+        "Language": "en-GB",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-01-13 15:11:33 UTC; chainsawriot",
+        "Author": "Gerrit-Jan Schutten [aut],\n  Chung-hong Chan [aut, cre] (<https://orcid.org/0000-0002-6232-7530>),\n  Peter Brohan [aut],\n  Detlef Steuer [aut] (<https://orcid.org/0000-0003-2676-5290>),\n  Thomas J. Leeper [aut] (<https://orcid.org/0000-0003-4097-6326>),\n  John Foster [ctb],\n  Sergio Oller [ctb],\n  Jim Hester [ctb] (<https://orcid.org/0000-0002-2739-7082>),\n  Stephen Watts [ctb],\n  Arthur Katossky [ctb],\n  Stas Malavin [ctb],\n  Duncan Garmonsway [ctb],\n  Mehrad Mahmoudian [ctb],\n  Matt Kerlogue [ctb],\n  Michal Lauer [ctb],\n  Till Straube [ctb],\n  Marcin Kalicinski [ctb, cph] (Author of included RapidXML code)",
+        "Maintainer": "Chung-hong Chan <chainsawtiney@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-01-13 15:40:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2025-03-04 05:16:11 UTC; windows",
+        "Archs": "x64"
+      }
+    },
+    "readr": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "readr",
+        "Title": "Read Rectangular Text Data",
+        "Version": "2.1.5",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\"),\n    person(\"Jim\", \"Hester\", role = \"aut\"),\n    person(\"Romain\", \"Francois\", role = \"ctb\"),\n    person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-6983-2759\")),\n    person(\"Shelby\", \"Bearrows\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(\"https://github.com/mandreyel/\", role = \"cph\",\n           comment = \"mio library\"),\n    person(\"Jukka\", \"Jylänki\", role = c(\"ctb\", \"cph\"),\n           comment = \"grisu3 implementation\"),\n    person(\"Mikkel\", \"Jørgensen\", role = c(\"ctb\", \"cph\"),\n           comment = \"grisu3 implementation\")\n  )",
+        "Description": "The goal of 'readr' is to provide a fast and friendly way to\n    read rectangular data (like 'csv', 'tsv', and 'fwf').  It is designed\n    to flexibly parse many types of data found in the wild, while still\n    cleanly failing when data unexpectedly changes.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://readr.tidyverse.org, https://github.com/tidyverse/readr",
+        "BugReports": "https://github.com/tidyverse/readr/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "cli (>= 3.2.0), clipr, crayon, hms (>= 0.4.1), lifecycle (>=\n0.2.0), methods, R6, rlang, tibble, utils, vroom (>= 1.6.0)",
+        "Suggests": "covr, curl, datasets, knitr, rmarkdown, spelling, stringi,\ntestthat (>= 3.2.0), tzdb (>= 0.1.1), waldo, withr, xml2",
+        "LinkingTo": "cpp11, tzdb (>= 0.1.1)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse, tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-01-10 21:03:49 UTC; jenny",
+        "Author": "Hadley Wickham [aut],\n  Jim Hester [aut],\n  Romain Francois [ctb],\n  Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>),\n  Shelby Bearrows [ctb],\n  Posit Software, PBC [cph, fnd],\n  https://github.com/mandreyel/ [cph] (mio library),\n  Jukka Jylänki [ctb, cph] (grisu3 implementation),\n  Mikkel Jørgensen [ctb, cph] (grisu3 implementation)",
+        "Maintainer": "Jennifer Bryan <jenny@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-01-10 23:20:02 UTC",
+        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 02:25:06 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "readr",
+        "RemoteRef": "readr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "2.1.5"
+      }
+    },
+    "rematch": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "rematch",
+        "Title": "Match Regular Expressions with a Nicer 'API'",
+        "Version": "2.0.0",
+        "Author": "Gabor Csardi",
+        "Maintainer": "Gabor Csardi <csardi.gabor@gmail.com>",
+        "Description": "A small wrapper on 'regexpr' to extract the matches and\n    captured groups from the match of a regular expression to a character\n    vector.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/gaborcsardi/rematch",
+        "BugReports": "https://github.com/gaborcsardi/rematch/issues",
+        "RoxygenNote": "5.0.1.9000",
+        "Suggests": "covr, testthat",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-08-30 12:10:51 UTC; gaborcsardi",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-08-30 16:50:02 UTC",
+        "Built": "R 4.4.1; ; 2024-06-19 09:46:03 UTC; windows"
       }
     },
     "remotes": {
@@ -3488,6 +3694,40 @@
         "RemoteSha": "1.9.1"
       }
     },
+    "shinyGovstyle": {
+      "Source": "github",
+      "Repository": null,
+      "description": {
+        "Package": "shinyGovstyle",
+        "Title": "Custom Gov Style Inputs for Shiny",
+        "Version": "0.1.0.9000",
+        "Authors@R": "c(\n    person(\"Ross\", \"Wyatt\", , \"ross.wyatt@justice.gov.uk\", role = c(\"aut\", \"cre\")),\n    person(\"Cameron\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"ctb\"),\n    person(\"Sarah\", \"Wong\", role = \"ctb\"),\n    person(\"Richard\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = \"ctb\"),\n    person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"ctb\"),\n    person(\"Jeni\", \"Martin\", role = \"ctb\")\n  )",
+        "Description": "Collection of 'shiny' application styling that are the based\n    on the GOV.UK Design System.  See\n    <https://design-system.service.gov.uk/components/> for details.",
+        "License": "GPL (>= 3)",
+        "URL": "https://github.com/moj-analytical-services/shinyGovstyle",
+        "BugReports": "https://github.com/moj-analytical-services/shinyGovstyle/issues",
+        "Depends": "R (>= 3.5)",
+        "Imports": "htmltools,\njsonlite,\nmagrittr,\npurrr,\nreactable,\nreadr,\nreadODS,\nshiny (>= 0.14),\nshinyjs,\nstringr,\nwritexl",
+        "Suggests": "testthat,\nshinytest2",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "LazyData": "true",
+        "Author": "Ross Wyatt [aut, cre],\n  Cameron Race [ctb],\n  Sarah Wong [ctb],\n  Richard Bielby [ctb],\n  Charlotte Foster [ctb],\n  Jeni Martin [ctb]",
+        "Maintainer": "Ross Wyatt <ross.wyatt@justice.gov.uk>",
+        "Built": "R 4.4.2; ; 2025-03-24 23:06:14 UTC; windows",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteUsername": "dfe-analytical-services",
+        "RemoteRepo": "shinyGovstyle",
+        "RemoteRef": "master",
+        "RemoteSha": "fdfe806d5af36b8fab6ec556b37035dc62fd3bb2",
+        "GithubHost": "api.github.com",
+        "GithubRepo": "shinyGovstyle",
+        "GithubUsername": "dfe-analytical-services",
+        "GithubRef": "master",
+        "GithubSHA1": "fdfe806d5af36b8fab6ec556b37035dc62fd3bb2"
+      }
+    },
     "shinycssloaders": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3519,6 +3759,33 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "1.1.0"
+      }
+    },
+    "shinyjs": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "shinyjs",
+        "Title": "Easily Improve the User Experience of Your Shiny Apps in Seconds",
+        "Version": "2.1.0",
+        "Authors@R": "person(\"Dean\", \"Attali\", \n    email = \"daattali@gmail.com\",\n    role = c(\"aut\", \"cre\"),\n    comment= c(ORCID=\"0000-0002-5645-3493\"))",
+        "Description": "Perform common useful JavaScript operations in Shiny apps that will\n    greatly improve your apps without having to know any JavaScript. Examples\n    include: hiding an element, disabling an input, resetting an input back to\n    its original value, delaying code execution by a few seconds, and many more\n    useful functions for both the end user and the developer. 'shinyjs' can also\n    be used to easily call your own custom JavaScript functions from R.",
+        "URL": "https://deanattali.com/shinyjs/",
+        "BugReports": "https://github.com/daattali/shinyjs/issues",
+        "Depends": "R (>= 3.1.0)",
+        "Imports": "digest (>= 0.6.8), jsonlite, shiny (>= 1.0.0)",
+        "Suggests": "htmltools (>= 0.2.9), knitr (>= 1.7), rmarkdown, shinyAce,\nshinydisconnect, testthat (>= 0.9.1)",
+        "License": "MIT + file LICENSE",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.1.1",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-12-21 11:32:22 UTC; Dean-X1C",
+        "Author": "Dean Attali [aut, cre] (<https://orcid.org/0000-0002-5645-3493>)",
+        "Maintainer": "Dean Attali <daattali@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2021-12-23 10:10:02 UTC",
+        "Built": "R 4.4.0; ; 2024-04-25 21:01:34 UTC; windows"
       }
     },
     "shinytest2": {
@@ -3896,6 +4163,43 @@
         "Built": "R 4.4.1; ; 2024-12-04 11:01:44 UTC; windows"
       }
     },
+    "tzdb": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "tzdb",
+        "Title": "Time Zone Database Information",
+        "Version": "0.4.0",
+        "Authors@R": "c(\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Howard\", \"Hinnant\", role = \"cph\",\n           comment = \"Author of the included date library\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Provides an up-to-date copy of the Internet Assigned Numbers\n    Authority (IANA) Time Zone Database. It is updated periodically to\n    reflect changes made by political bodies to time zone boundaries, UTC\n    offsets, and daylight saving time rules. Additionally, this package\n    provides a C++ interface for working with the 'date' library. 'date'\n    provides comprehensive support for working with dates and date-times,\n    which this package exposes to make it easier for other R packages to\n    utilize. Headers are provided for calendar specific calculations,\n    along with a limited interface for time zone manipulations.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://tzdb.r-lib.org, https://github.com/r-lib/tzdb",
+        "BugReports": "https://github.com/r-lib/tzdb/issues",
+        "Depends": "R (>= 3.5.0)",
+        "Suggests": "covr, testthat (>= 3.0.0)",
+        "LinkingTo": "cpp11 (>= 0.4.2)",
+        "Biarch": "yes",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2023-05-12 12:40:06 UTC; davis",
+        "Author": "Davis Vaughan [aut, cre],\n  Howard Hinnant [cph] (Author of the included date library),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Davis Vaughan <davis@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-05-12 23:00:02 UTC",
+        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 00:33:10 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "tzdb",
+        "RemoteRef": "tzdb",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "0.4.0"
+      }
+    },
     "usethis": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -4043,6 +4347,47 @@
         "Built": "R 4.4.0; ; 2024-04-25 19:47:00 UTC; windows"
       }
     },
+    "vroom": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "vroom",
+        "Title": "Read and Write Rectangular Text Data Quickly",
+        "Version": "1.6.5",
+        "Authors@R": "c(\n    person(\"Jim\", \"Hester\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-2739-7082\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-6983-2759\")),\n    person(\"Shelby\", \"Bearrows\", role = \"ctb\"),\n    person(\"https://github.com/mandreyel/\", role = \"cph\",\n           comment = \"mio library\"),\n    person(\"Jukka\", \"Jylänki\", role = \"cph\",\n           comment = \"grisu3 implementation\"),\n    person(\"Mikkel\", \"Jørgensen\", role = \"cph\",\n           comment = \"grisu3 implementation\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "The goal of 'vroom' is to read and write data (like 'csv',\n    'tsv' and 'fwf') quickly. When reading it uses a quick initial\n    indexing step, then reads the values lazily , so only the data you\n    actually use needs to be read.  The writer formats the data in\n    parallel and writes to disk asynchronously from formatting.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://vroom.r-lib.org, https://github.com/tidyverse/vroom",
+        "BugReports": "https://github.com/tidyverse/vroom/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "bit64, cli (>= 3.2.0), crayon, glue, hms, lifecycle (>=\n1.0.3), methods, rlang (>= 0.4.2), stats, tibble (>= 2.0.0),\ntidyselect, tzdb (>= 0.1.1), vctrs (>= 0.2.0), withr",
+        "Suggests": "archive, bench (>= 1.1.0), covr, curl, dplyr, forcats, fs,\nggplot2, knitr, patchwork, prettyunits, purrr, rmarkdown,\nrstudioapi, scales, spelling, testthat (>= 2.1.0), tidyr,\nutils, waldo, xml2",
+        "LinkingTo": "cpp11 (>= 0.2.0), progress (>= 1.2.1), tzdb (>= 0.1.1)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "nycflights13, tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Copyright": "file COPYRIGHTS",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.3.9000",
+        "NeedsCompilation": "yes",
+        "Packaged": "2023-12-05 16:46:59 UTC; jenny",
+        "Author": "Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>),\n  Shelby Bearrows [ctb],\n  https://github.com/mandreyel/ [cph] (mio library),\n  Jukka Jylänki [cph] (grisu3 implementation),\n  Mikkel Jørgensen [cph] (grisu3 implementation),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Jennifer Bryan <jenny@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-05 23:50:02 UTC",
+        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 02:06:35 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "vroom",
+        "RemoteRef": "vroom",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.6.5"
+      }
+    },
     "waldo": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -4165,6 +4510,41 @@
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemotePkgPlatform": "i386+x86_64-w64-mingw32",
         "RemoteSha": "3.0.2"
+      }
+    },
+    "writexl": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "writexl",
+        "Type": "Package",
+        "Title": "Export Data Frames to Excel 'xlsx' Format",
+        "Version": "1.5.2",
+        "Authors@R": "c(\n    person(\"Jeroen\", \"Ooms\", ,\"jeroenooms@gmail.com\", role = c(\"aut\", \"cre\"),\n      comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"John McNamara\", role = \"cph\",\n      comment = \"Author of libxlsxwriter (see AUTHORS and COPYRIGHT files for details)\"))",
+        "Description": "Zero-dependency data frame to xlsx exporter based on 'libxlsxwriter'\n    <https://libxlsxwriter.github.io>. Fast and no Java or Excel required.",
+        "License": "BSD_2_clause + file LICENSE",
+        "Encoding": "UTF-8",
+        "URL": "https://ropensci.r-universe.dev/writexl\nhttps://docs.ropensci.org/writexl/",
+        "BugReports": "https://github.com/ropensci/writexl/issues",
+        "RoxygenNote": "7.0.2",
+        "Suggests": "spelling, readxl, nycflights13, testthat, bit64",
+        "Language": "en-US",
+        "SystemRequirements": "zlib",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-03-17 21:14:10 UTC; jeroen",
+        "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  John McNamara [cph] (Author of libxlsxwriter (see AUTHORS and COPYRIGHT\n    files for details))",
+        "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-03-17 22:10:01 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2025-03-18 04:50:36 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "writexl",
+        "RemoteRef": "writexl",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.5.2"
       }
     },
     "xfun": {
@@ -4379,7 +4759,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "98fd5da4c03e6a3acb1031770eb469aa"
+      "checksum": "3f63b20fc41e83bf17bf752c6b2398f7"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4388,13 +4768,19 @@
       "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "c2290ae11bcbbaef152e0d92b54fc414"
+      "checksum": "973957fc5f7ba5f81673462dd67f9974"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
+    "R/pages/downloads.R": {
+      "checksum": "7779d1561d9a3eb04a3868dc907646c9"
+    },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"
+    },
+    "R/pages/technical_notes.R": {
+      "checksum": "4b163d2e53943f53e61e61b91473b8fb"
     },
     "R/utils.R": {
       "checksum": "99da16eac4ca8eb8d6871a70ea185aa9"
@@ -4403,10 +4789,10 @@
       "checksum": "933b821baf9f7f142cf982aed1a60c1f"
     },
     "renv.lock": {
-      "checksum": "bbd8c48000467a1a3fac71fea65692e3"
+      "checksum": "19c29bb53f56d4c64faf0ac5fc380e14"
     },
     "server.R": {
-      "checksum": "f27a5ac459ecdf9a768eb1e493b06760"
+      "checksum": "a4dba236815b6358a153fc9b61a5e9f2"
     },
     "tests/testdata-generator.R": {
       "checksum": "59f958d57d97053a7ac9572123b2ab29"
@@ -4415,7 +4801,7 @@
       "checksum": "e63263254e66f943b850489cb722c0df"
     },
     "tests/testdata/ees_release_pageviews.parquet": {
-      "checksum": "639b22f0ab6059b9f87813a758ec5b47"
+      "checksum": "10a3f947776b18830222a989881de890"
     },
     "tests/testdata/ees_search_console_queries.parquet": {
       "checksum": "cf7a23829516b89fcbc67975b344dca3"
@@ -4424,7 +4810,7 @@
       "checksum": "a0ee780d0b6a6e32b8163ae89ce1fee2"
     },
     "tests/testdata/ees_service_summary.parquet": {
-      "checksum": "a4e3f4439bf7bfddfaea1b7ec0eb5ab0"
+      "checksum": "dc6823a7f337978f45f999972fab4b58"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
@@ -4436,7 +4822,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "1c5291f3df4ffdcb82661dc5cf5aeca5"
+      "checksum": "505d8a2dbe75838d98495bd371ac0ba1"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

@@ -283,13 +283,19 @@ ui <- page_navbar(
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Downloads",
-    "Some downloads"
+    bslib::layout_column_wrap(
+      width = 1 / 2,
+      downloads_content() # defined in R/pages/technical_notes.R
+    )
   ),
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Technical notes ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Technical notes",
-    "Some technical notes"
+    bslib::layout_column_wrap(
+      width = 1 / 2,
+      technical_notes_content() # defined in R/pages/technical_notes.R
+    )
   )
 )

@@ -4,6 +4,7 @@ shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 # Standard app styling
 shhh(library(shiny))
 shhh(library(bslib))
+shhh(library(shinyGovstyle))
 shhh(library(bsicons))
 shhh(library(shinycssloaders))
 

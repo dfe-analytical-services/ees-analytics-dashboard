@@ -34,6 +34,15 @@ server <- function(input, output, session) {
       collect()
   })
 
+  output$service_summary_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_service_summary.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_summary_data(), file)
+    }
+  )
+
   # Value boxes ---------------------------------------------------------------
   output$service_total_sessions_box <- renderText({
     aggregate_total(
@@ -46,7 +55,7 @@ server <- function(input, output, session) {
   output$service_total_pageviews_box <- renderText({
     aggregate_total(
       data = service_summary_by_date(),
-      metric = "screenPageViews"
+      metric = "pageviews"
     )
   }) |>
     bindCache(last_updated_date(), input$service_date_choice)
@@ -65,7 +74,7 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = service_summary_by_date(),
       x = "date",
-      y = "screenPageViews"
+      y = "pageviews"
     )
   }) |>
     bindCache(last_updated_date(), input$service_date_choice)
@@ -80,6 +89,15 @@ server <- function(input, output, session) {
     read_delta_lake("ees_release_pageviews", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
+
+  output$pub_summary_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_pub_summary.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(release_pageviews_data(), file)
+    }
+  )
 
   # Dropdown options =========================================================
   publication_list <- reactive({
@@ -153,6 +171,15 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date())
 
+  output$search_console_queries_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_search_console_queries.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(search_console_data(), file)
+    }
+  )
+
   service_search_console <- reactive({
     search_console_data() |>
       filter(publication == "Service") |>
@@ -174,6 +201,15 @@ server <- function(input, output, session) {
     read_delta_lake("ees_search_console_timeseries", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
+
+  output$search_console_time_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_search_console_timeseries.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(search_console_timeseries(), file)
+    }
+  )
 
   service_search_console_time <- reactive({
     search_console_timeseries() |>

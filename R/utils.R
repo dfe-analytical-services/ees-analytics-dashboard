@@ -1,56 +1,42 @@
-# Date selections -------------------------------------------------------------
-date_options <- c(
-  "Last four weeks",
-  "Since 2nd Sept",
-  "Last year",
-  "All time"
-)
-
-filter_on_date <- function(data, selected_range, latest_date) {
-  first_date <- switch(selected_range,
-    "Last four weeks" = latest_date - 28,
-    "Since 2nd Sept" = as.Date("2024-09-02"),
-    "Last year" = latest_date - 365,
-    "All time" = as.Date("2020-04-03"),
-    as.Date("2020-04-03") # Default case
-  )
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Filter table by date
+#'
+#' @param data table to filter, can be lazy or in memory
+#' @param selected_start_date date to filter data from
+filter_on_date <- function(data, selected_start_date) {
+  first_date <- date_options[[selected_start_date]]
 
   data |>
-    filter(date >= first_date & date <= latest_date)
+    filter(date >= first_date)
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Read in table from delta lake
+#' Read in table
 #'
 #' This relies on already having a pool connection set up, or using the test
 #' flag to read in local data from the repo.
 #'
 #' @param table_name name of table in delta lake / local test data
-#' @param lazy whether to return lazily loaded table or collect into memory
 #' @param test_mode override flag that will load test data from repo
-read_delta_lake <- function(table_name, lazy = FALSE, test_mode = "") {
+read_delta_lake <- function(table_name, test_mode = "") {
   if (test_mode == "true") {
-    lazy_table <- duckplyr::read_parquet_duckdb(
+    duck_table <- duckplyr::read_parquet_duckdb(
       paste0("tests/testdata/", table_name, ".parquet")
     )
-  } else if (test_mode == "") {
-    lazy_table <- pool |>
+  } else {
+    duck_table <- pool |>
       dplyr::tbl(
         DBI::Id(
           catalog = config$catalog,
           schema = config$schema,
           table = table_name
         )
-      )
-  } else {
-    warning("There was an issue with the test_mode argument:", test_mode)
+      ) |>
+      collect() |>
+      as_duckdb_tibble()
   }
 
-  if (lazy) {
-    return(lazy_table |> duckplyr::as_duckdb_tibble())
-  } else {
-    return(lazy_table |> collect())
-  }
+  return(duck_table)
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,7 +53,7 @@ aggregate_total <- function(data, metric) {
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create basic single bar chart
+#' Create basic bar chart
 #'
 #' @param data data set
 #' @param x x axis data
@@ -100,8 +86,36 @@ simple_bar_chart <- function(data, x, y) {
     options = list(
       opts_hover(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;"),
       opts_hover_inv(css = "opacity:0.3;")
-    )
+    ),
+    height_svg = 1.7
   )
 
   girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
+}
+
+#' Custom table styling
+#'
+#' @param data table
+#' @param row_style
+#' @param searchable
+#' @param default_page_size
+dfe_reactable <- function(data,
+                          row_style = NULL,
+                          sortable = FALSE,
+                          default_page_size = 10) {
+  reactable::reactable(
+    data,
+
+    # DfE styling
+    highlight = TRUE,
+    borderless = TRUE,
+    showSortIcon = FALSE,
+    style = list(fontSize = "16px", display = "block"),
+    defaultColDef = colDef(headerClass = "bar-sort-header"),
+
+    # Customiseable settings
+    sortable = sortable,
+    defaultPageSize = default_page_size,
+    searchable = FALSE
+  )
 }

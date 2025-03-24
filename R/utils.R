@@ -87,7 +87,7 @@ simple_bar_chart <- function(data, x, y) {
       opts_hover(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;"),
       opts_hover_inv(css = "opacity:0.3;")
     ),
-    height_svg = 1.8
+    height_svg = 1.7
   )
 
   girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))

@@ -121,14 +121,14 @@ ui <- page_navbar(
         "Google search",
         layout_column_wrap(
           card(
-            height = 300,
+            height = 280,
             full_screen = TRUE,
             card_header("Top 10 Google searches by clicks in the past year"),
             reactableOutput("service_search_console_q_clicks") |>
               withSpinner()
           ),
           card(
-            height = 300,
+            height = 280,
             full_screen = TRUE,
             card_header("Google clicks over time"),
             girafeOutput("service_search_console_plot_clicks") |>
@@ -137,14 +137,14 @@ ui <- page_navbar(
         ),
         layout_column_wrap(
           card(
-            height = 300,
+            height = 280,
             full_screen = TRUE,
             card_header("Top 10 Google searches by appearances the past year"),
             reactableOutput("service_search_console_q_impressions") |>
               withSpinner()
           ),
           card(
-            height = 300,
+            height = 280,
             full_screen = TRUE,
             card_header("Google search appearances over time"),
             girafeOutput("service_search_console_plot_impressions") |>
@@ -258,7 +258,7 @@ ui <- page_navbar(
           full_screen = TRUE,
           card_header(
             tagList(
-              tags$p("Top 10 Google searches leading in the past year"),
+              tags$p("Top 10 Google searches in the past year"),
               radioButtons(
                 "pub_search_console_metric",
                 label = NULL,

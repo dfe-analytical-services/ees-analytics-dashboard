@@ -14,13 +14,13 @@ ui <- page_navbar(
       textOutput("service_latest_date") |>
         withSpinner(),
       selectInput(
-        "date_choice",
+        "service_date_choice",
         "Choose date range",
         names(date_options),
         selected = "All time"
       ),
       selectInput(
-        "metric_choice",
+        "service_metric_choice",
         "Choose metric",
         choices = c("Sessions", "Pageviews"),
         selected = "Sessions"
@@ -101,24 +101,38 @@ ui <- page_navbar(
       # Referrals =============================================================
       nav_panel(
         "Referrals",
-        card(
-          card_header(
-            tagList(
-              tags$p("Top Google searches in the past year"),
-              radioButtons(
-                "service_search_console_metric",
-                label = NULL,
-                inline = TRUE,
-                choiceNames = c("Clicks", "Search appearances"),
-                choiceValues = c("clicks", "impressions")
-              )
-            )
-          ),
-          reactableOutput("service_search_console_table") |>
-            withSpinner()
-        )
+        "Some referral stuff"
       ),
 
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Google search =========================================================
+      nav_panel(
+        "Google search",
+        layout_column_wrap(
+          card(
+            card_header("Top Google searches by clicks in the past year"),
+            reactableOutput("service_search_console_q_clicks") |>
+              withSpinner()
+          ),
+          card(
+            card_header("Google clicks over time"),
+            girafeOutput("service_search_console_plot_clicks") |>
+              withSpinner()
+          )
+        ),
+        layout_column_wrap(
+          card(
+            card_header("Top Google searches by appearances the past year"),
+            reactableOutput("service_search_console_q_impressions") |>
+              withSpinner()
+          ),
+          card(
+            card_header("Google appearances over time"),
+            girafeOutput("service_search_console_plot_impressions") |>
+              withSpinner()
+          )
+        )
+      ),
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Page types ============================================================
       nav_panel(

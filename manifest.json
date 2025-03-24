@@ -4379,7 +4379,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "d966a9a17cbdac7e660ed756940ee52f"
+      "checksum": "15e9a648e40266f6fdc5fdf512fc68f6"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4406,10 +4406,10 @@
       "checksum": "bbd8c48000467a1a3fac71fea65692e3"
     },
     "server.R": {
-      "checksum": "e0d6b13e6b6781c063737579ca5f897a"
+      "checksum": "d6bb69bf49fcba97307de28922cef587"
     },
     "tests/testdata-generator.R": {
-      "checksum": "9ec774e11a13deb5908e47b864e1b44d"
+      "checksum": "59f958d57d97053a7ac9572123b2ab29"
     },
     "tests/testdata/ees__last_updated.parquet": {
       "checksum": "e63263254e66f943b850489cb722c0df"
@@ -4419,6 +4419,9 @@
     },
     "tests/testdata/ees_search_console_queries.parquet": {
       "checksum": "cf7a23829516b89fcbc67975b344dca3"
+    },
+    "tests/testdata/ees_search_console_timeseries.parquet": {
+      "checksum": "a0ee780d0b6a6e32b8163ae89ce1fee2"
     },
     "tests/testdata/ees_service_summary.parquet": {
       "checksum": "a4e3f4439bf7bfddfaea1b7ec0eb5ab0"
@@ -4433,7 +4436,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "dce634aae7efe59dec06ff491b11c83f"
+      "checksum": "401f5180d7a5097abf7ceb0d86418910"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

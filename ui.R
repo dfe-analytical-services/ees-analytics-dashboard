@@ -6,7 +6,12 @@ ui <- page_navbar(
   bg = "#000", # main navbar background colour
   theme = bs_theme() |>
     # Custom CSS to add whitespace below tabs
-    bs_add_rules(".nav-underline { margin-bottom: 20px; }"),
+    bs_add_rules(
+      ".nav-underline { margin-bottom: 20px; };
+      .navbar-nav { margin-bottom: 0}"
+      # This second line stops the first line
+      # applying to the main navbar in the header
+    ),
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,7 +123,7 @@ ui <- page_navbar(
           card(
             height = 300,
             full_screen = TRUE,
-            card_header("Top Google searches by clicks in the past year"),
+            card_header("Top 10 Google searches by clicks in the past year"),
             reactableOutput("service_search_console_q_clicks") |>
               withSpinner()
           ),
@@ -134,14 +139,14 @@ ui <- page_navbar(
           card(
             height = 300,
             full_screen = TRUE,
-            card_header("Top Google searches by appearances the past year"),
+            card_header("Top 10 Google searches by appearances the past year"),
             reactableOutput("service_search_console_q_impressions") |>
               withSpinner()
           ),
           card(
             height = 300,
             full_screen = TRUE,
-            card_header("Google appearances over time"),
+            card_header("Google search appearances over time"),
             girafeOutput("service_search_console_plot_impressions") |>
               withSpinner()
           )
@@ -253,7 +258,7 @@ ui <- page_navbar(
           full_screen = TRUE,
           card_header(
             tagList(
-              tags$p("Top Google searches in the past year"),
+              tags$p("Top 10 Google searches leading in the past year"),
               radioButtons(
                 "pub_search_console_metric",
                 label = NULL,

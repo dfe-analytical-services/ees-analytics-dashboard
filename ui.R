@@ -25,7 +25,7 @@ ui <- page_navbar(
     navset_underline(
       nav_panel(
         "Overview",
-        layout_columns(
+        layout_column_wrap(
           bslib::value_box(
             title = tooltip(
               span(
@@ -56,7 +56,7 @@ ui <- page_navbar(
               withSpinner()
           )
         ),
-        layout_columns(
+        layout_column_wrap(
           card(
             height = 300,
             full_screen = TRUE,
@@ -155,7 +155,7 @@ ui <- page_navbar(
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   nav_panel(
     title = "Publication analytics",
-    layout_columns(
+    layout_column_wrap(
       fill = FALSE,
       textOutput("pub_latest_date"),
       selectInput(
@@ -174,7 +174,7 @@ ui <- page_navbar(
     navset_underline(
       nav_panel(
         "Overview",
-        layout_columns(
+        layout_column_wrap(
           bslib::value_box(
             title = tooltip(
               span(
@@ -205,7 +205,7 @@ ui <- page_navbar(
               withSpinner()
           )
         ),
-        layout_columns(
+        layout_column_wrap(
           card(
             height = 300,
             full_screen = TRUE,

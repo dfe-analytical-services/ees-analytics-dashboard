@@ -213,7 +213,7 @@ server <- function(input, output, session) {
       y = "clicks"
     )
   }) |>
-    bindCache(service_search_console_timeseries())
+    bindCache(service_search_console_time())
 
   output$service_search_console_plot_impressions <- renderGirafe({
     simple_bar_chart(
@@ -222,5 +222,5 @@ server <- function(input, output, session) {
       y = "impressions"
     )
   }) |>
-    bindCache(service_search_console_timeseries())
+    bindCache(service_search_console_time())
 }

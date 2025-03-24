@@ -18,12 +18,6 @@ ui <- page_navbar(
         "Choose date range",
         names(date_options),
         selected = "All time"
-      ),
-      selectInput(
-        "service_metric_choice",
-        "Choose metric",
-        choices = c("Sessions", "Pageviews"),
-        selected = "Sessions"
       )
     ),
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +58,8 @@ ui <- page_navbar(
         ),
         layout_columns(
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header(
               "Sessions",
               tooltip(
@@ -76,10 +72,15 @@ ui <- page_navbar(
                 )
               )
             ),
-            girafeOutput("service_sessions_plot") |>
-              withSpinner()
+            card_body(
+              min_height = 200,
+              girafeOutput("service_sessions_plot") |>
+                withSpinner()
+            )
           ),
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header(
               "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
             ),
@@ -110,11 +111,15 @@ ui <- page_navbar(
         "Google search",
         layout_column_wrap(
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header("Top Google searches by clicks in the past year"),
             reactableOutput("service_search_console_q_clicks") |>
               withSpinner()
           ),
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header("Google clicks over time"),
             girafeOutput("service_search_console_plot_clicks") |>
               withSpinner()
@@ -122,11 +127,15 @@ ui <- page_navbar(
         ),
         layout_column_wrap(
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header("Top Google searches by appearances the past year"),
             reactableOutput("service_search_console_q_impressions") |>
               withSpinner()
           ),
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header("Google appearances over time"),
             girafeOutput("service_search_console_plot_impressions") |>
               withSpinner()
@@ -198,6 +207,8 @@ ui <- page_navbar(
         ),
         layout_columns(
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header(
               "Sessions",
               tooltip(
@@ -214,6 +225,8 @@ ui <- page_navbar(
               withSpinner()
           ),
           card(
+            height = 300,
+            full_screen = TRUE,
             card_header(
               "Page views",
               tooltip(bs_icon("info-circle"), "The total number of pageviews.")
@@ -231,6 +244,8 @@ ui <- page_navbar(
       nav_panel(
         "Searches and referrals",
         card(
+          height = 530,
+          full_screen = TRUE,
           card_header(
             tagList(
               tags$p("Top Google searches in the past year"),

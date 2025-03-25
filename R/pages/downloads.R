@@ -31,6 +31,12 @@ downloads_content <- function() {
     ),
     tags$p("Accordion clicks on publication and methodology pages."),
     shinyGovstyle::download_link(
+      "pub_search_events_download",
+      "Publication search events",
+      file_size = "< 20 MB" # TODO: Generate automatically
+    ),
+    tags$p("Searches made on publication and methodology pages."),
+    shinyGovstyle::download_link(
       "readtime_download",
       "Reading time",
       file_size = "< 1 MB" # TODO: Generate automatically

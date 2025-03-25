@@ -14,6 +14,13 @@ technical_notes_content <- function() {
       " time will be starting a new session. All session starts events are recorded, as this is done before",
       " any interaction with cookies is possible."
     ),
+    tags$h2("Google searches (Google Search Console"),
+    tags$p(
+      "We show the top Google searches by clicks and appearances for the service and for each publication, at
+      publication level these are the searches that the URL is currently appearing for, and gives a sense of the
+      existing traffic. It's important to note that it does not capture the users who might be searching for our
+      statistics and not finding them as we're not appearing highly enough in the results."
+    ),
     tags$h2("Accordion clicks"),
     tags$p(
       "We track each time a user clicks to open or close an accordion. Be aware that as we only track the",

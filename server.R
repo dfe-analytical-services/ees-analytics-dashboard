@@ -377,4 +377,57 @@ server <- function(input, output, session) {
     )
   }) |>
     bindCache(search_console_time_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Publication search events =================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_search_events_full <- reactive({
+    message("Reading publication search events")
+
+    read_delta_lake("ees_publication_search_events", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_search_events_by_date <- reactive({
+    pub_search_events_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_search_events_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_search_events_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_pub_search_events.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_search_events_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  output$pub_searches_table <- renderReactable({
+    pub_search_events_by_date() |>
+      filter(page_type == "Release page") |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      select(-publication) |>
+      rename("Search term" = eventLabel) |>
+      arrange(desc(Count)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_search_events_by_date())
+
+  output$pub_searches_meth_table <- renderReactable({
+    pub_search_events_by_date() |>
+      filter(page_type == "Methodology pages") |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      select(-publication) |>
+      rename("Search term" = eventLabel) |>
+      arrange(desc(Count)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_search_events_by_date())
 }

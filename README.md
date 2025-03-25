@@ -60,6 +60,7 @@ Quick shorthands:
 
 - `pub` = publication
 - `gsc` = Google Search Console
+- `meth` = methodology
 
 Most of the app will have objects that start with `service_` or `pub_`, these refer to the page that the objects appear on based on the top navbar.
 

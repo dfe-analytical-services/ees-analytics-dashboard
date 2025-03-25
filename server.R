@@ -114,31 +114,89 @@ server <- function(input, output, session) {
   )
 
   # Table outputs -------------------------------------------------------------
+
   output$service_device_table <- renderReactable({
     service_device_by_date() |>
+      mutate(device = case_when(
+        device %in% c("mobile", "desktop", "tablet") ~ device,
+        TRUE ~ "Other"
+      )) |>
       group_by(page_type, device) |>
       summarise(
-        "Sessions" = sum(sessions),
-        "Pageviews" = sum(pageviews),
-        .groups = "keep"
+        Sessions = sum(sessions),
+        .groups = "drop"
       ) |>
-      ungroup() |>
+      pivot_wider(names_from = device, values_from = Sessions, values_fill = list(Sessions = 0)) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
 
+
   output$service_browser_table <- renderReactable({
     service_device_by_date() |>
+      mutate(browser = case_when(
+        browser %in% c("Chrome", "Edge", "Safari") ~ browser,
+        TRUE ~ "Other"
+      )) |>
       group_by(page_type, browser) |>
       summarise(
-        "Sessions" = sum(sessions),
-        "Pageviews" = sum(pageviews),
-        .groups = "keep"
+        Sessions = sum(sessions),
+        .groups = "drop"
       ) |>
-      ungroup() |>
+      pivot_wider(names_from = browser, values_from = Sessions, values_fill = list(Sessions = 0)) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$service_device_plot <- renderGirafe({
+    data_for_chart <- service_device_by_date() |>
+      mutate(device = case_when(
+        device %in% c("mobile", "desktop", "tablet") ~ device,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    stacked_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Sessions",
+      fill = "device",
+      height = 4
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
+  output$service_browser_plot <- renderGirafe({
+    data_for_chart <- service_device_by_date() |>
+      mutate(browser = case_when(
+        browser %in% c("Chrome", "Edge", "Safari") ~ browser,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, browser) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    stacked_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Sessions",
+      fill = "browser",
+      height = 4
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
+
 
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

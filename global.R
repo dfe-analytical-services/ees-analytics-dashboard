@@ -28,6 +28,7 @@ shhh(library(afcharts))
 shhh(library(scales))
 shhh(library(ggiraph))
 shhh(library(reactable))
+shhh(library(tidyr))
 
 # Pre-commit hooks and CI
 # We don't need the app to load these, they're just here for renv to track so

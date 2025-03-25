@@ -131,40 +131,44 @@ ui <- page_navbar(
       # Devices ===============================================================
       nav_panel(
         "Devices",
-
-        # card(
-        #   height = 600,
-        #   full_screen = TRUE,
-        #   card_header(
-        #     tagList(
-        #       tags$p("Title"),
-        #       radioButtons(
-        #         "service_device_metric",
-        #         label = NULL,
-        #         inline = TRUE,
-        #         choiceNames = c("Pageviews", "Sessions"),
-        #         choiceValues = c("pageviews", "sessions")
-        #       )
-        #     )
-        #   ),
-        #   reactableOutput("service_device_table") |>
-        #     withSpinner()
-        # ),
-        #
-        card(
-          height = 280,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("service_device_table") |>
-            withSpinner()
-        ),
-        card(
-          height = 280,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("service_browser_table") |>
-            withSpinner()
+        layout_column_wrap(
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            reactableOutput("service_device_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            girafeOutput("service_device_plot") |>
+              withSpinner()
+          )
         )
+      ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Browser ===============================================================
+      nav_panel(
+        "Browser",
+        layout_column_wrap(
+          card(
+            height = 280,
+            full_screen = TRUE,
+            card_header("Sessons by browser"),
+            reactableOutput("service_browser_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by browser"),
+            girafeOutput("service_browser_plot") |>
+              withSpinner()
+          )
+        ),
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

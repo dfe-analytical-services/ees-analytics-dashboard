@@ -4831,7 +4831,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "2dc06d03763bf61e1c012bb9ad976c17"
+      "checksum": "a3af5fdf0e23e12fa86b32e9a38cc868"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4846,7 +4846,7 @@
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
     "R/pages/downloads.R": {
-      "checksum": "f7455fc7d7d176e92c39c865b4273cc5"
+      "checksum": "44c195234d9e2e2597dd100d2640d810"
     },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"
@@ -4864,7 +4864,7 @@
       "checksum": "0b51971cb0dd115fc366dc3b89dfb50a"
     },
     "server.R": {
-      "checksum": "d5e102f3609f8ac1bdccb501b7cd3523"
+      "checksum": "f21e1256c5839782ce814abc3bc53cab"
     },
     "tests/testdata-generator.R": {
       "checksum": "5ca931bc65a4ac079774a10096a0d1d1"
@@ -4906,10 +4906,16 @@
       "checksum": "a22ecf4fc421d4f27d481e2d0779467d"
     },
     "tests/testthat/test-basic_load.R": {
-      "checksum": "e53c17e0b43813a3929365ffa3677b83"
+      "checksum": "516a3246b11aaabd30592e274f03939f"
+    },
+    "tests/testthat/test-downloads.R": {
+      "checksum": "8983a9deb3883d3c51ac35aee8257e82"
+    },
+    "tests/testthat/test-navigate_select_no_errors.R": {
+      "checksum": "786b54029a8fa4f84809dc082beafe3e"
     },
     "ui.R": {
-      "checksum": "89a9549b41ddd0db80e51570f84a5288"
+      "checksum": "8e0c850148f223cc63a44737c22e4c10"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

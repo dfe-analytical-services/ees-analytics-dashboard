@@ -1,5 +1,6 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
+  id = "pages",
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Custom styling ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,6 +34,7 @@ ui <- page_navbar(
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ## Overview ---------------------------------------------------------------
     navset_underline(
+      id = "service_tabs",
       nav_panel(
         "Overview",
         layout_column_wrap(
@@ -188,6 +190,7 @@ ui <- page_navbar(
       ),
     ),
     navset_underline(
+      id = "pub_tabs",
       nav_panel(
         "Overview",
         layout_column_wrap(

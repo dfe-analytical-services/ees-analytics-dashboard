@@ -12,7 +12,7 @@ downloads_content <- function() {
     ),
     tags$p("Sessions, pageviews and rolling 7 day averages by date."),
     shinyGovstyle::download_link(
-      "search_console_time_download",
+      "gsc_time_download",
       "Search console time series",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),
@@ -43,7 +43,7 @@ downloads_content <- function() {
     ),
     tags$p("Average reading time for current latest publication pages."),
     shinyGovstyle::download_link(
-      "search_console_queries_download",
+      "gsc_queries_download",
       "Google Search queries",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),

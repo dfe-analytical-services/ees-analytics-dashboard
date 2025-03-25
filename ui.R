@@ -107,11 +107,38 @@ ui <- page_navbar(
       # Devices ===============================================================
       nav_panel(
         "Devices",
+
+        # card(
+        #   height = 600,
+        #   full_screen = TRUE,
+        #   card_header(
+        #     tagList(
+        #       tags$p("Title"),
+        #       radioButtons(
+        #         "service_device_metric",
+        #         label = NULL,
+        #         inline = TRUE,
+        #         choiceNames = c("Pageviews", "Sessions"),
+        #         choiceValues = c("pageviews", "sessions")
+        #       )
+        #     )
+        #   ),
+        #   reactableOutput("service_device_table") |>
+        #     withSpinner()
+        # ),
+        #
         card(
           height = 280,
           full_screen = TRUE,
           card_header("Title"),
           reactableOutput("service_device_table") |>
+            withSpinner()
+        ),
+        card(
+          height = 280,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("service_browser_table") |>
             withSpinner()
         )
       ),
@@ -164,7 +191,14 @@ ui <- page_navbar(
       # Page types ============================================================
       nav_panel(
         "Page types",
-        "Some breakdowns by page type"
+        "Some breakdowns by page type",
+        card(
+          height = 280,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("service_time_on_page") |>
+            withSpinner()
+        )
       )
     ) # of of underline tabset
   ), # end of nav page

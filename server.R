@@ -109,9 +109,76 @@ server <- function(input, output, session) {
   # Table outputs -------------------------------------------------------------
   output$service_device_table <- renderReactable({
     service_device_by_date() |>
+      group_by(page_type, device) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
+
+  output$service_browser_table <- renderReactable({
+    service_device_by_date() |>
+      group_by(page_type, browser) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_device_by_date())
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Page types ================================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_time_on_page_full <- reactive({
+    message("Reading service time on page")
+
+    read_delta_lake("ees_service_time_on_page", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_time_on_page_by_date <- reactive({
+    service_time_on_page_full() |>
+      filter_on_date(input$service_date_choice) |>
+      collect()
+  }) |>
+    bindCache(service_time_on_page_full(), input$service_date_choice)
+
+  output$service_time_on_page_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_ees_service_time_on_page.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_time_on_page_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  output$service_time_on_page <- renderReactable({
+    service_time_on_page_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        "EngagementDuration" = sum(engagementDuration),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      mutate("avgTimeOnPage" = EngagementDuration / Pageviews) |>
+      select(page_type, Sessions, Pageviews, avgTimeOnPage) |>
+      arrange(desc(avgTimeOnPage)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_time_on_page_by_date())
+
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================

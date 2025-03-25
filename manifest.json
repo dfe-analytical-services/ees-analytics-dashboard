@@ -4831,7 +4831,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "a3af5fdf0e23e12fa86b32e9a38cc868"
+      "checksum": "98949f42393afd859a2bb6dccd9237b3"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4846,28 +4846,28 @@
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
     "R/pages/downloads.R": {
-      "checksum": "44c195234d9e2e2597dd100d2640d810"
+      "checksum": "16aaa5de89d31455e4cc976f4b331e27"
     },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"
     },
     "R/pages/technical_notes.R": {
-      "checksum": "9520b5e6b7a2223c684839b1ac4f38c5"
+      "checksum": "7803507dc49722bb202d7284b7153aed"
     },
     "R/utils.R": {
-      "checksum": "6729b847111058523136ee97bb1f84ab"
+      "checksum": "fb66c06d6f2f88644f8317cc186e9cd4"
     },
     "README.md": {
-      "checksum": "3552c67a83e3ccc463daabd9bfded382"
+      "checksum": "1f2309262b853fbdfb888eeec78f31d1"
     },
     "renv.lock": {
       "checksum": "0b51971cb0dd115fc366dc3b89dfb50a"
     },
     "server.R": {
-      "checksum": "f21e1256c5839782ce814abc3bc53cab"
+      "checksum": "70ac883159758037714288c0ba3f7990"
     },
     "tests/testdata-generator.R": {
-      "checksum": "5ca931bc65a4ac079774a10096a0d1d1"
+      "checksum": "6001a81a495b085ae32e950e1e9e3e24"
     },
     "tests/testdata/ees__last_updated.parquet": {
       "checksum": "e63263254e66f943b850489cb722c0df"
@@ -4880,6 +4880,9 @@
     },
     "tests/testdata/ees_publication_search_events.parquet": {
       "checksum": "107d63a18fbf526f1c711530a22b824b"
+    },
+    "tests/testdata/ees_publication_source_medium.parquet": {
+      "checksum": "0e3447a005d438efbd9317db74dc91d6"
     },
     "tests/testdata/ees_publication_summary.parquet": {
       "checksum": "10a3f947776b18830222a989881de890"
@@ -4909,13 +4912,13 @@
       "checksum": "516a3246b11aaabd30592e274f03939f"
     },
     "tests/testthat/test-downloads.R": {
-      "checksum": "8983a9deb3883d3c51ac35aee8257e82"
+      "checksum": "9d0beecfc241a72e359eb31053f51b3d"
     },
     "tests/testthat/test-navigate_select_no_errors.R": {
       "checksum": "786b54029a8fa4f84809dc082beafe3e"
     },
     "ui.R": {
-      "checksum": "8e0c850148f223cc63a44737c22e4c10"
+      "checksum": "402a735e100faa2478d4b4e5ff065a6a"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

@@ -47,6 +47,14 @@ downloads_content <- function() {
       "Google Search queries",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),
-    tags$p("Top queries leading to the service and publication pages by clicks and impressions over the past year.")
+    tags$p("Top queries leading to the service and publication pages by clicks and impressions over the past year."),
+    shinyGovstyle::download_link(
+      "pub_source_download",
+      "Source and medium",
+      file_size = "< 60 MB" # TODO: Generate automatically
+    ),
+    tags$p("Traffic source and medium information for publication pages."),
+    tags$br(),
+    tags$br()
   )
 }

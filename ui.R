@@ -238,11 +238,10 @@ ui <- page_navbar(
       # Page types ============================================================
       nav_panel(
         "Page types",
-        "Some breakdowns by page type",
         card(
-          height = 280,
+          height = 600,
           full_screen = TRUE,
-          card_header("Title"),
+          card_header("Interactions by page type"),
           reactableOutput("service_time_on_page") |>
             withSpinner()
         )

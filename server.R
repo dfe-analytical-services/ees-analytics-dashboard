@@ -244,16 +244,25 @@ server <- function(input, output, session) {
     service_time_on_page_by_date() |>
       group_by(page_type) |>
       summarise(
-        "Sessions" = sum(sessions),
-        "Pageviews" = sum(pageviews),
-        "EngagementDuration" = sum(engagementDuration),
+        "Sessions" = sum(sessions, na.rm = TRUE),
+        "Pageviews" = sum(pageviews, na.rm = TRUE),
+        "EngagementDuration" = sum(engagementDuration, na.rm = TRUE),
+        "session_starts" = sum(total_session_starts, na.rm = TRUE),
         .groups = "keep"
       ) |>
       ungroup() |>
       mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
-      select(page_type, Pageviews, avgTimeOnPage) |>
-      arrange(desc(avgTimeOnPage)) |>
-      dfe_reactable()
+      select(page_type, Pageviews, avgTimeOnPage, session_starts) |>
+      arrange(desc(Pageviews)) |>
+      mutate(
+        "Pageviews" = dfeR::comma_sep(Pageviews),
+        "session_starts" = dfeR::comma_sep(session_starts)
+      ) |>
+      rename(
+        "Average engagement time (seconds)" = avgTimeOnPage,
+        "Session start events" = session_starts
+      ) |>
+      dfe_reactable(default_page_size = 15)
   }) |>
     bindCache(service_time_on_page_by_date())
 

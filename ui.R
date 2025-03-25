@@ -66,6 +66,30 @@ ui <- page_navbar(
             ),
             value = textOutput("service_pageviews_box") |>
               withSpinner()
+          ),
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Average session duration",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The average session duration (total engagment time / total sessions).",
+              placement = "bottom"
+            ),
+            value = textOutput("service_avg_session_duration_box") |>
+              withSpinner()
+          ),
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Average page views per session",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The average page views per session. Total pageviews / total sessions.",
+              placement = "bottom"
+            ),
+            value = textOutput("service_pageviews_per_session_box") |>
+              withSpinner()
           )
         ),
         layout_column_wrap(

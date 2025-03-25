@@ -30,8 +30,7 @@ server <- function(input, output, session) {
 
   service_summary_by_date <- reactive({
     service_summary_full() |>
-      filter_on_date(input$service_date_choice) |>
-      collect()
+      filter_on_date(input$service_date_choice)
   }) |>
     bindCache(last_updated_date(), input$service_date_choice)
 
@@ -62,6 +61,20 @@ server <- function(input, output, session) {
     bindCache(service_summary_by_date())
 
   # Plots ---------------------------------------------------------------------
+  output$service_rolling_plot <- renderGirafe({
+    data <- service_summary_by_date() |>
+      select(date, pageviews_avg7, sessions_avg7) |>
+      filter(!is.na(pageviews_avg7))
+
+    simple_line_chart(
+      data = data,
+      x = "date",
+      lines = c("pageviews_avg7", "sessions_avg7"),
+      labels = c("Pageviews", "Sessions")
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
   output$service_sessions_plot <- renderGirafe({
     simple_bar_chart(
       data = service_summary_by_date(),

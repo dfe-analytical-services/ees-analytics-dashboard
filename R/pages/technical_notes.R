@@ -11,8 +11,18 @@ technical_notes_content <- function() {
     tags$p(
       "A session is defined as a unique user visit to the website. A session is considered to",
       " have ended when there is a 30 minute gap between page views. Meaning that a user returning after that",
-      " time will be starting a new session. All session starts events are recorded, as this is done before",
-      " any interaction with cookies is possible."
+      " time will be starting a new session."
+    ),
+    tags$h2("Pageviews"),
+    tags$p(
+      "A pageview is counted each time a page is loaded or reloaded in the browser. This includes",
+      " repeated views of the same page by the same user."
+    ),
+    tags$h2("7 day rolling averages"),
+    tags$p(
+      "We calculate a 7 day rolling average for sessions and pageviews to smooth out the data and make it easier",
+      " to see trends over time. This is calculated by taking the average of the current day plus the previous 6",
+      " days current day."
     ),
     tags$h2("Source and medium"),
     tags$p(

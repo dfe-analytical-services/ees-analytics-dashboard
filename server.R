@@ -173,7 +173,7 @@ server <- function(input, output, session) {
       ) |>
       ungroup() |>
       mutate("avgTimeOnPage" = EngagementDuration / Pageviews) |>
-      select(page_type, Sessions, Pageviews, avgTimeOnPage) |>
+      select(page_type, Pageviews, avgTimeOnPage) |>
       arrange(desc(avgTimeOnPage)) |>
       dfe_reactable()
   }) |>
@@ -317,6 +317,52 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Content interactions ======================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  content_interactions_full <- reactive({
+    message("Reading publication accordions")
+
+    read_delta_lake("ees_publication_time_on_page", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  content_interactions_by_date <- reactive({
+    content_interactions_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(content_interactions_full(), input$pub_date_choice, input$pub_name_choice)
+
+  # Download ------------------------------------------------------------------
+  output$content_interactions_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_content_interactions.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(content_interactions_full(), file)
+    }
+  )
+
+  # Table ---------------------------------------------------------------------
+  output$pub_content_interactions_table <- renderReactable({
+    content_interactions_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        "EngagementDuration" = sum(engagementDuration),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      mutate("avgTimeOnPage" = EngagementDuration / Pageviews) |>
+      select(page_type, Pageviews, avgTimeOnPage) |>
+      arrange(desc(avgTimeOnPage)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(content_interactions_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================

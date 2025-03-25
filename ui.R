@@ -303,6 +303,15 @@ ui <- page_navbar(
           )
         )
       ),
+      card(
+        height = 530,
+        full_screen = TRUE,
+        card_header("Title"),
+        reactableOutput("pub_content_interactions_table") |>
+          withSpinner()
+      ),
+
+
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Accordions ============================================================

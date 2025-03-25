@@ -4546,7 +4546,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "7b7a3c8b1ce0236bb19449c876b6879e"
+      "checksum": "3efb79daf2b8f76bed2cc08f6370fe21"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4579,7 +4579,7 @@
       "checksum": "0b51971cb0dd115fc366dc3b89dfb50a"
     },
     "server.R": {
-      "checksum": "36ca0d969c0319c5dc118c2003ce02c7"
+      "checksum": "6bfa69c2db0e7d6d3984fc7b68be0f82"
     },
     "tests/testdata-generator.R": {
       "checksum": "5ca931bc65a4ac079774a10096a0d1d1"
@@ -4630,7 +4630,7 @@
       "checksum": "786b54029a8fa4f84809dc082beafe3e"
     },
     "ui.R": {
-      "checksum": "b426a41e3f4a849c5d52da9abcbc73f3"
+      "checksum": "80d5f9cf2ea0add2efc9de7816a2865a"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

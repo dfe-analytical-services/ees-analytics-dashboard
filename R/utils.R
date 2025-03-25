@@ -248,3 +248,89 @@ pretty_time <- function(seconds) {
     }
   }
 }
+
+#' Simple line chart
+#'
+#' Helper function to make a simple line chart that's vaguely aesthetic
+#'
+#' @param data Data frame containing the data to plot
+#' @param x Column name for the x-axis
+#' @param lines Vector of column names for the metrics to plot as lines
+simple_line_chart <- function(data, x, lines, labels = NULL) {
+  missing_columns <- setdiff(lines, colnames(data))
+  if (length(missing_columns) > 0) {
+    stop(
+      paste(
+        "The following columns are missing from the data:",
+        paste(missing_columns, collapse = ", ")
+      )
+    )
+  }
+
+  if (!is.null(labels) && length(labels) != length(lines)) {
+    stop("The length of the labels vector must match the length of the lines vector.")
+  }
+
+  data_long <- data |>
+    tidyr::pivot_longer(
+      cols = all_of(lines),
+      names_to = "metric",
+      values_to = "value"
+    )
+
+  if (!is.null(labels)) {
+    label_map <- setNames(labels, lines)
+    data_long$metric <- factor(data_long$metric, levels = lines, labels = labels)
+  }
+
+  p <- ggplot(data_long, aes(x = !!sym(x), y = value, colour = metric, group = metric)) +
+    geom_point_interactive(
+      aes(
+        tooltip = paste0(metric, ": ", value, "\n", x, ": ", !!sym(x)),
+        data_id = seq_along(value)
+      ),
+      size = 0.1,
+      hover_nearest = TRUE
+    ) +
+    geom_line(linewidth = 0.6) +
+    theme_af() +
+    scale_colour_discrete_af(palette = "main2") +
+    labs(
+      x = NULL,
+      y = NULL
+    ) +
+    theme(
+      legend.position = "none",
+      panel.grid = element_blank(),
+      plot.margin = margin(5, 100, 5, 5) # Add extra whitespace to the right
+    )
+
+  if (!is.null(labels)) {
+    label_positions <- data_long |>
+      group_by(metric) |>
+      filter(!!sym(x) == max(!!sym(x))) |>
+      ungroup()
+
+    p <- p +
+      geom_text(
+        data = label_positions,
+        aes(label = metric),
+        hjust = -0.1, # Move labels to the right of the lines
+        vjust = 0.5, # Align labels at the same height as the line ends
+        size = 4,
+        color = "black",
+        show.legend = FALSE
+      ) +
+      coord_cartesian(clip = "off") # Ensure labels are not clipped
+  }
+
+  g <- girafe(
+    ggobj = p,
+    options = list(
+      opts_hover = list(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;")
+    ),
+    height_svg = 1.7
+  )
+
+  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
+}

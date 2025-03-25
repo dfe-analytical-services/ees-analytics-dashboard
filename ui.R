@@ -93,37 +93,25 @@ ui <- page_navbar(
           )
         ),
         layout_column_wrap(
-          card(
-            height = 300,
+          navset_card_tab(
+            id = "service_overview_tabs",
             full_screen = TRUE,
-            card_header(
-              "Sessions",
-              tooltip(
-                bs_icon("info-circle"),
-                paste(
-                  "The total number of sessions. This is only applicable to the service as",
-                  "a whole - sessions are only counted for entry pages in the Google Analytics",
-                  "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
-                  "as two sessions."
-                )
-              )
+            nav_panel(
+              "7 day rolling average",
+              girafeOutput("service_rolling_plot") |>
+                withSpinner()
             ),
-            card_body(
-              min_height = 200,
+            nav_panel(
+              "Pageviews by day",
+              girafeOutput("service_pageviews_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Sessions by day",
               girafeOutput("service_sessions_plot") |>
                 withSpinner()
             )
-          ),
-          card(
-            height = 300,
-            full_screen = TRUE,
-            card_header(
-              "Page views", tooltip(bs_icon("info-circle"), "The total number of pageviews.")
-            ),
-            girafeOutput("service_pageviews_plot") |>
-              withSpinner()
-          ),
-          col_widths = c(6, 6)
+          )
         )
       ),
 

@@ -76,11 +76,15 @@ Imagine we had a SQL table called 'example'...
 
 ### Adding new data
 
-All data is pulled from our unity catalog area under the `analytics_app` schema. Each table used in the app also has a local parquet file equivalent for use in automated tests and for development in case you can't access the main database.
+All data is pulled from our unity catalog area under the `analytics_app` schema. Each table used in the app also has a 
+local parquet file equivalent for use in automated tests and for development in case you can't access the main database.
 
-If you want to see where to start, have a look at the [PR that added the accordion events](https://github.com/dfe-analytical-services/ees-analytics-dashboard/pull/4/) as an example for the places in the code that you'll need to touch for new data.
+If you want to see where to start, have a look at the [PR that added the accordion events](https://github.com/dfe-analytical-services/ees-analytics-dashboard/pull/4/)
+as an example for the places in the code that you'll need to touch for new data, it's not exhaustive, and may go out of
+date if the app changes, though should give a starting point.
 
-If you're adding any new data into the dashboard, make sure to update the `tests/testdata-generator.R` script to add in any new tables, and then use that script to regenerate the test data.
+If you're adding any new data into the dashboard, make sure to update the `tests/testdata-generator.R` script to add in 
+any new tables, and then use that script to regenerate the test data.
 
 Steps for adding new data:
 - Add a call to read in the full table into server.R and cache it

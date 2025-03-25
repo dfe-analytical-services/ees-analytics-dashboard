@@ -254,7 +254,7 @@ ui <- page_navbar(
         )
       ),
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Content ===============================================================
+      # Accordions ============================================================
       nav_panel(
         "Accordion clicks",
         layout_column_wrap(
@@ -274,6 +274,21 @@ ui <- page_navbar(
           )
         )
       ),
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Content interactions ==================================================
+      nav_panel(
+        "Content interactions",
+        layout_column_wrap(
+          bslib::value_box(
+            title = "Time to read latest release in full",
+            value = textOutput("readtime_box") |>
+              withSpinner()
+          )
+        )
+      ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Searches and referrals ================================================
       nav_panel(
         "Searches and referrals",
         card(
@@ -295,6 +310,9 @@ ui <- page_navbar(
             withSpinner()
         )
       ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Tables ================================================================
       nav_panel(
         "Tables",
         "Something about tables"

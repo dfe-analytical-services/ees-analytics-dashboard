@@ -119,3 +119,59 @@ dfe_reactable <- function(data,
     searchable = FALSE
   )
 }
+
+#' Pretty time
+#'
+#' Convert seconds into a human readable format
+#'
+#' Recognises when to present as:
+#' - seconds
+#' - minutes and seconds
+#' - hours, minutes and seconds
+#'
+#' It doesn't do days or higher yet, but could be adapted to
+#' if there's demand.
+#'
+#' @param seconds number of seconds to prettify
+#'
+#' @returns string containing the 'pretty' time
+pretty_time <- function(seconds) {
+  # Present as seconds
+  if (seconds < 120) {
+    if (seconds == 1) {
+      return("1 second")
+    } else {
+      return(paste0(seconds, " seconds"))
+    }
+  } else {
+    # Present as minutes and seconds
+    if (seconds < 7140) {
+      mins <- seconds %/% 60
+      secs <- dfeR::round_five_up(seconds %% 60)
+
+      min_desc <- ifelse(mins == 1, " minute ", " minutes ")
+      sec_desc <- ifelse(secs == 1, " second", " seconds")
+
+      return(
+        paste0(
+          mins, min_desc, secs, sec_desc
+        )
+      )
+      # Present as hours, minutes and seconds
+    } else {
+      hours <- seconds %/% 3600
+      mins <- seconds %/% 60 - hours * 60
+      secs <- round_five_up(seconds %% 60)
+
+      hour_desc <- ifelse(hours == 1, " hour ", " hours ")
+      min_desc <- ifelse(mins == 1, " minute ", " minutes ")
+      sec_desc <- ifelse(secs == 1, " second", " seconds")
+
+      return(
+        paste0(
+          dfeR::comma_sep(hours), hour_desc, mins, min_desc, secs, sec_desc
+        )
+      )
+    }
+  }
+}

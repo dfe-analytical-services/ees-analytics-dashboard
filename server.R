@@ -250,6 +250,33 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Reading time ==============================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  readtime_full <- reactive({
+    message("Reading reading reading reading reading time")
+
+    read_delta_lake("ees_avg_readtime", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  output$readtime_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_avg_readtime.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(readtime_full(), file)
+    }
+  )
+
+  # Value box -----------------------------------------------------------------
+  output$readtime_box <- renderText({
+    readtime_full() |>
+      filter(title == input$pub_name_choice) |>
+      pull(avg_read_time) |>
+      pretty_time() # TODO: add to dfeR
+  }) |>
+    bindCache(readtime_full(), input$pub_name_choice)
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================

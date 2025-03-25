@@ -60,6 +60,13 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_summary_by_date())
 
+  output$service_pageviews_per_session_box <- renderText({
+    paste(
+      round(sum(service_summary_by_date()$pageviews, na.rm = TRUE) / sum(service_summary_by_date()$sessions, na.rm = TRUE), 1)
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
   # Plots ---------------------------------------------------------------------
   output$service_rolling_plot <- renderGirafe({
     data <- service_summary_by_date() |>
@@ -120,11 +127,269 @@ server <- function(input, output, session) {
   )
 
   # Table outputs -------------------------------------------------------------
+
   output$service_device_table <- renderReactable({
     service_device_by_date() |>
+      mutate(device = case_when(
+        device %in% c("mobile", "desktop", "tablet") ~ device,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "drop"
+      ) |>
+      pivot_wider(names_from = device, values_from = Sessions, values_fill = list(Sessions = 0)) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
+
+
+  output$service_browser_table <- renderReactable({
+    service_device_by_date() |>
+      mutate(browser = case_when(
+        browser %in% c("Chrome", "Edge", "Safari") ~ browser,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, browser) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "drop"
+      ) |>
+      pivot_wider(names_from = browser, values_from = Sessions, values_fill = list(Sessions = 0)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_device_by_date())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$service_device_plot <- renderGirafe({
+    data_for_chart <- service_device_by_date() |>
+      mutate(device = case_when(
+        device %in% c("mobile", "desktop", "tablet") ~ device,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    stacked_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Sessions",
+      fill = "device",
+      height = 4
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
+  output$service_browser_plot <- renderGirafe({
+    data_for_chart <- service_device_by_date() |>
+      mutate(browser = case_when(
+        browser %in% c("Chrome", "Edge", "Safari") ~ browser,
+        TRUE ~ "Other"
+      )) |>
+      group_by(page_type, browser) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    stacked_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Sessions",
+      fill = "browser",
+      height = 4
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
+
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Page types ================================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_time_on_page_full <- reactive({
+    message("Reading service time on page")
+
+    read_delta_lake("ees_service_time_on_page", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_time_on_page_by_date <- reactive({
+    service_time_on_page_full() |>
+      filter_on_date(input$service_date_choice) |>
+      collect()
+  }) |>
+    bindCache(service_time_on_page_full(), input$service_date_choice)
+
+  output$service_time_on_page_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_ees_service_time_on_page.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_time_on_page_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  output$service_time_on_page <- renderReactable({
+    service_time_on_page_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        "EngagementDuration" = sum(engagementDuration),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
+      select(page_type, Pageviews, avgTimeOnPage) |>
+      arrange(desc(avgTimeOnPage)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_time_on_page_by_date())
+
+  # Value box -------------------------------------------------------------
+
+  output$service_avg_session_duration_box <- renderText({
+    paste(
+      round(sum(service_time_on_page_by_date()$engagementDuration, na.rm = TRUE) / sum(service_time_on_page_by_date()$sessions, na.rm = TRUE), 1),
+      "seconds"
+    )
+  }) |>
+    bindCache(service_summary_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Source / medium =====================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_source_full <- reactive({
+    message("Reading service sources and mediums")
+
+    read_delta_lake("ees_service_source_medium", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_source_by_date <- reactive({
+    service_source_full() |>
+      filter_on_date(input$service_date_choice)
+  }) |>
+    bindCache(service_source_full(), input$service_date_choice)
+
+  output$service_source_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_service_source.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_source_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  service_source_summarised <- reactive({
+    service_source_by_date() |>
+      group_by(source) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_source_table <- renderReactable({
+    service_source_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_source_summarised())
+
+  service_medium_summarised <- reactive({
+    service_source_by_date() |>
+      group_by(medium) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_medium_table <- renderReactable({
+    service_medium_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_medium_summarised())
+
+  # Plots ---------------------------------------------------------------------
+  output$service_source_plot <- renderGirafe({
+    top_5 <- service_source_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- service_source_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        source = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "source",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_medium_plot <- renderGirafe({
+    top_5 <- service_medium_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- service_medium_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        medium = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "medium",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(service_medium_summarised())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================
@@ -265,6 +530,52 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Content interactions ======================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  content_interactions_full <- reactive({
+    message("Reading publication accordions")
+
+    read_delta_lake("ees_publication_time_on_page", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  content_interactions_by_date <- reactive({
+    content_interactions_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(content_interactions_full(), input$pub_date_choice, input$pub_name_choice)
+
+  # Download ------------------------------------------------------------------
+  output$content_interactions_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_content_interactions.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(content_interactions_full(), file)
+    }
+  )
+
+  # Table ---------------------------------------------------------------------
+  output$pub_content_interactions_table <- renderReactable({
+    content_interactions_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "Sessions" = sum(sessions),
+        "Pageviews" = sum(pageviews),
+        "EngagementDuration" = sum(engagementDuration),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
+      select(page_type, Pageviews, avgTimeOnPage) |>
+      arrange(desc(avgTimeOnPage)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(content_interactions_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================

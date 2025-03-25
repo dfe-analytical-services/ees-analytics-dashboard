@@ -21,15 +21,15 @@ server <- function(input, output, session) {
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service summary ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  service_summary_data <- reactive({
-    message("Reading service by date")
+  service_summary_full <- reactive({
+    message("Reading service summary")
 
     read_delta_lake("ees_service_summary", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
 
   service_summary_by_date <- reactive({
-    service_summary_data() |>
+    service_summary_full() |>
       filter_on_date(input$service_date_choice) |>
       collect()
   }) |>
@@ -40,12 +40,12 @@ server <- function(input, output, session) {
       paste0(Sys.Date(), "_ees_analytics_service_summary.csv")
     },
     content = function(file) {
-      duckplyr::compute_csv(service_summary_data(), file)
+      duckplyr::compute_csv(service_summary_full(), file)
     }
   )
 
   # Value boxes ---------------------------------------------------------------
-  output$service_total_sessions_box <- renderText({
+  output$service_sessions_box <- renderText({
     aggregate_total(
       data = service_summary_by_date(),
       metric = "sessions"
@@ -53,7 +53,7 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_summary_by_date())
 
-  output$service_total_pageviews_box <- renderText({
+  output$service_pageviews_box <- renderText({
     aggregate_total(
       data = service_summary_by_date(),
       metric = "pageviews"
@@ -83,7 +83,7 @@ server <- function(input, output, session) {
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Service devices ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  service_device <- reactive({
+  service_device_full <- reactive({
     message("Reading service by device")
 
     read_delta_lake("ees_service_device_browser", Sys.getenv("TESTTHAT"))
@@ -91,18 +91,18 @@ server <- function(input, output, session) {
     bindCache(last_updated_date())
 
   service_device_by_date <- reactive({
-    service_device() |>
+    service_device_full() |>
       filter_on_date(input$service_date_choice) |>
       collect()
   }) |>
-    bindCache(last_updated_date(), input$service_date_choice)
+    bindCache(service_device_full(), input$service_date_choice)
 
   output$service_device_download <- downloadHandler(
     filename = function() {
       paste0(Sys.Date(), "_ees_service_device_browser.csv")
     },
     content = function(file) {
-      duckplyr::compute_csv(service_device(), file)
+      duckplyr::compute_csv(service_device_full(), file)
     }
   )
 
@@ -117,10 +117,10 @@ server <- function(input, output, session) {
   # Publication summaries =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Data loading ==============================================================
-  release_pageviews_data <- reactive({
-    message("Reading publication pageviews")
+  pub_summary_full <- reactive({
+    message("Reading publication summary")
 
-    read_delta_lake("ees_release_pageviews", Sys.getenv("TESTTHAT"))
+    read_delta_lake("ees_publication_summary", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
 
@@ -129,18 +129,18 @@ server <- function(input, output, session) {
       paste0(Sys.Date(), "_ees_analytics_pub_summary.csv")
     },
     content = function(file) {
-      duckplyr::compute_csv(release_pageviews_data(), file)
+      duckplyr::compute_csv(pub_summary_full(), file)
     }
   )
 
   # Dropdown options =========================================================
   publication_list <- reactive({
-    release_pageviews_data() |>
+    pub_summary_full() |>
       distinct(publication) |>
       pull(publication) |>
       stringr::str_sort()
   }) |>
-    bindCache(release_pageviews_data())
+    bindCache(pub_summary_full())
 
   observe({
     updateSelectInput(
@@ -151,56 +151,55 @@ server <- function(input, output, session) {
   })
 
   # Filtering data ============================================================
-  release_pageviews_by_date <- reactive({
-    release_pageviews_data() |>
+  pub_summary_by_date <- reactive({
+    pub_summary_full() |>
       filter(publication == input$pub_name_choice) |>
       filter_on_date(input$pub_date_choice) |>
       collect()
   }) |>
-    bindCache(release_pageviews_data(), input$pub_date_choice, input$pub_name_choice)
+    bindCache(pub_summary_full(), input$pub_date_choice, input$pub_name_choice)
 
   # Value boxes ---------------------------------------------------------------
-  output$publication_total_sessions_box <- renderText({
+  output$pub_sessions_box <- renderText({
     aggregate_total(
-      data = release_pageviews_by_date(),
+      data = pub_summary_by_date(),
       metric = "sessions"
     )
   }) |>
-    bindCache(release_pageviews_by_date())
+    bindCache(pub_summary_by_date())
 
-  output$publication_total_pageviews_box <- renderText({
+  output$pub_pageviews_box <- renderText({
     aggregate_total(
-      data = release_pageviews_by_date(),
+      data = pub_summary_by_date(),
       metric = "pageviews"
     )
   }) |>
-    bindCache(release_pageviews_by_date())
+    bindCache(pub_summary_by_date())
 
   # Plots ---------------------------------------------------------------------
-  output$publication_sessions_plot <- renderGirafe({
+  output$pub_sessions_plot <- renderGirafe({
     simple_bar_chart(
-      data = release_pageviews_by_date(),
+      data = pub_summary_by_date(),
       x = "date",
       y = "sessions"
     )
   }) |>
-    bindCache(release_pageviews_by_date())
+    bindCache(pub_summary_by_date())
 
-  output$publication_pageviews_plot <- renderGirafe({
+  output$pub_pageviews_plot <- renderGirafe({
     simple_bar_chart(
-      data = release_pageviews_by_date(),
+      data = pub_summary_by_date(),
       x = "date",
       y = "pageviews"
     )
   }) |>
-    bindCache(release_pageviews_by_date())
-
+    bindCache(pub_summary_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  search_console_data <- reactive({
-    message("Reading search console data")
+  search_console_full <- reactive({
+    message("Reading search console queries")
 
     read_delta_lake("ees_search_console_queries", Sys.getenv("TESTTHAT"))
   }) |>
@@ -211,26 +210,26 @@ server <- function(input, output, session) {
       paste0(Sys.Date(), "_ees_analytics_search_console_queries.csv")
     },
     content = function(file) {
-      duckplyr::compute_csv(search_console_data(), file)
+      duckplyr::compute_csv(search_console_full(), file)
     }
   )
 
   service_search_console <- reactive({
-    search_console_data() |>
+    search_console_full() |>
       filter(publication == "Service") |>
       select(-c(publication))
   }) |>
-    bindCache(search_console_data())
+    bindCache(search_console_full())
 
   publication_search_console <- reactive({
-    search_console_data() |>
+    search_console_full() |>
       filter(publication == input$pub_name_choice) |>
       filter(metric == input$pub_search_console_metric) |>
       select(-c(metric, publication))
   }) |>
-    bindCache(search_console_data(), input$pub_name_choice, input$pub_search_console_metric)
+    bindCache(search_console_full(), input$pub_name_choice, input$pub_search_console_metric)
 
-  search_console_timeseries <- reactive({
+  search_console_time_full <- reactive({
     message("Reading search console timeseries")
 
     read_delta_lake("ees_search_console_timeseries", Sys.getenv("TESTTHAT"))
@@ -242,18 +241,18 @@ server <- function(input, output, session) {
       paste0(Sys.Date(), "_ees_analytics_search_console_timeseries.csv")
     },
     content = function(file) {
-      duckplyr::compute_csv(search_console_timeseries(), file)
+      duckplyr::compute_csv(search_console_time_full(), file)
     }
   )
 
-  service_search_console_time <- reactive({
-    search_console_timeseries() |>
+  search_console_time_by_date <- reactive({
+    search_console_time_full() |>
       filter_on_date(input$service_date_choice)
   }) |>
-    bindCache(search_console_timeseries(), input$service_date_choice)
+    bindCache(search_console_time_full(), input$service_date_choice)
 
   # Table outputs -------------------------------------------------------------
-  output$service_search_console_q_clicks <- renderReactable({
+  output$service_gsc_q_clicks_table <- renderReactable({
     service_search_console() |>
       filter(metric == "clicks") |>
       rename("clicks" = count) |>
@@ -262,7 +261,7 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_search_console())
 
-  output$service_search_console_q_impressions <- renderReactable({
+  output$service_gsc_q_impressions_table <- renderReactable({
     service_search_console() |>
       filter(metric == "impressions") |>
       rename("impressions" = count) |>
@@ -271,27 +270,28 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_search_console())
 
-  output$publication_search_console_table <- renderReactable({
-    dfe_reactable(publication_search_console())
+  output$pub_gsc_table <- renderReactable({
+    publication_search_console() |>
+      dfe_reactable()
   }) |>
     bindCache(publication_search_console())
 
   # Plot outputs --------------------------------------------------------------
-  output$service_search_console_plot_clicks <- renderGirafe({
+  output$service_gsc_clicks_plot <- renderGirafe({
     simple_bar_chart(
-      data = service_search_console_time(),
+      data = search_console_time_by_date(),
       x = "date",
       y = "clicks"
     )
   }) |>
-    bindCache(service_search_console_time())
+    bindCache(search_console_time_by_date())
 
-  output$service_search_console_plot_impressions <- renderGirafe({
+  output$service_gsc_impressions_plot <- renderGirafe({
     simple_bar_chart(
-      data = service_search_console_time(),
+      data = search_console_time_by_date(),
       x = "date",
       y = "impressions"
     )
   }) |>
-    bindCache(service_search_console_time())
+    bindCache(search_console_time_by_date())
 }

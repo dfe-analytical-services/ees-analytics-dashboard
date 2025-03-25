@@ -50,7 +50,7 @@ ui <- page_navbar(
               ),
               placement = "bottom"
             ),
-            value = textOutput("service_total_sessions_box") |>
+            value = textOutput("service_sessions_box") |>
               withSpinner()
           ),
           bslib::value_box(
@@ -62,7 +62,7 @@ ui <- page_navbar(
               "The total number of pageviews.",
               placement = "bottom"
             ),
-            value = textOutput("service_total_pageviews_box") |>
+            value = textOutput("service_pageviews_box") |>
               withSpinner()
           )
         ),
@@ -130,14 +130,14 @@ ui <- page_navbar(
             height = 280,
             full_screen = TRUE,
             card_header("Top 10 Google searches by clicks in the past year"),
-            reactableOutput("service_search_console_q_clicks") |>
+            reactableOutput("service_gsc_q_clicks_table") |>
               withSpinner()
           ),
           card(
             height = 280,
             full_screen = TRUE,
             card_header("Google clicks over time"),
-            girafeOutput("service_search_console_plot_clicks") |>
+            girafeOutput("service_gsc_clicks_plot") |>
               withSpinner()
           )
         ),
@@ -146,14 +146,14 @@ ui <- page_navbar(
             height = 280,
             full_screen = TRUE,
             card_header("Top 10 Google searches by appearances the past year"),
-            reactableOutput("service_search_console_q_impressions") |>
+            reactableOutput("service_gsc_q_impressions_table") |>
               withSpinner()
           ),
           card(
             height = 280,
             full_screen = TRUE,
             card_header("Google search appearances over time"),
-            girafeOutput("service_search_console_plot_impressions") |>
+            girafeOutput("service_gsc_impressions_plot") |>
               withSpinner()
           )
         )
@@ -205,7 +205,7 @@ ui <- page_navbar(
               ),
               placement = "bottom"
             ),
-            value = textOutput("publication_total_sessions_box") |>
+            value = textOutput("pub_sessions_box") |>
               withSpinner()
           ),
           bslib::value_box(
@@ -217,7 +217,7 @@ ui <- page_navbar(
               "The total number of pageviews.",
               placement = "bottom"
             ),
-            value = textOutput("publication_total_pageviews_box") |>
+            value = textOutput("pub_pageviews_box") |>
               withSpinner()
           )
         ),
@@ -237,7 +237,7 @@ ui <- page_navbar(
                 )
               )
             ),
-            girafeOutput("publication_sessions_plot") |>
+            girafeOutput("pub_sessions_plot") |>
               withSpinner()
           ),
           card(
@@ -247,7 +247,7 @@ ui <- page_navbar(
               "Page views",
               tooltip(bs_icon("info-circle"), "The total number of pageviews.")
             ),
-            girafeOutput("publication_pageviews_plot") |>
+            girafeOutput("pub_pageviews_plot") |>
               withSpinner()
           ),
           col_widths = c(6, 6)
@@ -274,7 +274,7 @@ ui <- page_navbar(
               )
             )
           ),
-          reactableOutput("publication_search_console_table") |>
+          reactableOutput("pub_gsc_table") |>
             withSpinner()
         )
       ),
@@ -291,6 +291,7 @@ ui <- page_navbar(
     title = "Downloads",
     bslib::layout_column_wrap(
       width = 1 / 2,
+      offset = 1 / 4,
       downloads_content() # defined in R/pages/technical_notes.R
     )
   ),
@@ -301,6 +302,7 @@ ui <- page_navbar(
     title = "Technical notes",
     bslib::layout_column_wrap(
       width = 1 / 2,
+      offset = 1 / 4,
       technical_notes_content() # defined in R/pages/technical_notes.R
     )
   )

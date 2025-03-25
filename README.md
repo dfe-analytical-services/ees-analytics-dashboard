@@ -54,6 +54,26 @@ Package control is handled using [renv](https://rstudio.github.io/renv/articles/
 
 It's also worth checking that you can run the automated tests using `shinytest2::test_app()`, so you can be confident you have everything set up correctly before you start developing.
 
+### Naming conventions
+
+Quick shorthands:
+
+- `pub` = publication
+- `gsc` = Google Search Console
+
+Most of the app will have objects that start with `service_` or `pub_`, these refer to the page that the objects appear on based on the top navbar.
+
+To help with the ever growing server file until we modularise the code, we've adopted the following naming conventions.
+
+Imagine we had a SQL table called 'example'...
+
+- `example_full` = Full table of date
+- `example_by_date` = Filtered table based on user inputs (note that at pub level this is also filtered by pub)
+- `example_plot` = Charts based on filtered data
+- `example_table` = Tables based on filtered data
+- `example_download` = Download links based on filtered data
+- `example_box` = Value boxes based on filtered data
+
 ### Adding new data
 
 All data is pulled from our unity catalog area under the `analytics_app` schema. Each table used in the app also has a local parquet file equivalent for use in automated tests and for development in case you can't access the main database.

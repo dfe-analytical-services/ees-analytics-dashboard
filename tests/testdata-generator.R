@@ -60,7 +60,7 @@ create_last_updated <- function() {
 
 # Execute =====================================================================
 by_date_datasets <- c(
-  "ees_service_summary", "ees_release_pageviews", "ees_search_console_timeseries",
+  "ees_service_summary", "ees_publication_summary", "ees_search_console_timeseries",
   "ees_service_device_browser", "ees_publication_accordions"
 )
 

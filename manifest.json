@@ -4872,7 +4872,7 @@
     "tests/testdata/ees__last_updated.parquet": {
       "checksum": "e63263254e66f943b850489cb722c0df"
     },
-    "tests/testdata/ees_release_pageviews.parquet": {
+    "tests/testdata/ees_publication_summary.parquet": {
       "checksum": "10a3f947776b18830222a989881de890"
     },
     "tests/testdata/ees_search_console_queries.parquet": {

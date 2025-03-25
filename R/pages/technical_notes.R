@@ -22,7 +22,7 @@ technical_notes_content <- function() {
     tags$p(
       "We calculate a 7 day rolling average for sessions and pageviews to smooth out the data and make it easier",
       " to see trends over time. This is calculated by taking the average of the current day plus the previous 6",
-      " days current day."
+      " days."
     ),
     tags$h2("Source and medium"),
     tags$p(

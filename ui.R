@@ -357,7 +357,27 @@ ui <- page_navbar(
         )
       ),
 
-
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Devices ===============================================================
+      nav_panel(
+        "Devices",
+        layout_column_wrap(
+          card(
+            height = 450,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            reactableOutput("pub_device_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 450,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            girafeOutput("pub_device_plot") |>
+              withSpinner()
+          )
+        )
+      ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Accordions ============================================================

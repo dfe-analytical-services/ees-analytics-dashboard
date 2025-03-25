@@ -616,6 +616,69 @@ server <- function(input, output, session) {
   }) |>
     bindCache(readtime_full(), input$pub_name_choice)
 
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Publication devices ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_device_full <- reactive({
+    message("Reading pub by device")
+
+    read_delta_lake("ees_publication_device_browser", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_device_by_date <- reactive({
+    pub_device_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice) |>
+      collect()
+  }) |>
+    bindCache(pub_device_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_device_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_pub_device.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_device_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+
+  output$pub_device_table <- renderReactable({
+    pub_device_by_date() |>
+      group_by(device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "drop"
+      ) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_device_by_date())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$pub_device_plot <- renderGirafe({
+    data_for_chart <- pub_device_by_date() |>
+      group_by(device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "device",
+      y = "Sessions",
+      height = 3
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
+
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

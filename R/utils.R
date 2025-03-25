@@ -289,7 +289,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
         tooltip = paste0(metric, ": ", value, "\n", x, ": ", !!sym(x)),
         data_id = seq_along(value)
       ),
-      size = 0.1,
+      size = 0,
       hover_nearest = TRUE
     ) +
     geom_line(linewidth = 0.6) +
@@ -302,7 +302,9 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
     theme(
       legend.position = "none",
       panel.grid = element_blank(),
-      plot.margin = margin(5, 100, 5, 5) # Add extra whitespace to the right
+      plot.margin = margin(5, 100, 5, 5), # Add extra whitespace to the right
+      text = element_text(size = 5),
+      axis.text = element_text(size = 5)
     )
 
   if (!is.null(labels)) {
@@ -317,7 +319,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
         aes(label = metric),
         hjust = -0.1, # Move labels to the right of the lines
         vjust = 0.5, # Align labels at the same height as the line ends
-        size = 4,
+        size = 2.0, # Adjust size to match theme text size
         color = "black",
         show.legend = FALSE
       ) +

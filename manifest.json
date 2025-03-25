@@ -4831,7 +4831,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "8144db1131ec952cdbf9bd9a923096a5"
+      "checksum": "efe0e3feb14269557bb58066037c411e"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4846,7 +4846,7 @@
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
     "R/pages/downloads.R": {
-      "checksum": "f97e45f2f4e988896e9e6baf62e5be8a"
+      "checksum": "16aaa5de89d31455e4cc976f4b331e27"
     },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"

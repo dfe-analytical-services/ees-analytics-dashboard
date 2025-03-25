@@ -374,7 +374,20 @@ ui <- page_navbar(
       # Tables ================================================================
       nav_panel(
         "Tables",
-        "Something about tables"
+        layout_column_wrap(
+          card(
+            full_screen = TRUE,
+            card_header("Top viewed featured tables"),
+            reactableOutput("pub_featured_tables_table") |>
+              withSpinner()
+          ),
+          card(
+            full_screen = TRUE,
+            card_header("Data sets with most tables created"),
+            reactableOutput("pub_created_tables_table") |>
+              withSpinner()
+          )
+        )
       )
     ) # end of underline tabset
   ), # end of nav page

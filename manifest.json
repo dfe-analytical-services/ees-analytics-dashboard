@@ -1203,6 +1203,46 @@
         "Built": "R 4.4.0; ; 2024-04-25 22:00:15 UTC; windows"
       }
     },
+    "dbplyr": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "dbplyr",
+        "Title": "A 'dplyr' Back End for Databases",
+        "Version": "2.5.0",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Maximilian\", \"Girlich\", role = \"aut\"),\n    person(\"Edgar\", \"Ruiz\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "A 'dplyr' back end for databases that allows you to work with\n    remote database tables as if they are in-memory data frames.  Basic\n    features works with any database that has a 'DBI' back end; more\n    advanced features require 'SQL' translation to be provided by the\n    package author.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://dbplyr.tidyverse.org/, https://github.com/tidyverse/dbplyr",
+        "BugReports": "https://github.com/tidyverse/dbplyr/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "blob (>= 1.2.0), cli (>= 3.6.1), DBI (>= 1.1.3), dplyr (>=\n1.1.2), glue (>= 1.6.2), lifecycle (>= 1.0.3), magrittr,\nmethods, pillar (>= 1.9.0), purrr (>= 1.0.1), R6 (>= 2.2.2),\nrlang (>= 1.1.1), tibble (>= 3.2.1), tidyr (>= 1.3.0),\ntidyselect (>= 1.2.1), utils, vctrs (>= 0.6.3), withr (>=\n2.5.0)",
+        "Suggests": "bit64, covr, knitr, Lahman, nycflights13, odbc (>= 1.4.2),\nRMariaDB (>= 1.2.2), rmarkdown, RPostgres (>= 1.4.5),\nRPostgreSQL, RSQLite (>= 2.3.1), testthat (>= 3.1.10)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "TRUE",
+        "Encoding": "UTF-8",
+        "Language": "en-gb",
+        "RoxygenNote": "7.3.1",
+        "Collate": "'db-sql.R' 'utils-check.R' 'import-standalone-types-check.R'\n'import-standalone-obj-type.R' 'utils.R' 'sql.R' 'escape.R'\n'translate-sql-cut.R' 'translate-sql-quantile.R'\n'translate-sql-string.R' 'translate-sql-paste.R'\n'translate-sql-helpers.R' 'translate-sql-window.R'\n'translate-sql-conditional.R' 'backend-.R' 'backend-access.R'\n'backend-hana.R' 'backend-hive.R' 'backend-impala.R'\n'verb-copy-to.R' 'backend-mssql.R' 'backend-mysql.R'\n'backend-odbc.R' 'backend-oracle.R' 'backend-postgres.R'\n'backend-postgres-old.R' 'backend-redshift.R'\n'backend-snowflake.R' 'backend-spark-sql.R' 'backend-sqlite.R'\n'backend-teradata.R' 'build-sql.R' 'data-cache.R'\n'data-lahman.R' 'data-nycflights13.R' 'db-escape.R' 'db-io.R'\n'db.R' 'dbplyr.R' 'explain.R' 'ident.R'\n'import-standalone-s3-register.R' 'join-by-compat.R'\n'join-cols-compat.R' 'lazy-join-query.R' 'lazy-ops.R'\n'lazy-query.R' 'lazy-select-query.R' 'lazy-set-op-query.R'\n'memdb.R' 'optimise-utils.R' 'pillar.R' 'progress.R'\n'sql-build.R' 'query-join.R' 'query-select.R'\n'query-semi-join.R' 'query-set-op.R' 'query.R' 'reexport.R'\n'remote.R' 'rows.R' 'schema.R' 'simulate.R' 'sql-clause.R'\n'sql-expr.R' 'src-sql.R' 'src_dbi.R' 'table-name.R'\n'tbl-lazy.R' 'tbl-sql.R' 'test-frame.R' 'testthat.R'\n'tidyeval-across.R' 'tidyeval.R' 'translate-sql.R'\n'utils-format.R' 'verb-arrange.R' 'verb-compute.R'\n'verb-count.R' 'verb-distinct.R' 'verb-do-query.R' 'verb-do.R'\n'verb-expand.R' 'verb-fill.R' 'verb-filter.R' 'verb-group_by.R'\n'verb-head.R' 'verb-joins.R' 'verb-mutate.R'\n'verb-pivot-longer.R' 'verb-pivot-wider.R' 'verb-pull.R'\n'verb-select.R' 'verb-set-ops.R' 'verb-slice.R'\n'verb-summarise.R' 'verb-uncount.R' 'verb-window.R' 'zzz.R'",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-03-15 17:27:18 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre],\n  Maximilian Girlich [aut],\n  Edgar Ruiz [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Hadley Wickham <hadley@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-03-19 17:00:05 UTC",
+        "Built": "R 4.4.1; ; 2024-07-09 02:34:31 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "dbplyr",
+        "RemoteRef": "dbplyr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "2.5.0"
+      }
+    },
     "desc": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -4071,6 +4111,38 @@
         "Archs": "x64"
       }
     },
+    "tidyr": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "tidyr",
+        "Title": "Tidy Messy Data",
+        "Version": "1.3.1",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Maximilian\", \"Girlich\", role = \"aut\"),\n    person(\"Kevin\", \"Ushey\", , \"kevin@posit.co\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Tools to help to create tidy data, where each column is a\n    variable, each row is an observation, and each cell contains a single\n    value.  'tidyr' contains tools for changing the shape (pivoting) and\n    hierarchy (nesting and 'unnesting') of a dataset, turning deeply\n    nested lists into rectangular data frames ('rectangling'), and\n    extracting values out of string columns. It also includes tools for\n    working with missing values (both implicit and explicit).",
+        "License": "MIT + file LICENSE",
+        "URL": "https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr",
+        "BugReports": "https://github.com/tidyverse/tidyr/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "cli (>= 3.4.1), dplyr (>= 1.0.10), glue, lifecycle (>= 1.0.3),\nmagrittr, purrr (>= 1.0.1), rlang (>= 1.1.1), stringr (>=\n1.5.0), tibble (>= 2.1.1), tidyselect (>= 1.2.0), utils, vctrs\n(>= 0.5.2)",
+        "Suggests": "covr, data.table, knitr, readr, repurrrsive (>= 1.1.0),\nrmarkdown, testthat (>= 3.0.0)",
+        "LinkingTo": "cpp11 (>= 0.4.0)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.3.0",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-01-23 14:27:23 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre],\n  Davis Vaughan [aut],\n  Maximilian Girlich [aut],\n  Kevin Ushey [ctb],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Hadley Wickham <hadley@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-01-24 14:50:09 UTC",
+        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 02:25:04 UTC; windows",
+        "Archs": "x64"
+      }
+    },
     "tidyselect": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -4759,7 +4831,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "3f63b20fc41e83bf17bf752c6b2398f7"
+      "checksum": "eb158058d8138ce42568e6ffff48e958"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4768,7 +4840,7 @@
       "checksum": "7677f6256b859879836aa3204a4b0b9c"
     },
     "global.R": {
-      "checksum": "973957fc5f7ba5f81673462dd67f9974"
+      "checksum": "344adec244c9da0fcd4d172476537ae9"
     },
     "LICENSE": {
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
@@ -4783,16 +4855,16 @@
       "checksum": "4b163d2e53943f53e61e61b91473b8fb"
     },
     "R/utils.R": {
-      "checksum": "99da16eac4ca8eb8d6871a70ea185aa9"
+      "checksum": "103a9c72e44bfac5924cf2420db2252d"
     },
     "README.md": {
       "checksum": "933b821baf9f7f142cf982aed1a60c1f"
     },
     "renv.lock": {
-      "checksum": "19c29bb53f56d4c64faf0ac5fc380e14"
+      "checksum": "0b51971cb0dd115fc366dc3b89dfb50a"
     },
     "server.R": {
-      "checksum": "a4dba236815b6358a153fc9b61a5e9f2"
+      "checksum": "29bdb78ed9a1bf87036ac7b7f189d79b"
     },
     "tests/testdata-generator.R": {
       "checksum": "59f958d57d97053a7ac9572123b2ab29"

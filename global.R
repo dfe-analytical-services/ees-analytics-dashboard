@@ -11,6 +11,7 @@ shhh(library(shinycssloaders))
 # Database connection
 shhh(library(odbc))
 shhh(library(pool))
+shhh(library(dbplyr))
 
 # Data processing
 shhh(library(dplyr))

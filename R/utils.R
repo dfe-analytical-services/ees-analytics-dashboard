@@ -47,7 +47,7 @@ read_delta_lake <- function(table_name, test_mode = "") {
 aggregate_total <- function(data, metric) {
   data |>
     as.data.frame() |>
-    summarise(sum(!!sym(metric))) |>
+    summarise(sum(!!sym(metric), na.rm = TRUE)) |>
     dfeR::comma_sep() |>
     paste0()
 }

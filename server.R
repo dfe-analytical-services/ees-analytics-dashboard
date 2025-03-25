@@ -26,7 +26,7 @@ server <- function(input, output, session) {
 
     read_delta_lake("ees_service_summary", Sys.getenv("TESTTHAT"))
   }) |>
-    bindCache(last_updated_date)
+    bindCache(last_updated_date())
 
   service_summary_by_date <- reactive({
     service_summary_data() |>

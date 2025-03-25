@@ -253,9 +253,26 @@ ui <- page_navbar(
           col_widths = c(6, 6)
         )
       ),
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Content ===============================================================
       nav_panel(
-        "Content",
-        "Some stuff on content"
+        "Accordion clicks",
+        layout_column_wrap(
+          card(
+            height = 530,
+            full_screen = TRUE,
+            card_header("Release pages"),
+            reactableOutput("pub_accordions_release_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 530,
+            full_screen = TRUE,
+            card_header("Methodology page"),
+            reactableOutput("pub_accordions_methodology_table") |>
+              withSpinner()
+          )
+        )
       ),
       nav_panel(
         "Searches and referrals",

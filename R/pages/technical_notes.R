@@ -14,6 +14,11 @@ technical_notes_content <- function() {
       " time will be starting a new session. All session starts events are recorded, as this is done before",
       " any interaction with cookies is possible."
     ),
+    tags$h2("Accordion clicks"),
+    tags$p(
+      "We track each time a user clicks to open or close an accordion. Be aware that as we only track the",
+      " accordions by name, that any accordions that have shared the same name will be combined together."
+    ),
     tags$h2("Average read time"),
     tags$p(
       "We've followed the methodology used in ",

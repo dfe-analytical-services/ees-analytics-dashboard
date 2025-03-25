@@ -25,6 +25,12 @@ downloads_content <- function() {
     ),
     tags$p("TBC."),
     shinyGovstyle::download_link(
+      "pub_accordions_download",
+      "Publication accordion clicks",
+      file_size = "< 100 MB" # TODO: Generate automatically
+    ),
+    tags$p("Accordion clicks on publication and methodology pages."),
+    shinyGovstyle::download_link(
       "search_console_queries_download",
       "Google Search queries",
       file_size = "< 1 MB" # TODO: Generate automatically

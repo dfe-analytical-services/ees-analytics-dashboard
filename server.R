@@ -208,9 +208,9 @@ server <- function(input, output, session) {
   pub_accordions_by_date <- reactive({
     pub_accordions_full() |>
       filter_on_date(input$pub_date_choice) |>
-      collect()
+      filter(publication == input$pub_name_choice)
   }) |>
-    bindCache(pub_accordions_full(), input$pub_date_choice)
+    bindCache(pub_accordions_full(), input$pub_date_choice, input$pub_name_choice)
 
   # Download ------------------------------------------------------------------
   output$pub_accordions_download <- downloadHandler(
@@ -223,11 +223,34 @@ server <- function(input, output, session) {
   )
 
   # Table ---------------------------------------------------------------------
-  output$pub_accordions_table <- renderReactable({
+  output$pub_accordions_release_table <- renderReactable({
     pub_accordions_by_date() |>
+      filter(page_type == "Release page") |>
+      select(-page_type) |>
+      group_by(publication, eventLabel) |>
+      summarise("Clicks" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      rename("Accordion title" = eventLabel) |>
+      select(-publication) |>
+      arrange(desc(Clicks)) |>
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
+
+  output$pub_accordions_methodology_table <- renderReactable({
+    pub_accordions_by_date() |>
+      filter(page_type == "Methodology") |>
+      select(-page_type) |>
+      group_by(publication, eventLabel) |>
+      summarise("Clicks" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      rename("Accordion title" = eventLabel) |>
+      select(-publication) |>
+      arrange(desc(Clicks)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_accordions_by_date())
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

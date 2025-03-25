@@ -4833,6 +4833,7 @@
     ".Rprofile": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "checksum": "6109639e2a834cc255c7517ea9a6a0a3"
 =======
       "checksum": "94f8cc7d86d84c070a839f886b7c52ec"
@@ -4843,6 +4844,9 @@
       "checksum": "6109639e2a834cc255c7517ea9a6a0a3"
 >>>>>>> 4dee164 (add server code)
 >>>>>>> 0d7ac97 (add server code)
+=======
+      "checksum": "7d16a5a963c41360c156f5f3d50651d2"
+>>>>>>> 83133bc (Add the rest of the accordions code)
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4857,13 +4861,13 @@
       "checksum": "10e3eca0c999a770b2fa5cdca77e205e"
     },
     "R/pages/downloads.R": {
-      "checksum": "7779d1561d9a3eb04a3868dc907646c9"
+      "checksum": "a2cb24d229246df7a1f776b6a46f020a"
     },
     "R/pages/service_summary.R": {
       "checksum": "6b99989509451a6a3e790bc17241462d"
     },
     "R/pages/technical_notes.R": {
-      "checksum": "4b163d2e53943f53e61e61b91473b8fb"
+      "checksum": "9208343c53f4cd0d88b519bb08e26f98"
     },
     "R/utils.R": {
       "checksum": "103a9c72e44bfac5924cf2420db2252d"
@@ -4875,6 +4879,7 @@
       "checksum": "0b51971cb0dd115fc366dc3b89dfb50a"
     },
     "server.R": {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "checksum": "fa8f181ee4dfebbe3e991eff4f6fc81d"
@@ -4898,12 +4903,15 @@
       "checksum": "07bb55e98e5519a9ab5f425cbf3f2d43"
 >>>>>>> 4dee164 (add server code)
 >>>>>>> 0d7ac97 (add server code)
+=======
+      "checksum": "59798b6c2e1531bb42bafe0d59be7f4e"
+    },
+    "tests/testdata-generator.R": {
+      "checksum": "07bb55e98e5519a9ab5f425cbf3f2d43"
+>>>>>>> 83133bc (Add the rest of the accordions code)
     },
     "tests/testdata/ees__last_updated.parquet": {
       "checksum": "e63263254e66f943b850489cb722c0df"
-    },
-    "tests/testdata/ees_publication_accordions.parquet": {
-      "checksum": "250699c13c2f920a27592e9f790ab609"
     },
     "tests/testdata/ees_publication_summary.parquet": {
       "checksum": "10a3f947776b18830222a989881de890"
@@ -4933,7 +4941,7 @@
       "checksum": "e37881a90ee7cb7e18d579cb63d47dd8"
     },
     "ui.R": {
-      "checksum": "e54db60d00423ed95b35711186a41ee8"
+      "checksum": "81d5cd056c053109a26210664facda2a"
     },
     "www/Fred.png": {
       "checksum": "de0c7c27f59730040c362ad5da5d166c"

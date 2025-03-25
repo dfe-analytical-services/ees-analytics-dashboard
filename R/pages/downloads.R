@@ -12,7 +12,7 @@ downloads_content <- function() {
     ),
     tags$p("Sessions, pageviews and rolling 7 day averages by date."),
     shinyGovstyle::download_link(
-      "search_console_time_download",
+      "gsc_time_download",
       "Search console time series",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),
@@ -31,13 +31,19 @@ downloads_content <- function() {
     ),
     tags$p("Accordion clicks on publication and methodology pages."),
     shinyGovstyle::download_link(
+      "pub_search_events_download",
+      "Publication search events",
+      file_size = "< 20 MB" # TODO: Generate automatically
+    ),
+    tags$p("Searches made on publication and methodology pages."),
+    shinyGovstyle::download_link(
       "readtime_download",
       "Reading time",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),
     tags$p("Average reading time for current latest publication pages."),
     shinyGovstyle::download_link(
-      "search_console_queries_download",
+      "gsc_queries_download",
       "Google Search queries",
       file_size = "< 1 MB" # TODO: Generate automatically
     ),

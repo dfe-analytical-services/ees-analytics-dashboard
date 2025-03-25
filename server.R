@@ -37,7 +37,7 @@ server <- function(input, output, session) {
 
   output$service_summary_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_analytics_service_summary.csv")
+      paste0(Sys.Date(), "_service_summary.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(service_summary_full(), file)
@@ -126,7 +126,7 @@ server <- function(input, output, session) {
 
   output$pub_summary_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_analytics_pub_summary.csv")
+      paste0(Sys.Date(), "_pub_summary.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(pub_summary_full(), file)
@@ -215,7 +215,7 @@ server <- function(input, output, session) {
   # Download ------------------------------------------------------------------
   output$pub_accordions_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_analytics_pub_accordions.csv")
+      paste0(Sys.Date(), "_pub_accordions.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(pub_accordions_full(), file)
@@ -250,6 +250,7 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -262,7 +263,7 @@ server <- function(input, output, session) {
 
   output$readtime_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_avg_readtime.csv")
+      paste0(Sys.Date(), "_readtime.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(readtime_full(), file)
@@ -288,9 +289,9 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date())
 
-  output$search_console_queries_download <- downloadHandler(
+  output$gsc_queries_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_analytics_search_console_queries.csv")
+      paste0(Sys.Date(), "_gsc_queries.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(search_console_full(), file)
@@ -319,9 +320,9 @@ server <- function(input, output, session) {
   }) |>
     bindCache(last_updated_date())
 
-  output$search_console_time_download <- downloadHandler(
+  output$gsc_time_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_analytics_search_console_timeseries.csv")
+      paste0(Sys.Date(), "_gsc_time.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(search_console_time_full(), file)
@@ -377,4 +378,57 @@ server <- function(input, output, session) {
     )
   }) |>
     bindCache(search_console_time_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Publication search events =================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_search_events_full <- reactive({
+    message("Reading publication search events")
+
+    read_delta_lake("ees_publication_search_events", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_search_events_by_date <- reactive({
+    pub_search_events_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_search_events_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_search_events_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_search_events.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_search_events_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  output$pub_searches_table <- renderReactable({
+    pub_search_events_by_date() |>
+      filter(page_type == "Release page") |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      select(-publication) |>
+      rename("Search term" = eventLabel) |>
+      arrange(desc(Count)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_search_events_by_date())
+
+  output$pub_searches_meth_table <- renderReactable({
+    pub_search_events_by_date() |>
+      filter(page_type == "Methodology pages") |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      select(-publication) |>
+      rename("Search term" = eventLabel) |>
+      arrange(desc(Count)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_search_events_by_date())
 }

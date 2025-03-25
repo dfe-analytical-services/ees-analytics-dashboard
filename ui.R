@@ -1,5 +1,6 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
+  id = "pages",
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Custom styling ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,6 +34,7 @@ ui <- page_navbar(
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ## Overview ---------------------------------------------------------------
     navset_underline(
+      id = "service_tabs",
       nav_panel(
         "Overview",
         layout_column_wrap(
@@ -188,6 +190,7 @@ ui <- page_navbar(
       ),
     ),
     navset_underline(
+      id = "pub_tabs",
       nav_panel(
         "Overview",
         layout_column_wrap(
@@ -253,6 +256,20 @@ ui <- page_navbar(
           col_widths = c(6, 6)
         )
       ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Content interactions ==================================================
+      nav_panel(
+        "Content interactions",
+        layout_column_wrap(
+          bslib::value_box(
+            title = "Time to read latest release in full",
+            value = textOutput("readtime_box") |>
+              withSpinner()
+          )
+        )
+      ),
+
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Accordions ============================================================
       nav_panel(
@@ -274,41 +291,52 @@ ui <- page_navbar(
           )
         )
       ),
+
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Content interactions ==================================================
+      # Searches ==============================================================
       nav_panel(
-        "Content interactions",
+        "Searches",
         layout_column_wrap(
-          bslib::value_box(
-            title = "Time to read latest release in full",
-            value = textOutput("readtime_box") |>
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header(
+              tagList(
+                tags$p("Top 10 Google searches in the past year"),
+                radioButtons(
+                  "pub_search_console_metric",
+                  label = NULL,
+                  inline = TRUE,
+                  choiceNames = c("Clicks", "Search appearances"),
+                  choiceValues = c("clicks", "impressions")
+                )
+              )
+            ),
+            reactableOutput("pub_gsc_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Searches on publication pages"),
+            reactableOutput("pub_searches_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Searches on methodology pages"),
+            reactableOutput("pub_searches_meth_table") |>
               withSpinner()
           )
         )
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Searches and referrals ================================================
+      # Referrals =============================================================
       nav_panel(
-        "Searches and referrals",
-        card(
-          height = 530,
-          full_screen = TRUE,
-          card_header(
-            tagList(
-              tags$p("Top 10 Google searches in the past year"),
-              radioButtons(
-                "pub_search_console_metric",
-                label = NULL,
-                inline = TRUE,
-                choiceNames = c("Clicks", "Search appearances"),
-                choiceValues = c("clicks", "impressions")
-              )
-            )
-          ),
-          reactableOutput("pub_gsc_table") |>
-            withSpinner()
-        )
+        "Referrals",
+        "Some referral stuff"
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,7 +354,6 @@ ui <- page_navbar(
     title = "Downloads",
     bslib::layout_column_wrap(
       width = 1 / 2,
-      offset = 1 / 4,
       downloads_content() # defined in R/pages/technical_notes.R
     )
   ),
@@ -337,7 +364,6 @@ ui <- page_navbar(
     title = "Technical notes",
     bslib::layout_column_wrap(
       width = 1 / 2,
-      offset = 1 / 4,
       technical_notes_content() # defined in R/pages/technical_notes.R
     )
   )

@@ -175,7 +175,38 @@ ui <- page_navbar(
       # Referrals =============================================================
       nav_panel(
         "Referrals",
-        "Some referral stuff"
+        layout_column_wrap(
+          navset_card_tab(
+            full_screen = TRUE,
+            id = "pub_referrals_tabs",
+            nav_panel(
+              "Chart",
+              tags$strong("Percentage of pageviews by source"),
+              girafeOutput("service_source_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Full table",
+              reactableOutput("service_source_table") |>
+                withSpinner()
+            )
+          ),
+          navset_card_tab(
+            full_screen = TRUE,
+            id = "pub_medium_tabs",
+            nav_panel(
+              "Chart",
+              tags$strong("Percentage of pageviews by medium"),
+              girafeOutput("service_medium_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Full table",
+              reactableOutput("service_medium_table") |>
+                withSpinner()
+            )
+          )
+        )
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -255,6 +255,130 @@ server <- function(input, output, session) {
     bindCache(service_summary_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Source / medium =====================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_source_full <- reactive({
+    message("Reading service sources and mediums")
+
+    read_delta_lake("ees_service_source_medium", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_source_by_date <- reactive({
+    service_source_full() |>
+      filter_on_date(input$service_date_choice)
+  }) |>
+    bindCache(service_source_full(), input$service_date_choice)
+
+  output$service_source_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_service_source.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_source_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  service_source_summarised <- reactive({
+    service_source_by_date() |>
+      group_by(source) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_source_table <- renderReactable({
+    service_source_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_source_summarised())
+
+  service_medium_summarised <- reactive({
+    service_source_by_date() |>
+      group_by(medium) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_medium_table <- renderReactable({
+    service_medium_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_medium_summarised())
+
+  # Plots ---------------------------------------------------------------------
+  output$service_source_plot <- renderGirafe({
+    top_5 <- service_source_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- service_source_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        source = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "source",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(service_source_by_date())
+
+  output$service_medium_plot <- renderGirafe({
+    top_5 <- service_medium_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- service_medium_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        medium = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "medium",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(service_medium_summarised())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Data loading ==============================================================

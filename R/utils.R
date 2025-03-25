@@ -58,10 +58,11 @@ aggregate_total <- function(data, metric) {
 #' @param data data set
 #' @param x x axis data
 #' @param y y axis data
+#' @param height height of the chart
 #' @param flip boolean to flip the chart to horizontal bars
 #' @param suffix character string to append to y values in axis label and tooltips
 #' @param reorder boolean to reorder the data by y values
-simple_bar_chart <- function(data, x, y, flip = FALSE, suffix = "", reorder = FALSE) {
+simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = "", reorder = FALSE) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -81,7 +82,11 @@ simple_bar_chart <- function(data, x, y, flip = FALSE, suffix = "", reorder = FA
       hover_nearest = TRUE
     ) +
     theme_af() +
-    scale_y_continuous(labels = function(y) paste0(scales::comma(y), suffix)) +
+    theme(
+      text = element_text(size = 10),
+      axis.text = element_text(size = 10)
+    ) +
+    scale_y_continuous(labels = comma) +
     labs(
       x = NULL,
       y = NULL
@@ -101,7 +106,61 @@ simple_bar_chart <- function(data, x, y, flip = FALSE, suffix = "", reorder = FA
       opts_hover(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;"),
       opts_hover_inv(css = "opacity:0.3;")
     ),
-    height_svg = 1.7
+    height_svg = height
+  )
+
+  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
+}
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Create stacked bar chart
+#'
+#' @param data data set
+#' @param x x axis data
+#' @param y y axis data
+#' @param fill grouping within bars
+
+stacked_bar_chart <- function(data, x, y, fill, height = 1.7) {
+  x_var <- x
+  y_var <- y
+  fill_var <- fill
+
+  p <- data |>
+    ggplot(aes_string(x = x_var, y = y_var, fill = fill_var)) +
+    geom_col_interactive(
+      aes(
+        data_id = seq_along(data[[x_var]]),
+        tooltip = paste0(
+          !!sym(x_var), " / ", !!sym(fill_var), " - ", scales::comma(!!sym(y_var))
+        )
+      ),
+      position = "fill",
+      hover_nearest = TRUE
+    ) +
+    scale_fill_manual(values = c("#12436D", "#28A197", "#801650", "#F46A25")) +
+    theme_af() +
+    theme(
+      text = element_text(size = 10),
+      axis.text = element_text(size = 10),
+      legend.position = "top",
+      legend.text = element_text(size = 10)
+    ) +
+    guides(fill = guide_legend(reverse = TRUE)) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(
+      x = NULL,
+      y = NULL,
+      fill = NULL # Remove legend title
+    ) +
+    coord_flip()
+
+  g <- girafe(
+    ggobj = p,
+    options = list(
+      opts_hover(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;"),
+      opts_hover_inv(css = "opacity:0.3;")
+    ),
+    height_svg = height
   )
 
   girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))

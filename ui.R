@@ -66,6 +66,30 @@ ui <- page_navbar(
             ),
             value = textOutput("service_pageviews_box") |>
               withSpinner()
+          ),
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Average session duration",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The average session duration (total engagment time / total sessions).",
+              placement = "bottom"
+            ),
+            value = textOutput("service_avg_session_duration_box") |>
+              withSpinner()
+          ),
+          bslib::value_box(
+            title = tooltip(
+              span(
+                "Average page views per session",
+                bsicons::bs_icon("question-circle-fill")
+              ),
+              "The average page views per session. Total pageviews / total sessions.",
+              placement = "bottom"
+            ),
+            value = textOutput("service_pageviews_per_session_box") |>
+              withSpinner()
           )
         ),
         layout_column_wrap(
@@ -107,13 +131,44 @@ ui <- page_navbar(
       # Devices ===============================================================
       nav_panel(
         "Devices",
-        card(
-          height = 280,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("service_device_table") |>
-            withSpinner()
+        layout_column_wrap(
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            reactableOutput("service_device_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            girafeOutput("service_device_plot") |>
+              withSpinner()
+          )
         )
+      ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Browser ===============================================================
+      nav_panel(
+        "Browser",
+        layout_column_wrap(
+          card(
+            height = 280,
+            full_screen = TRUE,
+            card_header("Sessons by browser"),
+            reactableOutput("service_browser_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Sessions by browser"),
+            girafeOutput("service_browser_plot") |>
+              withSpinner()
+          )
+        ),
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,7 +219,14 @@ ui <- page_navbar(
       # Page types ============================================================
       nav_panel(
         "Page types",
-        "Some breakdowns by page type"
+        "Some breakdowns by page type",
+        card(
+          height = 280,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("service_time_on_page") |>
+            withSpinner()
+        )
       )
     ) # of of underline tabset
   ), # end of nav page
@@ -267,8 +329,17 @@ ui <- page_navbar(
             value = textOutput("readtime_box") |>
               withSpinner()
           )
+        ),
+        card(
+          height = 530,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("pub_content_interactions_table") |>
+            withSpinner()
         )
       ),
+
+
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Accordions ============================================================

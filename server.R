@@ -80,6 +80,40 @@ server <- function(input, output, session) {
     bindCache(last_updated_date(), input$service_date_choice)
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Service devices ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  service_device <- reactive({
+    message("Reading service by device")
+
+    read_delta_lake("ees_service_device_browser", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_device_by_date <- reactive({
+    service_device() |>
+      filter_on_date(input$service_date_choice) |>
+      collect()
+  })
+
+  output$service_device_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_service_device_browser.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_device(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  output$service_device_table <- renderReactable({
+    service_device_by_date() |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_device_by_date())
+
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Data loading ==============================================================

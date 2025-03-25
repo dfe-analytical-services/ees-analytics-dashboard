@@ -105,7 +105,13 @@ ui <- page_navbar(
       # Devices ===============================================================
       nav_panel(
         "Devices",
-        "Some devices"
+        card(
+          height = 280,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("service_device_table") |>
+            withSpinner()
+        )
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

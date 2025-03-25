@@ -4832,10 +4832,17 @@
     },
     ".Rprofile": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "checksum": "6109639e2a834cc255c7517ea9a6a0a3"
 =======
       "checksum": "94f8cc7d86d84c070a839f886b7c52ec"
 >>>>>>> 146565e (remove accordions test data to add in example PR)
+=======
+      "checksum": "94f8cc7d86d84c070a839f886b7c52ec"
+=======
+      "checksum": "6109639e2a834cc255c7517ea9a6a0a3"
+>>>>>>> 4dee164 (add server code)
+>>>>>>> 0d7ac97 (add server code)
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4869,16 +4876,28 @@
     },
     "server.R": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "checksum": "fa8f181ee4dfebbe3e991eff4f6fc81d"
     },
     "tests/testdata-generator.R": {
       "checksum": "07bb55e98e5519a9ab5f425cbf3f2d43"
 =======
+=======
+>>>>>>> 0d7ac97 (add server code)
       "checksum": "e7f7c7a4deaa2d920f6f52771dafd546"
     },
     "tests/testdata-generator.R": {
       "checksum": "2ae01c3ee60bc094cd133e956b4a7431"
+<<<<<<< HEAD
 >>>>>>> 146565e (remove accordions test data to add in example PR)
+=======
+=======
+      "checksum": "fa8f181ee4dfebbe3e991eff4f6fc81d"
+    },
+    "tests/testdata-generator.R": {
+      "checksum": "07bb55e98e5519a9ab5f425cbf3f2d43"
+>>>>>>> 4dee164 (add server code)
+>>>>>>> 0d7ac97 (add server code)
     },
     "tests/testdata/ees__last_updated.parquet": {
       "checksum": "e63263254e66f943b850489cb722c0df"

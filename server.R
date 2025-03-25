@@ -237,7 +237,7 @@ server <- function(input, output, session) {
         .groups = "keep"
       ) |>
       ungroup() |>
-      mutate("avgTimeOnPage" = EngagementDuration / Pageviews) |>
+      mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
       select(page_type, Pageviews, avgTimeOnPage) |>
       arrange(desc(avgTimeOnPage)) |>
       dfe_reactable()
@@ -433,7 +433,7 @@ server <- function(input, output, session) {
         .groups = "keep"
       ) |>
       ungroup() |>
-      mutate("avgTimeOnPage" = EngagementDuration / Pageviews) |>
+      mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
       select(page_type, Pageviews, avgTimeOnPage) |>
       arrange(desc(avgTimeOnPage)) |>
       dfe_reactable()

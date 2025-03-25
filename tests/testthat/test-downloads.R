@@ -17,8 +17,8 @@ files <- c(
   "gsc_time_download",
   "gsc_queries_download",
   "pub_source_download",
-  "pub_featured_tables",
-  "pub_created_tables"
+  "pub_featured_tables_download",
+  "pub_created_tables_download"
 )
 
 test_that("Can download all files", {

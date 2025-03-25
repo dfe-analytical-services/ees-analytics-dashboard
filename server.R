@@ -86,7 +86,8 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = service_summary_by_date(),
       x = "date",
-      y = "sessions"
+      y = "sessions",
+      fontSize = 5
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -95,7 +96,8 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = service_summary_by_date(),
       x = "date",
-      y = "pageviews"
+      y = "pageviews",
+      fontSize = 5
     )
   }) |>
     bindCache(service_summary_by_date())

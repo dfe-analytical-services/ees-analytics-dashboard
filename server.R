@@ -196,6 +196,62 @@ server <- function(input, output, session) {
     bindCache(pub_summary_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Publication accordions ====================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_accordions_full <- reactive({
+    message("Reading publication accordions")
+
+    read_delta_lake("ees_publication_accordions", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_accordions_by_date <- reactive({
+    pub_accordions_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_accordions_full(), input$pub_date_choice, input$pub_name_choice)
+
+  # Download ------------------------------------------------------------------
+  output$pub_accordions_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_analytics_pub_accordions.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_accordions_full(), file)
+    }
+  )
+
+  # Table ---------------------------------------------------------------------
+  output$pub_accordions_release_table <- renderReactable({
+    pub_accordions_by_date() |>
+      filter(page_type == "Release page") |>
+      select(-page_type) |>
+      group_by(publication, eventLabel) |>
+      summarise("Clicks" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      rename("Accordion title" = eventLabel) |>
+      select(-publication) |>
+      arrange(desc(Clicks)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_accordions_by_date())
+
+  output$pub_accordions_methodology_table <- renderReactable({
+    pub_accordions_by_date() |>
+      filter(page_type == "Methodology") |>
+      select(-page_type) |>
+      group_by(publication, eventLabel) |>
+      summarise("Clicks" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      rename("Accordion title" = eventLabel) |>
+      select(-publication) |>
+      arrange(desc(Clicks)) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_accordions_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   search_console_full <- reactive({

@@ -39,6 +39,19 @@ technical_notes_content <- function() {
       "We track each time a user clicks to open or close an accordion. Be aware that as we only track the",
       " accordions by name, that any accordions that have shared the same name will be combined together."
     ),
+    tags$h2("Table tool and featured tables"),
+    tags$p(
+      "Currently we are only able to track table tool creation events, at that point we can track the file used",
+      ", but nothing more. In some instances, long publication and filenames have led to names getting truncated.",
+      " We can track featured tables when they are clicked from the table tool page, however",
+      " it is not currently possible to get the number of times users access featured tables or fast-track (explore",
+      " this data green buttons) from release pages. We don't have access to the publication information to join on",
+      " to currently."
+    ),
+    tags$p(
+      "We're working on implementing our own tracking of table tool events to give us more reliable and",
+      " fine-grained data."
+    ),
     tags$h2("Average read time"),
     tags$p(
       "We've followed the methodology used in ",

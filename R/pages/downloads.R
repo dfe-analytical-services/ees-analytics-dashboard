@@ -54,6 +54,18 @@ downloads_content <- function() {
       file_size = "< 60 MB" # TODO: Generate automatically
     ),
     tags$p("Traffic source and medium information for publication pages."),
+    shinyGovstyle::download_link(
+      "pub_featured_tables_download",
+      "Featured table views",
+      file_size = "< 40 MB" # TODO: Generate automatically
+    ),
+    tags$p("Views of featured tables from within the table tool."),
+    shinyGovstyle::download_link(
+      "pub_created_tables_download",
+      "Created tables by data set",
+      file_size = "< 20 MB" # TODO: Generate automatically
+    ),
+    tags$p("Tables created by users in the table tool broken down by the data set they were made from."),
     tags$br(),
     tags$br()
   )

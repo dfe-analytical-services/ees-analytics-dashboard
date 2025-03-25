@@ -289,7 +289,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
         tooltip = paste0(metric, ": ", value, "\n", x, ": ", !!sym(x)),
         data_id = seq_along(value)
       ),
-      size = 0,
+      size = 0.1,
       hover_nearest = TRUE
     ) +
     geom_line(linewidth = 0.6) +

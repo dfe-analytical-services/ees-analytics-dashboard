@@ -301,14 +301,14 @@ ui <- page_navbar(
             value = textOutput("readtime_box") |>
               withSpinner()
           )
+        ),
+        card(
+          height = 530,
+          full_screen = TRUE,
+          card_header("Title"),
+          reactableOutput("pub_content_interactions_table") |>
+            withSpinner()
         )
-      ),
-      card(
-        height = 530,
-        full_screen = TRUE,
-        card_header("Title"),
-        reactableOutput("pub_content_interactions_table") |>
-          withSpinner()
       ),
 
 

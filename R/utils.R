@@ -58,7 +58,9 @@ aggregate_total <- function(data, metric) {
 #' @param data data set
 #' @param x x axis data
 #' @param y y axis data
-simple_bar_chart <- function(data, x, y) {
+#' @param flip boolean to flip the chart to horizontal bars
+#' @param suffix character string to append to y values in axis label and tooltips
+simple_bar_chart <- function(data, x, y, flip = FALSE, suffix = "") {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -68,18 +70,26 @@ simple_bar_chart <- function(data, x, y) {
       aes(
         data_id = seq_along(!!sym(x)),
         tooltip = paste0(
-          x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y))
+          x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y)), suffix
         )
       ),
       fill = af_colour_values["dark-blue"],
       hover_nearest = TRUE
     ) +
     theme_af() +
-    scale_y_continuous(labels = comma) +
+    scale_y_continuous(labels = function(y) paste0(scales::comma(y), suffix)) +
     labs(
       x = NULL,
       y = NULL
     )
+  if (flip) {
+    data <- data |>
+      arrange(desc(!!sym(y)))
+
+    p <- p +
+      coord_flip() +
+      theme(panel.grid = element_blank())
+  }
 
   g <- girafe(
     ggobj = p,

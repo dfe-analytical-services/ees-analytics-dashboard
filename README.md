@@ -60,6 +60,15 @@ All data is pulled from our unity catalog area under the `analytics_app` schema.
 
 If you're adding any new data into the dashboard, make sure to update the `tests/testdata-generator.R` script to add in any new tables, and then use that script to regenerate the test data.
 
+Steps for adding new data:
+- Add a call to read in the full table into server.R and cache it
+- Create a filtered version based on the user inputs
+- Create any value box / table / plot outputs from that filtered data and cache them
+- Create a download output and add link to downloads page
+- Add any appropriate technical notes
+- Add the table name to the lists in the `tests/testdata-generator.R` script and regenerate test data
+- Add new UI tests as appropriate
+
 ### Tests and test data
 
 Tests can be run locally by using `shinytest2::test_app()`. You should do this regularly to check that the tests are passing against the code you are working on.

@@ -27,7 +27,7 @@ ui <- page_navbar(
         "service_date_choice",
         "Choose date range",
         names(date_options),
-        selected = "All time"
+        selected = "Last year"
       )
     ),
     ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +184,7 @@ ui <- page_navbar(
         "pub_date_choice",
         "Choose date range",
         names(date_options),
-        selected = "All time"
+        selected = "Last year"
       ),
     ),
     navset_underline(

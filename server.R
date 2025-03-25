@@ -521,12 +521,12 @@ server <- function(input, output, session) {
       mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
 
     simple_bar_chart(
-      data = data |>
-        mutate(source = factor(source, levels = source[order(pageviews_perc)])),
+      data = data,
       x = "source",
       y = "pageviews_perc",
       flip = TRUE,
-      suffix = "%"
+      suffix = "%",
+      reorder = TRUE
     )
   }) |>
     bindCache(pub_source_by_date())
@@ -550,12 +550,12 @@ server <- function(input, output, session) {
       mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
 
     simple_bar_chart(
-      data = data |>
-        mutate(medium = factor(medium, levels = medium[order(pageviews_perc)])),
+      data = data,
       x = "medium",
       y = "pageviews_perc",
       flip = TRUE,
-      suffix = "%"
+      suffix = "%",
+      reorder = TRUE
     )
   }) |>
     bindCache(pub_medium_summarised())

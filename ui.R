@@ -407,14 +407,58 @@ ui <- page_navbar(
       # Referrals =============================================================
       nav_panel(
         "Referrals",
-        "Some referral stuff"
+        layout_column_wrap(
+          navset_card_tab(
+            full_screen = TRUE,
+            id = "pub_referrals_tabs",
+            nav_panel(
+              "Chart",
+              tags$strong("Percentage of pageviews by source"),
+              girafeOutput("pub_source_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Full table",
+              reactableOutput("pub_source_table") |>
+                withSpinner()
+            )
+          ),
+          navset_card_tab(
+            full_screen = TRUE,
+            id = "pub_medium_tabs",
+            nav_panel(
+              "Chart",
+              tags$strong("Percentage of pageviews by medium"),
+              girafeOutput("pub_medium_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Full table",
+              reactableOutput("pub_medium_table") |>
+                withSpinner()
+            )
+          )
+        )
       ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Tables ================================================================
       nav_panel(
         "Tables",
-        "Something about tables"
+        layout_column_wrap(
+          card(
+            full_screen = TRUE,
+            card_header("Top viewed featured tables"),
+            reactableOutput("pub_featured_tables_table") |>
+              withSpinner()
+          ),
+          card(
+            full_screen = TRUE,
+            card_header("Data sets with most tables created"),
+            reactableOutput("pub_created_tables_table") |>
+              withSpinner()
+          )
+        )
       )
     ) # end of underline tabset
   ), # end of nav page

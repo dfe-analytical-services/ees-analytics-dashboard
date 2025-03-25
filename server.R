@@ -275,6 +275,8 @@ server <- function(input, output, session) {
   )
 
   # Dropdown options =========================================================
+  # TODO: Could get this from a separate smaller table to save needing to load
+  # the full publication summary table on initial start up
   publication_list <- reactive({
     pub_summary_full() |>
       distinct(publication) |>
@@ -618,4 +620,206 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_search_events_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Pub sources and mediums ===================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_source_full <- reactive({
+    message("Reading publication sources and mediums")
+
+    read_delta_lake("ees_publication_source_medium", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_source_by_date <- reactive({
+    pub_source_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_source_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_source_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_source.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_source_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  pub_source_summarised <- reactive({
+    pub_source_by_date() |>
+      group_by(publication, source) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication) |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(pub_source_by_date())
+
+  output$pub_source_table <- renderReactable({
+    pub_source_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_source_summarised())
+
+  pub_medium_summarised <- reactive({
+    pub_source_by_date() |>
+      group_by(publication, medium) |>
+      summarise(
+        "pageviews" = sum(pageviews),
+        "sessions" = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication) |>
+      arrange(desc(pageviews))
+  }) |>
+    bindCache(pub_source_by_date())
+
+  output$pub_medium_table <- renderReactable({
+    pub_medium_summarised() |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_medium_summarised())
+
+  # Plots ---------------------------------------------------------------------
+  output$pub_source_plot <- renderGirafe({
+    top_5 <- pub_source_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- pub_source_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        source = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "source",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(pub_source_by_date())
+
+  output$pub_medium_plot <- renderGirafe({
+    top_5 <- pub_medium_summarised() |>
+      filter(pageviews > 0) |>
+      arrange(desc(pageviews)) |>
+      head(5)
+
+    other <- pub_medium_summarised() |>
+      arrange(desc(pageviews)) |>
+      slice(6:n()) |>
+      summarise(
+        medium = "other",
+        pageviews = sum(pageviews, na.rm = TRUE),
+        sessions = sum(sessions, na.rm = TRUE)
+      )
+
+    data <- bind_rows(top_5, other) |>
+      mutate(pageviews_perc = dfeR::round_five_up(pageviews / sum(pageviews) * 100, 1))
+
+    simple_bar_chart(
+      data = data,
+      x = "medium",
+      y = "pageviews_perc",
+      flip = TRUE,
+      suffix = "%",
+      reorder = TRUE
+    )
+  }) |>
+    bindCache(pub_medium_summarised())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Featured tables ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_featured_tables_full <- reactive({
+    message("Reading featured tables")
+
+    read_delta_lake("ees_publication_featured_tables", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_featured_tables_by_date <- reactive({
+    pub_featured_tables_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_featured_tables_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_featured_tables_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_featured_tables.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_featured_tables_full(), file)
+    }
+  )
+
+  output$pub_featured_tables_table <- renderReactable({
+    pub_featured_tables_by_date() |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      arrange(desc(Count)) |>
+      select(-publication) |>
+      rename("Featured table title" = eventLabel) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_featured_tables_by_date())
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Created tables ============================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_created_tables_full <- reactive({
+    message("Reading created tables")
+
+    read_delta_lake("ees_publication_tables_created", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_created_tables_by_date <- reactive({
+    pub_created_tables_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(pub_created_tables_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_created_tables_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_created_tables.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_created_tables_full(), file)
+    }
+  )
+
+  output$pub_created_tables_table <- renderReactable({
+    pub_created_tables_by_date() |>
+      group_by(publication, eventLabel) |>
+      summarise("Count" = sum(eventCount), .groups = "keep") |>
+      ungroup() |>
+      arrange(desc(Count)) |>
+      select(-publication) |>
+      rename("Data set title" = eventLabel) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_created_tables_by_date())
 }

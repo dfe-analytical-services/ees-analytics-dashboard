@@ -74,6 +74,7 @@ Imagine we had a SQL table called 'example'...
 - `example_table` = Tables based on filtered data
 - `example_download` = Download links based on filtered data
 - `example_box` = Value boxes based on filtered data
+- `example_tabs` = ID for card tabsets
 
 ### Adding new data
 

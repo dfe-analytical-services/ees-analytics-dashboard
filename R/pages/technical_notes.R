@@ -14,6 +14,19 @@ technical_notes_content <- function() {
       " time will be starting a new session. All session starts events are recorded, as this is done before",
       " any interaction with cookies is possible."
     ),
+    tags$h2("Source and medium"),
+    tags$p(
+      "The source and medium are defined by Google Analytics 4, and are the source of the user visit and the",
+      " medium of the visit. For example, a user might come from a search engine (source) and the medium might",
+      " be organic search. This is useful for understanding where users are coming from and how they are finding",
+      " the website."
+    ),
+    tags$p("Within source and medium data there are a few different options for no data:"),
+    tags$ul(
+      tags$li("(direct) - the user has clicked on a link in an email or a document"),
+      tags$li("(none) - there is no referrer data, e.g. a user has typed the URL directly into the browser"),
+      tags$li("(not set) - when the source and medium may exist, but are not known")
+    ),
     tags$h2("Google searches (Google Search Console"),
     tags$p(
       "We show the top Google searches by clicks and appearances for the service and for each publication, at
@@ -25,6 +38,19 @@ technical_notes_content <- function() {
     tags$p(
       "We track each time a user clicks to open or close an accordion. Be aware that as we only track the",
       " accordions by name, that any accordions that have shared the same name will be combined together."
+    ),
+    tags$h2("Table tool and featured tables"),
+    tags$p(
+      "Currently we are only able to track table tool creation events, at that point we can track the file used",
+      ", but nothing more. In some instances, long publication and filenames have led to names getting truncated.",
+      " We can track featured tables when they are clicked from the table tool page, however",
+      " it is not currently possible to get the number of times users access featured tables or fast-track (explore",
+      " this data green buttons) from release pages. We don't have access to the publication information to join on",
+      " to currently."
+    ),
+    tags$p(
+      "We're working on implementing our own tracking of table tool events to give us more reliable and",
+      " fine-grained data."
     ),
     tags$h2("Average read time"),
     tags$p(

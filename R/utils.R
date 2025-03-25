@@ -59,17 +59,23 @@ aggregate_total <- function(data, metric) {
 #' @param x x axis data
 #' @param y y axis data
 #' @param height height of the chart
-simple_bar_chart <- function(data, x, y, height = 1.7) {
+#' @param flip boolean to flip the chart to horizontal bars
+#' @param suffix character string to append to y values in axis label and tooltips
+#' @param reorder boolean to reorder the data by y values
+simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = "", reorder = FALSE) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
   p <- data |>
-    ggplot(aes(x = !!sym(x), y = !!sym(y))) +
+    ggplot(aes(
+      x = if (reorder) reorder(!!sym(x), !!sym(y)) else !!sym(x),
+      y = !!sym(y)
+    )) +
     geom_col_interactive(
       aes(
         data_id = seq_along(!!sym(x)),
         tooltip = paste0(
-          x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y))
+          x_var, ": ", !!sym(x), "\n", y_var, ": ", scales::comma(!!sym(y)), suffix
         )
       ),
       fill = af_colour_values["dark-blue"],
@@ -85,6 +91,14 @@ simple_bar_chart <- function(data, x, y, height = 1.7) {
       x = NULL,
       y = NULL
     )
+  if (flip) {
+    data <- data |>
+      arrange(desc(!!sym(y)))
+
+    p <- p +
+      coord_flip() +
+      theme(panel.grid = element_blank())
+  }
 
   g <- girafe(
     ggobj = p,

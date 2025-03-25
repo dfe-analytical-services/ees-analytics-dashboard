@@ -8,7 +8,7 @@ start <- Sys.time()
 pkgs <- c("odbc", "pool", "dplyr", "duckplyr")
 
 for (pkg in pkgs) {
-  shhh(library(pkg, character.only = TRUE))
+  library(pkg, character.only = TRUE)
 }
 
 # Custom functions ============================================================
@@ -61,7 +61,8 @@ create_last_updated <- function() {
 # Execute =====================================================================
 by_date_datasets <- c(
   "ees_service_summary", "ees_publication_summary", "ees_search_console_timeseries",
-  "ees_service_device_browser", "ees_publication_accordions", "ees_publication_search_events"
+  "ees_service_device_browser", "ees_publication_accordions", "ees_publication_search_events",
+  "ees_publication_source_medium", "ees_publication_featured_tables", "ees_publication_tables_created"
 )
 
 no_date_datasets <- c(

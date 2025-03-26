@@ -77,7 +77,8 @@ server <- function(input, output, session) {
       data = data,
       x = "date",
       lines = c("pageviews_avg7", "sessions_avg7"),
-      labels = c("Pageviews", "Sessions")
+      labels = c("Pageviews", "Sessions"),
+      height = 2
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -315,7 +316,8 @@ server <- function(input, output, session) {
       y = "pageviews",
       height = 4,
       fontSize = 8,
-      flip = TRUE
+      flip = TRUE,
+      reorder = TRUE
     )
   }) |>
     bindCache(service_time_on_page_by_date())
@@ -472,6 +474,86 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_medium_summarised())
 
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Download types =====================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_downloads_full <- reactive({
+    message("Reading service downloadss and mediums")
+
+    read_delta_lake("ees_service_downloads", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_downloads_by_date <- reactive({
+    service_downloads_full() |>
+      filter_on_date(input$service_date_choice)
+  }) |>
+    bindCache(service_downloads_full(), input$service_date_choice)
+
+  output$service_downloads_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_service_downloads.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_downloads_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  service_downloads_summarised <- reactive({
+    service_downloads_by_date() |>
+      group_by(page_type, download_type) |>
+      summarise(
+        "eventCount" = sum(eventCount),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(page_type, download_type)
+  }) |>
+    bindCache(service_downloads_by_date())
+
+  output$service_downloads_table <- renderReactable({
+    service_downloads_summarised() |>
+      mutate(
+        "eventCount" = dfeR::comma_sep(eventCount)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Download type" = download_type,
+        "Download count" = eventCount
+      ) |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_downloads_summarised())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$service_downloads_plot <- renderGirafe({
+    data_for_chart <- service_downloads_summarised() |>
+      mutate(Download = paste0(page_type, " - ", download_type)) |>
+      arrange(desc(eventCount))
+
+
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "Download",
+      y = "eventCount",
+      flip = TRUE,
+      reorder = TRUE,
+      height = 3
+    )
+  }) |>
+    bindCache(service_downloads_by_date())
+
+
+
+
+
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -594,6 +676,9 @@ server <- function(input, output, session) {
       rename("Accordion title" = eventLabel) |>
       select(-publication) |>
       arrange(desc(Clicks)) |>
+      mutate(
+        "Clicks" = dfeR::comma_sep(Clicks)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
@@ -608,6 +693,9 @@ server <- function(input, output, session) {
       rename("Accordion title" = eventLabel) |>
       select(-publication) |>
       arrange(desc(Clicks)) |>
+      mutate(
+        "Clicks" = dfeR::comma_sep(Clicks)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_accordions_by_date())
@@ -682,7 +770,8 @@ server <- function(input, output, session) {
       x = "page_type",
       y = "Pageviews",
       flip = TRUE,
-      height = 3
+      height = 3,
+      reorder = TRUE
     )
   }) |>
     bindCache(pub_summary_by_date())
@@ -786,10 +875,37 @@ server <- function(input, output, session) {
       y = "value",
       flip = TRUE,
       height = 2.5,
-      fontSize = 7
+      fontSize = 7,
+      reorder = TRUE
     )
   }) |>
     bindCache(pub_summary_by_date())
+
+
+  # Value box -----------------------------------------------------------------
+  output$table_tool_box <- renderText({
+    tables_created <- content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      pull(total_tables_created) |>
+      as.numeric()
+
+    table_tool_views <- content_interactions_by_date() |>
+      filter(page_type == "Table tool") |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      pull(pageviews) |>
+      as.numeric()
+
+    paste(round(tables_created / table_tool_views, 2))
+  }) |>
+    bindCache(readtime_full(), input$pub_name_choice)
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================
@@ -822,7 +938,7 @@ server <- function(input, output, session) {
 
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Publication devices ===========================================================
+  # Publication devices =======================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   pub_device_full <- reactive({
     message("Reading pub by device")
@@ -856,6 +972,9 @@ server <- function(input, output, session) {
       summarise(
         Sessions = sum(sessions),
         .groups = "drop"
+      ) |>
+      mutate(
+        "Sessions" = dfeR::comma_sep(Sessions)
       ) |>
       dfe_reactable()
   }) |>
@@ -942,8 +1061,11 @@ server <- function(input, output, session) {
   output$service_gsc_q_clicks_table <- renderReactable({
     service_search_console() |>
       filter(metric == "clicks") |>
-      rename("clicks" = count) |>
+      rename("Clicks" = count) |>
       select(-metric) |>
+      mutate(
+        "Clicks" = dfeR::comma_sep(Clicks)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_search_console())
@@ -953,12 +1075,21 @@ server <- function(input, output, session) {
       filter(metric == "impressions") |>
       rename("impressions" = count) |>
       select(-metric) |>
+      mutate(
+        "impressions" = dfeR::comma_sep(impressions)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_search_console())
 
   output$pub_gsc_table <- renderReactable({
     publication_search_console() |>
+      mutate(
+        "count" = dfeR::comma_sep(count)
+      ) |>
+      rename(
+        "Clicks" = count
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(publication_search_console())
@@ -1078,6 +1209,15 @@ server <- function(input, output, session) {
 
   output$pub_source_table <- renderReactable({
     pub_source_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Source" = source,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_source_summarised())
@@ -1098,6 +1238,15 @@ server <- function(input, output, session) {
 
   output$pub_medium_table <- renderReactable({
     pub_medium_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Medium" = medium,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_medium_summarised())
@@ -1195,6 +1344,9 @@ server <- function(input, output, session) {
       arrange(desc(Count)) |>
       select(-publication) |>
       rename("Featured table title" = eventLabel) |>
+      mutate(
+        "Count" = dfeR::comma_sep(Count)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_featured_tables_by_date())
@@ -1233,6 +1385,9 @@ server <- function(input, output, session) {
       arrange(desc(Count)) |>
       select(-publication) |>
       rename("Data set title" = eventLabel) |>
+      mutate(
+        "Count" = dfeR::comma_sep(Count)
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(pub_created_tables_by_date())

@@ -257,7 +257,9 @@ pretty_time <- function(seconds) {
 #' @param data Data frame containing the data to plot
 #' @param x Column name for the x-axis
 #' @param lines Vector of column names for the metrics to plot as lines
-simple_line_chart <- function(data, x, lines, labels = NULL) {
+#' @param labels Optional vector of labels to use for the lines
+#' @param height Height of the chart
+simple_line_chart <- function(data, x, lines, labels = NULL, height = 1.7) {
   missing_columns <- setdiff(lines, colnames(data))
   if (length(missing_columns) > 0) {
     stop(
@@ -339,7 +341,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
     options = list(
       opts_hover = list(css = "cursor:pointer;fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;")
     ),
-    height_svg = 1.7
+    height_svg = height
   )
 
   girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))

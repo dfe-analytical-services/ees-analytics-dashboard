@@ -39,78 +39,88 @@ ui <- page_navbar(
       nav_panel(
         "Overview",
         layout_column_wrap(
-          bslib::value_box(
-            title = tooltip(
-              span(
-                "Number of sessions",
-                bsicons::bs_icon("question-circle-fill")
+          style = css(grid_template_columns = "2fr 7fr"),
+          column(
+            12,
+            bslib::value_box(
+              height = 110,
+              title = tooltip(
+                span(
+                  "Number of sessions",
+                  bsicons::bs_icon("question-circle-fill")
+                ),
+                paste(
+                  "The total number of sessions. This is only applicable to the service as",
+                  "a whole - sessions are only counted for entry pages in the Google Analytics",
+                  "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
+                  "as two sessions."
+                ),
+                placement = "bottom"
               ),
-              paste(
-                "The total number of sessions. This is only applicable to the service as",
-                "a whole - sessions are only counted for entry pages in the Google Analytics",
-                "data. Sessions have a 24 hour limit, a session lasting 25 hours would count",
-                "as two sessions."
-              ),
-              placement = "bottom"
-            ),
-            value = textOutput("service_sessions_box") |>
-              withSpinner()
-          ),
-          bslib::value_box(
-            title = tooltip(
-              span(
-                "Number of pageviews",
-                bsicons::bs_icon("question-circle-fill")
-              ),
-              "The total number of pageviews.",
-              placement = "bottom"
-            ),
-            value = textOutput("service_pageviews_box") |>
-              withSpinner()
-          ),
-          bslib::value_box(
-            title = tooltip(
-              span(
-                "Average session duration",
-                bsicons::bs_icon("question-circle-fill")
-              ),
-              "The average session duration (total engagment time / total sessions).",
-              placement = "bottom"
-            ),
-            value = textOutput("service_avg_session_duration_box") |>
-              withSpinner()
-          ),
-          bslib::value_box(
-            title = tooltip(
-              span(
-                "Average page views per session",
-                bsicons::bs_icon("question-circle-fill")
-              ),
-              "The average page views per session. Total pageviews / total sessions.",
-              placement = "bottom"
-            ),
-            value = textOutput("service_pageviews_per_session_box") |>
-              withSpinner()
-          )
-        ),
-        layout_column_wrap(
-          navset_card_tab(
-            id = "service_overview_tabs",
-            full_screen = TRUE,
-            nav_panel(
-              "7 day rolling average",
-              girafeOutput("service_rolling_plot") |>
+              value = textOutput("service_sessions_box") |>
                 withSpinner()
             ),
-            nav_panel(
-              "Pageviews by day",
-              girafeOutput("service_pageviews_plot") |>
+            bslib::value_box(
+              height = 110,
+              title = tooltip(
+                span(
+                  "Number of pageviews",
+                  bsicons::bs_icon("question-circle-fill")
+                ),
+                "The total number of pageviews.",
+                placement = "bottom"
+              ),
+              value = textOutput("service_pageviews_box") |>
                 withSpinner()
             ),
-            nav_panel(
-              "Sessions by day",
-              girafeOutput("service_sessions_plot") |>
+            bslib::value_box(
+              height = 110,
+              title = tooltip(
+                span(
+                  "Average session duration",
+                  bsicons::bs_icon("question-circle-fill")
+                ),
+                "The average session duration (total engagment time / total sessions).",
+                placement = "bottom"
+              ),
+              value = textOutput("service_avg_session_duration_box") |>
                 withSpinner()
+            ),
+            bslib::value_box(
+              height = 110,
+              title = tooltip(
+                span(
+                  "Average page views per session",
+                  bsicons::bs_icon("question-circle-fill")
+                ),
+                "The average page views per session. Total pageviews / total sessions.",
+                placement = "bottom"
+              ),
+              value = textOutput("service_pageviews_per_session_box") |>
+                withSpinner()
+            )
+          ),
+          column(
+            12,
+            navset_card_tab(
+              id = "service_overview_tabs",
+              full_screen = TRUE,
+              height = 500,
+              nav_panel(
+                "7 day rolling average",
+                girafeOutput("service_rolling_plot") |>
+                  withSpinner()
+              ),
+              nav_panel(
+                "Pageviews by day",
+                girafeOutput("service_pageviews_plot") |>
+                  withSpinner()
+              ),
+              nav_panel(
+                "Sessions by day",
+                girafeOutput("service_sessions_plot") |>
+                  withSpinner()
+              )
             )
           )
         )
@@ -235,6 +245,34 @@ ui <- page_navbar(
           )
         )
       ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Downloads ===============================================================
+      nav_panel(
+        "Downloads",
+        layout_column_wrap(
+          card(
+            height = 280,
+            full_screen = TRUE,
+            card_header("Downloads"),
+            reactableOutput("service_downloads_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Downloads"),
+            girafeOutput("service_downloads_plot") |>
+              withSpinner()
+          )
+        ),
+      ),
+
+
+
+
+
+
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Page types ============================================================
       nav_panel(
@@ -356,10 +394,20 @@ ui <- page_navbar(
         "Content interactions",
         layout_column_wrap(
           style = css(grid_template_columns = "1fr 2fr 2fr"),
-          bslib::value_box(
-            title = "Time to read latest release in full",
-            value = textOutput("readtime_box") |>
-              withSpinner()
+          column(
+            12,
+            bslib::value_box(
+              height = 170,
+              title = "Time to read latest release in full",
+              value = textOutput("readtime_box") |>
+                withSpinner()
+            ),
+            bslib::value_box(
+              height = 170,
+              title = "Tables created per table tool view",
+              value = textOutput("table_tool_box") |>
+                withSpinner()
+            )
           ),
           card(
             height = 200,

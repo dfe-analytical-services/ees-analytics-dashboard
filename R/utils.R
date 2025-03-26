@@ -291,9 +291,16 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
         data_id = seq_along(value)
       ),
       size = 0.1,
-      hover_nearest = TRUE
+      hover_nearest = TRUE,
+      alpha = 0 # Make points transparent
     ) +
-    geom_line(linewidth = 0.6) +
+    geom_line_interactive(
+      aes(
+        tooltip = paste0(metric, ": ", dfeR::comma_sep(value), "\n", x, ": ", !!sym(x)),
+        data_id = seq_along(value)
+      ),
+      linewidth = 0.4
+    ) +
     theme_af() +
     scale_colour_discrete_af(palette = "main2") +
     labs(
@@ -330,7 +337,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
   g <- girafe(
     ggobj = p,
     options = list(
-      opts_hover = list(css = "fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;")
+      opts_hover = list(css = "cursor:pointer;fill:#ffdd00;stroke:black;stroke-width:1px;opacity:1;")
     ),
     height_svg = 1.7
   )

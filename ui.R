@@ -1,6 +1,7 @@
 ui <- page_navbar(
   title = "Explore education statistics analytics",
   id = "pages",
+  header = tags$head(includeHTML(("google-analytics.html"))),
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Custom styling ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

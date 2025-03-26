@@ -2,6 +2,7 @@ ui <- page_navbar(
   title = "Explore education statistics analytics",
   id = "pages",
   header = tags$head(includeHTML(("google-analytics.html"))),
+  tags$head(tags$style(type = "text/css", "text {font-family:  sans-serif}")), # override font for girafe charts
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Custom styling ============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,7 +106,7 @@ ui <- page_navbar(
             navset_card_tab(
               id = "service_overview_tabs",
               full_screen = TRUE,
-              height = 500,
+              height = 600,
               nav_panel(
                 "7 day rolling average",
                 girafeOutput("service_rolling_plot") |>

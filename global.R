@@ -85,6 +85,11 @@ options(
   spinner.proxy.height = "30px"
 )
 
+# TODO: Cache to temporary place on disk, should make sure it is
+# - wiped out with each deploy on server
+# - wiped out easily when developing locally
+# shinyOptions(cache = cachem::cache_disk(file.path(dirname(tempdir()), "ees-analytics-cache")))
+
 # Custom functions ============================================================
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)
 

@@ -37,7 +37,7 @@ technical_notes_content <- function() {
       tags$li("(none) - there is no referrer data, e.g. a user has typed the URL directly into the browser"),
       tags$li("(not set) - when the source and medium may exist, but are not known")
     ),
-    tags$h2("Google searches (Google Search Console"),
+    tags$h2("Google searches (Google Search Console)"),
     tags$p(
       "We show the top Google searches by clicks and appearances for the service and for each publication, at
       publication level these are the searches that the URL is currently appearing for, and gives a sense of the
@@ -51,8 +51,11 @@ technical_notes_content <- function() {
     ),
     tags$h2("Table tool and featured tables"),
     tags$p(
-      "Currently we are only able to track table tool creation events, at that point we can track the file used",
-      ", but nothing more. In some instances, long publication and filenames have led to names getting truncated.",
+      "Currently we are only able to track table tool creation events at that point we can track the file used",
+      ", but nothing more."
+    ),
+    tags$p(
+      "In some instances, long publication and filenames have led to names getting truncated.",
       " We can track featured tables when they are clicked from the table tool page, however",
       " it is not currently possible to get the number of times users access featured tables or fast-track (explore",
       " this data green buttons) from release pages. We don't have access to the publication information to join on",

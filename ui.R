@@ -108,8 +108,8 @@ ui <- page_navbar(
               full_screen = TRUE,
               height = 600,
               nav_panel(
-                "7 day rolling average",
-                girafeOutput("service_rolling_plot") |>
+                "Sessions by day",
+                girafeOutput("service_sessions_plot") |>
                   withSpinner()
               ),
               nav_panel(
@@ -118,8 +118,8 @@ ui <- page_navbar(
                   withSpinner()
               ),
               nav_panel(
-                "Sessions by day",
-                girafeOutput("service_sessions_plot") |>
+                "7 day rolling average",
+                girafeOutput("service_rolling_plot") |>
                   withSpinner()
               )
             )
@@ -178,7 +178,7 @@ ui <- page_navbar(
         layout_column_wrap(
           navset_card_tab(
             full_screen = TRUE,
-            id = "pub_referrals_tabs",
+            id = "service_referrals_tabs",
             nav_panel(
               "Chart",
               tags$strong("Percentage of pageviews by source"),
@@ -193,7 +193,7 @@ ui <- page_navbar(
           ),
           navset_card_tab(
             full_screen = TRUE,
-            id = "pub_medium_tabs",
+            id = "service_medium_tabs",
             nav_panel(
               "Chart",
               tags$strong("Percentage of pageviews by medium"),
@@ -255,24 +255,19 @@ ui <- page_navbar(
           card(
             height = 280,
             full_screen = TRUE,
-            card_header("Downloads"),
+            card_header("Types of downloads"),
             reactableOutput("service_downloads_table") |>
               withSpinner()
           ),
           card(
             height = 600,
             full_screen = TRUE,
-            card_header("Downloads"),
+            card_header("Types of downloads"),
             girafeOutput("service_downloads_plot") |>
               withSpinner()
           )
         ),
       ),
-
-
-
-
-
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Page types ============================================================
@@ -289,10 +284,7 @@ ui <- page_navbar(
           card(
             height = 300,
             full_screen = TRUE,
-            card_header(
-              "Page views",
-              tooltip(bs_icon("info-circle"), "Views by area of the service")
-            ),
+            card_header("Pageviews by area of the service"),
             girafeOutput("service_time_on_page_plot") |>
               withSpinner()
           )
@@ -394,58 +386,52 @@ ui <- page_navbar(
       nav_panel(
         "Content interactions",
         layout_column_wrap(
-          style = css(grid_template_columns = "1fr 2fr 2fr"),
-          column(
-            12,
-            bslib::value_box(
-              height = 170,
-              title = "Time to read latest release in full",
-              value = textOutput("readtime_box") |>
-                withSpinner()
-            ),
-            bslib::value_box(
-              height = 170,
-              title = "Tables created per table tool view",
-              value = textOutput("table_tool_box") |>
-                withSpinner()
-            )
-          ),
-          card(
-            height = 200,
-            full_screen = TRUE,
-            card_header("Title"),
-            reactableOutput("pub_content_interactions_table") |>
+          bslib::value_box(
+            height = 170,
+            title = "Time to read latest release in full",
+            value = textOutput("readtime_box") |>
               withSpinner()
           ),
-          card(
-            height = 300,
-            full_screen = TRUE,
-            card_header(
-              "Page views",
-              tooltip(bs_icon("info-circle"), "The total number of pageviews.")
-            ),
-            girafeOutput("pub_content_interactions_plot") |>
+          bslib::value_box(
+            height = 170,
+            title = "Tables created per table tool view",
+            value = textOutput("table_tool_box") |>
               withSpinner()
           )
         ),
         layout_column_wrap(
-          style = css(grid_template_columns = "3fr 4fr"),
-          card(
-            height = 200,
+          navset_card_tab(
             full_screen = TRUE,
-            card_header("Event summary"),
-            reactableOutput("pub_content_interactions_summary_table") |>
-              withSpinner()
-          ),
-          card(
-            height = 400,
-            full_screen = TRUE,
-            card_header(
-              "Page views",
-              tooltip(bs_icon("info-circle"), "Event summary.")
+            id = "pub_engagement_tabs",
+            nav_panel(
+              "Average engagement time",
+              girafeOutput("pub_content_engagement_plot") |>
+                withSpinner()
             ),
-            girafeOutput("pub_content_interactions_summary_plot") |>
-              withSpinner()
+            nav_panel(
+              "Pageviews",
+              girafeOutput("pub_content_interactions_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Full table",
+              reactableOutput("pub_content_interactions_table") |>
+                withSpinner()
+            )
+          ),
+          navset_card_tab(
+            full_screen = TRUE,
+            id = "pub_events_tabs",
+            nav_panel(
+              "Events chart",
+              girafeOutput("pub_content_interactions_summary_plot") |>
+                withSpinner()
+            ),
+            nav_panel(
+              "Events table",
+              reactableOutput("pub_content_interactions_summary_table") |>
+                withSpinner()
+            )
           )
         )
       ),

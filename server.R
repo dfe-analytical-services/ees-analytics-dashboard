@@ -122,7 +122,7 @@ server <- function(input, output, session) {
 
   output$service_device_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_service_device_browser.csv")
+      paste0(Sys.Date(), "_service_device.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(service_device_full(), file)
@@ -260,7 +260,7 @@ server <- function(input, output, session) {
 
   output$service_time_on_page_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_ees_service_time_on_page.csv")
+      paste0(Sys.Date(), "_service_time_on_page.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(service_time_on_page_full(), file)
@@ -774,13 +774,40 @@ server <- function(input, output, session) {
       reorder = TRUE
     )
   }) |>
-    bindCache(pub_summary_by_date())
+    bindCache(content_interactions_by_date())
+
+  output$pub_content_engagement_plot <- renderGirafe({
+    data_for_chart <- content_interactions_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "Pageviews" = sum(pageviews),
+        "EngagementDuration" = sum(engagementDuration),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
+      select(page_type, Pageviews, avgTimeOnPage) |>
+      arrange(desc(avgTimeOnPage))
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "avgTimeOnPage",
+      flip = TRUE,
+      height = 3,
+      reorder = TRUE,
+      suffix = " seconds"
+    )
+  }) |>
+    bindCache(content_interactions_by_date())
 
   # Summary of events ---------------------------------------------------------
 
   content_interactions_summary_full <- reactive({
     message("Reading publication summary")
 
+    # TODO: refactor so we don't need to read in twice
+    # this table is already read in further up the script!!
     read_delta_lake("ees_publication_summary", Sys.getenv("TESTTHAT"))
   }) |>
     bindCache(last_updated_date())
@@ -805,12 +832,12 @@ server <- function(input, output, session) {
   # Table ---------------------------------------------------------------------
 
   pub_interactions_summary_metric_labels <- c(
-    total_session_starts = "Total sessions starts on release page",
-    total_accordion_events = "Total accordion click events on release page",
-    total_download_events = "Total data and file downloads",
-    total_featured_tables = "Total featured table clicks",
-    total_search_events = "Total search events on release page",
-    total_tables_created = "Total tables created"
+    total_session_starts = "First page in session (release page)",
+    total_accordion_events = "Accordion clicks (release page)",
+    total_download_events = "Total downloads",
+    total_featured_tables = "Total featured table clicks (table tool)",
+    total_search_events = "In page searches (release page)",
+    total_tables_created = "Custom tables created"
   )
 
   output$pub_content_interactions_summary_table <- renderReactable({
@@ -874,8 +901,7 @@ server <- function(input, output, session) {
       x = "metric",
       y = "value",
       flip = TRUE,
-      height = 2.5,
-      fontSize = 7,
+      height = 3,
       reorder = TRUE
     )
   }) |>
@@ -935,8 +961,6 @@ server <- function(input, output, session) {
   }) |>
     bindCache(readtime_full(), input$pub_name_choice)
 
-
-
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication devices =======================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -957,7 +981,7 @@ server <- function(input, output, session) {
 
   output$pub_device_download <- downloadHandler(
     filename = function() {
-      paste0(Sys.Date(), "_ees_pub_device.csv")
+      paste0(Sys.Date(), "_pub_device.csv")
     },
     content = function(file) {
       duckplyr::compute_csv(pub_device_full(), file)

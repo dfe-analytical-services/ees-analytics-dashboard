@@ -62,7 +62,8 @@ aggregate_total <- function(data, metric) {
 #' @param flip boolean to flip the chart to horizontal bars
 #' @param suffix character string to append to y values in axis label and tooltips
 #' @param reorder boolean to reorder the data by y values
-simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = "", reorder = FALSE) {
+#' @param font-size font size for the chart
+simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = "", reorder = FALSE, fontSize = 10) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -83,8 +84,8 @@ simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = ""
     ) +
     theme_af() +
     theme(
-      text = element_text(size = 10),
-      axis.text = element_text(size = 10)
+      text = element_text(size = fontSize),
+      axis.text = element_text(size = fontSize)
     ) +
     scale_y_continuous(labels = comma) +
     labs(
@@ -109,7 +110,7 @@ simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = ""
     height_svg = height
   )
 
-  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")))
+  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")), opts_sizing(rescale = TRUE))
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -309,7 +310,9 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
     theme(
       legend.position = "none",
       panel.grid = element_blank(),
-      plot.margin = margin(5, 100, 5, 5) # Add extra whitespace to the right
+      plot.margin = margin(5, 100, 5, 5), # Add extra whitespace to the right
+      text = element_text(size = 5),
+      axis.text = element_text(size = 5)
     )
 
   if (!is.null(labels)) {
@@ -324,7 +327,7 @@ simple_line_chart <- function(data, x, lines, labels = NULL) {
         aes(label = metric),
         hjust = -0.1, # Move labels to the right of the lines
         vjust = 0.5, # Align labels at the same height as the line ends
-        size = 4,
+        size = 2.0, # Adjust size to match theme text size
         color = "black",
         show.legend = FALSE
       ) +

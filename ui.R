@@ -239,13 +239,24 @@ ui <- page_navbar(
       # Page types ============================================================
       nav_panel(
         "Page types",
-        "Some breakdowns by page type",
-        card(
-          height = 280,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("service_time_on_page") |>
-            withSpinner()
+        layout_column_wrap(
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Interactions by area of the service"),
+            reactableOutput("service_time_on_page") |>
+              withSpinner()
+          ),
+          card(
+            height = 300,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "Views by area of the service")
+            ),
+            girafeOutput("service_time_on_page_plot") |>
+              withSpinner()
+          )
         )
       )
     ) # of of underline tabset
@@ -344,22 +355,73 @@ ui <- page_navbar(
       nav_panel(
         "Content interactions",
         layout_column_wrap(
+          style = css(grid_template_columns = "1fr 2fr 2fr"),
           bslib::value_box(
             title = "Time to read latest release in full",
             value = textOutput("readtime_box") |>
               withSpinner()
+          ),
+          card(
+            height = 200,
+            full_screen = TRUE,
+            card_header("Title"),
+            reactableOutput("pub_content_interactions_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 300,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+            ),
+            girafeOutput("pub_content_interactions_plot") |>
+              withSpinner()
           )
         ),
-        card(
-          height = 530,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("pub_content_interactions_table") |>
-            withSpinner()
+        layout_column_wrap(
+          style = css(grid_template_columns = "3fr 4fr"),
+          card(
+            height = 200,
+            full_screen = TRUE,
+            card_header("Event summary"),
+            reactableOutput("pub_content_interactions_summary_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 400,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "Event summary.")
+            ),
+            girafeOutput("pub_content_interactions_summary_plot") |>
+              withSpinner()
+          )
         )
       ),
 
-
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Devices ===============================================================
+      nav_panel(
+        "Devices",
+        layout_column_wrap(
+          card(
+            height = 450,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            reactableOutput("pub_device_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 450,
+            full_screen = TRUE,
+            card_header("Sessions by device"),
+            girafeOutput("pub_device_plot") |>
+              withSpinner()
+          )
+        )
+      ),
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Accordions ============================================================

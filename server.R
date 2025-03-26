@@ -86,7 +86,8 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = service_summary_by_date(),
       x = "date",
-      y = "sessions"
+      y = "sessions",
+      fontSize = 5
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -95,7 +96,8 @@ server <- function(input, output, session) {
     simple_bar_chart(
       data = service_summary_by_date(),
       x = "date",
-      y = "pageviews"
+      y = "pageviews",
+      fontSize = 5
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -132,7 +134,7 @@ server <- function(input, output, session) {
     service_device_by_date() |>
       mutate(device = case_when(
         device %in% c("mobile", "desktop", "tablet") ~ device,
-        TRUE ~ "Other"
+        TRUE ~ "other"
       )) |>
       group_by(page_type, device) |>
       summarise(
@@ -140,10 +142,24 @@ server <- function(input, output, session) {
         .groups = "drop"
       ) |>
       pivot_wider(names_from = device, values_from = Sessions, values_fill = list(Sessions = 0)) |>
+      arrange(desc(desktop)) |>
+      select(page_type, desktop, mobile, tablet, other) |>
+      mutate(
+        "desktop" = dfeR::comma_sep(desktop),
+        "mobile" = dfeR::comma_sep(mobile),
+        "tablet" = dfeR::comma_sep(tablet),
+        "other" = dfeR::comma_sep(other)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Desktop" = desktop,
+        "Mobile" = mobile,
+        "Tablet" = tablet,
+        "Other" = other
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
-
 
   output$service_browser_table <- renderReactable({
     service_device_by_date() |>
@@ -157,6 +173,17 @@ server <- function(input, output, session) {
         .groups = "drop"
       ) |>
       pivot_wider(names_from = browser, values_from = Sessions, values_fill = list(Sessions = 0)) |>
+      arrange(desc(Chrome)) |>
+      select(page_type, Chrome, Edge, Safari, Other) |>
+      mutate(
+        "Chrome" = dfeR::comma_sep(Chrome),
+        "Edge" = dfeR::comma_sep(Edge),
+        "Safari" = dfeR::comma_sep(Safari),
+        "Other" = dfeR::comma_sep(Other)
+      ) |>
+      rename(
+        "Page type" = page_type
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
@@ -244,20 +271,56 @@ server <- function(input, output, session) {
     service_time_on_page_by_date() |>
       group_by(page_type) |>
       summarise(
-        "Sessions" = sum(sessions),
-        "Pageviews" = sum(pageviews),
-        "EngagementDuration" = sum(engagementDuration),
+        "Sessions" = sum(sessions, na.rm = TRUE),
+        "Pageviews" = sum(pageviews, na.rm = TRUE),
+        "EngagementDuration" = sum(engagementDuration, na.rm = TRUE),
+        "session_starts" = sum(total_session_starts, na.rm = TRUE),
         .groups = "keep"
       ) |>
       ungroup() |>
       mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
-      select(page_type, Pageviews, avgTimeOnPage) |>
-      arrange(desc(avgTimeOnPage)) |>
-      dfe_reactable()
+      select(page_type, Pageviews, avgTimeOnPage, session_starts) |>
+      arrange(desc(Pageviews)) |>
+      mutate(
+        "Pageviews" = dfeR::comma_sep(Pageviews),
+        "session_starts" = dfeR::comma_sep(session_starts)
+      ) |>
+      rename(
+        "Average engagement time (seconds)" = avgTimeOnPage,
+        "Session start events" = session_starts
+      ) |>
+      dfe_reactable(default_page_size = 15)
   }) |>
     bindCache(service_time_on_page_by_date())
 
-  # Value box -------------------------------------------------------------
+
+  # Plots --------------------------------------------------------------------
+
+  output$service_time_on_page_plot <- renderGirafe({
+    data_for_chart <- service_time_on_page_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "sessions" = sum(sessions, na.rm = TRUE),
+        "pageviews" = sum(pageviews, na.rm = TRUE),
+        "engagementDuration" = sum(engagementDuration, na.rm = TRUE),
+        "session_starts" = sum(total_session_starts, na.rm = TRUE),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(page_type, pageviews)
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "pageviews",
+      height = 4,
+      fontSize = 8,
+      flip = TRUE
+    )
+  }) |>
+    bindCache(service_time_on_page_by_date())
+
+  # Value box ----------------------------------------------------------------
 
   output$service_avg_session_duration_box <- renderText({
     paste(
@@ -309,6 +372,15 @@ server <- function(input, output, session) {
 
   output$service_source_table <- renderReactable({
     service_source_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Source" = source,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_source_summarised())
@@ -328,6 +400,15 @@ server <- function(input, output, session) {
 
   output$service_medium_table <- renderReactable({
     service_medium_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Medium" = medium,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_medium_summarised())
@@ -573,9 +654,142 @@ server <- function(input, output, session) {
       mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
       select(page_type, Pageviews, avgTimeOnPage) |>
       arrange(desc(avgTimeOnPage)) |>
+      mutate(
+        "Pageviews" = dfeR::comma_sep(Pageviews)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Average engagement time (seconds)" = avgTimeOnPage,
+        "Views" = Pageviews
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(content_interactions_by_date())
+
+  # Plot ---------------------------------------------------------------------
+
+  output$pub_content_interactions_plot <- renderGirafe({
+    data_for_chart <- content_interactions_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        Pageviews = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Pageviews",
+      flip = TRUE,
+      height = 3
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
+
+  # Summary of events ---------------------------------------------------------
+
+  content_interactions_summary_full <- reactive({
+    message("Reading publication summary")
+
+    read_delta_lake("ees_publication_summary", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  content_interactions_summary_by_date <- reactive({
+    content_interactions_summary_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(content_interactions_summary_full(), input$pub_date_choice, input$pub_name_choice)
+
+  # Download ------------------------------------------------------------------
+  output$content_interactions_summary_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_content_interactions_summary.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(content_interactions_summary_full(), file)
+    }
+  )
+
+  # Table ---------------------------------------------------------------------
+
+  pub_interactions_summary_metric_labels <- c(
+    total_session_starts = "Total sessions starts on release page",
+    total_accordion_events = "Total accordion click events on release page",
+    total_download_events = "Total data and file downloads",
+    total_featured_tables = "Total featured table clicks",
+    total_search_events = "Total search events on release page",
+    total_tables_created = "Total tables created"
+  )
+
+  output$pub_content_interactions_summary_table <- renderReactable({
+    content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        sessions = sum(sessions),
+        total_session_starts = sum(total_session_starts),
+        total_accordion_events = sum(total_accordion_events),
+        total_download_events = sum(total_download_events),
+        total_featured_tables = sum(total_featured_tables),
+        total_search_events = sum(total_search_events),
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication, -pageviews, -sessions) |>
+      tidyr::pivot_longer(
+        cols = everything(),
+        names_to = "metric",
+        values_to = "value"
+      ) |>
+      mutate(metric = pub_interactions_summary_metric_labels[metric]) |>
+      mutate(
+        "value" = dfeR::comma_sep(value)
+      ) |>
+      rename(
+        "Count" = value,
+        "Event" = metric
+      ) |>
+      dfe_reactable()
+  }) |>
+    bindCache(content_interactions_summary_by_date())
+
+  output$pub_content_interactions_summary_plot <- renderGirafe({
+    data_for_chart <- content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        sessions = sum(sessions),
+        total_session_starts = sum(total_session_starts),
+        total_accordion_events = sum(total_accordion_events),
+        total_download_events = sum(total_download_events),
+        total_featured_tables = sum(total_featured_tables),
+        total_search_events = sum(total_search_events),
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication, -pageviews, -sessions) |>
+      tidyr::pivot_longer(
+        cols = everything(),
+        names_to = "metric",
+        values_to = "value"
+      ) |>
+      mutate(metric = pub_interactions_summary_metric_labels[metric])
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "metric",
+      y = "value",
+      flip = TRUE,
+      height = 2.5,
+      fontSize = 7
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================
@@ -604,6 +818,69 @@ server <- function(input, output, session) {
       pretty_time() # TODO: add to dfeR
   }) |>
     bindCache(readtime_full(), input$pub_name_choice)
+
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Publication devices ===========================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  pub_device_full <- reactive({
+    message("Reading pub by device")
+
+    read_delta_lake("ees_publication_device_browser", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  pub_device_by_date <- reactive({
+    pub_device_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice) |>
+      collect()
+  }) |>
+    bindCache(pub_device_full(), input$pub_date_choice, input$pub_name_choice)
+
+  output$pub_device_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_ees_pub_device.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(pub_device_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+
+  output$pub_device_table <- renderReactable({
+    pub_device_by_date() |>
+      group_by(device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "drop"
+      ) |>
+      dfe_reactable()
+  }) |>
+    bindCache(pub_device_by_date())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$pub_device_plot <- renderGirafe({
+    data_for_chart <- pub_device_by_date() |>
+      group_by(device) |>
+      summarise(
+        Sessions = sum(sessions),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "device",
+      y = "Sessions",
+      height = 3
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
+
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Search console ============================================================

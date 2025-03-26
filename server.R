@@ -472,6 +472,86 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_medium_summarised())
 
+
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Download types =====================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  service_downloads_full <- reactive({
+    message("Reading service downloadss and mediums")
+
+    read_delta_lake("ees_service_downloads", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  service_downloads_by_date <- reactive({
+    service_downloads_full() |>
+      filter_on_date(input$service_date_choice)
+  }) |>
+    bindCache(service_downloads_full(), input$service_date_choice)
+
+  output$service_downloads_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_service_downloads.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(service_downloads_full(), file)
+    }
+  )
+
+  # Table outputs -------------------------------------------------------------
+  service_downloads_summarised <- reactive({
+    service_downloads_by_date() |>
+      group_by(page_type, download_type) |>
+      summarise(
+        "eventCount" = sum(eventCount),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      arrange(page_type, download_type)
+  }) |>
+    bindCache(service_downloads_by_date())
+
+  output$service_downloads_table <- renderReactable({
+    service_downloads_summarised() |>
+      mutate(
+        "eventCount" = dfeR::comma_sep(eventCount)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Download type" = download_type,
+        "Download count" = eventCount
+      ) |>
+      dfe_reactable()
+  }) |>
+    bindCache(service_downloads_summarised())
+
+
+  # Plots ---------------------------------------------------------------------
+  output$service_downloads_plot <- renderGirafe({
+    data_for_chart <- service_downloads_summarised() |>
+      mutate(Download = paste0(page_type, " - ", download_type)) |>
+      arrange(desc(eventCount))
+
+
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "Download",
+      y = "eventCount",
+      flip = TRUE,
+      reorder = TRUE,
+      height = 3
+    )
+  }) |>
+    bindCache(service_downloads_by_date())
+
+
+
+
+
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Publication summaries =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

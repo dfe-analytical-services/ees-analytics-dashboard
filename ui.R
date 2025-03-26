@@ -235,6 +235,34 @@ ui <- page_navbar(
           )
         )
       ),
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Downloads ===============================================================
+      nav_panel(
+        "Downloads",
+        layout_column_wrap(
+          card(
+            height = 280,
+            full_screen = TRUE,
+            card_header("Downloads"),
+            reactableOutput("service_downloads_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Downloads"),
+            girafeOutput("service_downloads_plot") |>
+              withSpinner()
+          )
+        ),
+      ),
+
+
+
+
+
+
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Page types ============================================================
       nav_panel(

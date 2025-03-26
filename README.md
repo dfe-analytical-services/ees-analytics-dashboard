@@ -27,7 +27,9 @@ Code used to extract source data, process it, and save the database tables used 
 
 ### iii. Access requirements
 
-To use the full data, you will need access the statistics services area of the unity catalog in the DfE delta lake, specifically the `analytics_app` schema.
+To use the full data, you will need access the statistics services area of the unity catalog in the DfE delta lake, specifically the `analytics_app` schema. There is a template `.Renviron.example` file in the repo that shows what varibles you will need to set yourself in your own `.Renviron` file.
+
+Do not ever commit or your details into the example file. Use `usethis::edit_r_environ()` to open and edit your own `.Renviron` file.
 
 The following pages give guidance that will help you set up your connection:
 - [Connecting to a SQL warehouse from R Studio](https://dfe-analytical-services.github.io/analysts-guide/ADA/databricks_rstudio_sql_warehouse.html)
@@ -39,6 +41,10 @@ You can use the following line to run the app with the same environment variable
 ```r
 withr::with_envvar(c(TESTTHAT = "true"), shiny::runApp())
 ```
+
+The app itself uses it's own service principal (PROD-SP-STATISTICS SERVICES) and SQL warehouse (STATISTICS SERVICES SP WAREHOUSE) to connect to the data, this will be different to the SQL warehouse you may be using yourself when developing. We've done this so the app has a protected SQL resource at all times with no risk of conflict with other users in the unit.
+
+The warehouse ID and details required to connect should be set in your own environment variables, and for the deployed app, is set in RSConnect itself.
 
 ## Contributing to the dashboard
 

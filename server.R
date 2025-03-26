@@ -293,7 +293,34 @@ server <- function(input, output, session) {
   }) |>
     bindCache(service_time_on_page_by_date())
 
-  # Value box -------------------------------------------------------------
+
+  # Plots --------------------------------------------------------------------
+
+  output$service_time_on_page_plot <- renderGirafe({
+    data_for_chart <- service_time_on_page_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        "sessions" = sum(sessions, na.rm = TRUE),
+        "pageviews" = sum(pageviews, na.rm = TRUE),
+        "engagementDuration" = sum(engagementDuration, na.rm = TRUE),
+        "session_starts" = sum(total_session_starts, na.rm = TRUE),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(page_type, pageviews)
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "pageviews",
+      height = 4,
+      fontSize = 8,
+      flip = TRUE
+    )
+  }) |>
+    bindCache(service_time_on_page_by_date())
+
+  # Value box ----------------------------------------------------------------
 
   output$service_avg_session_duration_box <- renderText({
     paste(

@@ -238,12 +238,24 @@ ui <- page_navbar(
       # Page types ============================================================
       nav_panel(
         "Page types",
-        card(
-          height = 600,
-          full_screen = TRUE,
-          card_header("Interactions by page type"),
-          reactableOutput("service_time_on_page") |>
-            withSpinner()
+        layout_column_wrap(
+          card(
+            height = 600,
+            full_screen = TRUE,
+            card_header("Interactions by area of the service"),
+            reactableOutput("service_time_on_page") |>
+              withSpinner()
+          ),
+          card(
+            height = 300,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "Views by area of the service")
+            ),
+            girafeOutput("service_time_on_page_plot") |>
+              withSpinner()
+          )
         )
       )
     ) # of of underline tabset

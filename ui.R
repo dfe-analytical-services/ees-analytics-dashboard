@@ -384,10 +384,20 @@ ui <- page_navbar(
         "Content interactions",
         layout_column_wrap(
           style = css(grid_template_columns = "1fr 2fr 2fr"),
-          bslib::value_box(
-            title = "Time to read latest release in full",
-            value = textOutput("readtime_box") |>
-              withSpinner()
+          column(
+            12,
+            bslib::value_box(
+              height = 170,
+              title = "Time to read latest release in full",
+              value = textOutput("readtime_box") |>
+                withSpinner()
+            ),
+            bslib::value_box(
+              height = 170,
+              title = "Tables created per table tool view",
+              value = textOutput("table_tool_box") |>
+                withSpinner()
+            )
           ),
           card(
             height = 200,

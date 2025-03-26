@@ -880,6 +880,32 @@ server <- function(input, output, session) {
   }) |>
     bindCache(pub_summary_by_date())
 
+
+  # Value box -----------------------------------------------------------------
+  output$table_tool_box <- renderText({
+    tables_created <- content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      pull(total_tables_created) |>
+      as.numeric()
+
+    table_tool_views <- content_interactions_by_date() |>
+      filter(page_type == "Table tool") |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      pull(pageviews) |>
+      as.numeric()
+
+    paste(round(tables_created / table_tool_views, 2))
+  }) |>
+    bindCache(readtime_full(), input$pub_name_choice)
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

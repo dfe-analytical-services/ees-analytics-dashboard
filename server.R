@@ -130,7 +130,6 @@ server <- function(input, output, session) {
   )
 
   # Table outputs -------------------------------------------------------------
-
   output$service_device_table <- renderReactable({
     service_device_by_date() |>
       mutate(device = case_when(

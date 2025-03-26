@@ -584,6 +584,14 @@ server <- function(input, output, session) {
       mutate("avgTimeOnPage" = round(EngagementDuration / Pageviews, 1)) |>
       select(page_type, Pageviews, avgTimeOnPage) |>
       arrange(desc(avgTimeOnPage)) |>
+      mutate(
+        "Pageviews" = dfeR::comma_sep(Pageviews)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Average engagement time (seconds)" = avgTimeOnPage,
+        "Views" = Pageviews
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(content_interactions_by_date())
@@ -668,11 +676,16 @@ server <- function(input, output, session) {
         values_to = "value"
       ) |>
       mutate(metric = pub_interactions_summary_metric_labels[metric]) |>
+      mutate(
+        "value" = dfeR::comma_sep(value)
+      ) |>
+      rename(
+        "Count" = value,
+        "Event" = metric
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(content_interactions_summary_by_date())
-
-  # pub_content_interactions_summary_table
 
   output$pub_content_interactions_summary_plot <- renderGirafe({
     data_for_chart <- content_interactions_summary_by_date() |>

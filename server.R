@@ -77,7 +77,8 @@ server <- function(input, output, session) {
       data = data,
       x = "date",
       lines = c("pageviews_avg7", "sessions_avg7"),
-      labels = c("Pageviews", "Sessions")
+      labels = c("Pageviews", "Sessions"),
+      height = 2
     )
   }) |>
     bindCache(service_summary_by_date())

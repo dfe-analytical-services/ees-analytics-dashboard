@@ -342,18 +342,49 @@ ui <- page_navbar(
       nav_panel(
         "Content interactions",
         layout_column_wrap(
+          style = css(grid_template_columns = "1fr 2fr 2fr"),
           bslib::value_box(
             title = "Time to read latest release in full",
             value = textOutput("readtime_box") |>
               withSpinner()
+          ),
+          card(
+            height = 200,
+            full_screen = TRUE,
+            card_header("Title"),
+            reactableOutput("pub_content_interactions_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 300,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "The total number of pageviews.")
+            ),
+            girafeOutput("pub_content_interactions_plot") |>
+              withSpinner()
           )
         ),
-        card(
-          height = 530,
-          full_screen = TRUE,
-          card_header("Title"),
-          reactableOutput("pub_content_interactions_table") |>
-            withSpinner()
+        layout_column_wrap(
+          style = css(grid_template_columns = "3fr 4fr"),
+          card(
+            height = 200,
+            full_screen = TRUE,
+            card_header("Event summary"),
+            reactableOutput("pub_content_interactions_summary_table") |>
+              withSpinner()
+          ),
+          card(
+            height = 400,
+            full_screen = TRUE,
+            card_header(
+              "Page views",
+              tooltip(bs_icon("info-circle"), "Event summary.")
+            ),
+            girafeOutput("pub_content_interactions_summary_plot") |>
+              withSpinner()
+          )
         )
       ),
 

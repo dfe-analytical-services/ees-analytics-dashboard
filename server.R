@@ -588,6 +588,126 @@ server <- function(input, output, session) {
   }) |>
     bindCache(content_interactions_by_date())
 
+  # Plot ---------------------------------------------------------------------
+
+  output$pub_content_interactions_plot <- renderGirafe({
+    data_for_chart <- content_interactions_by_date() |>
+      group_by(page_type) |>
+      summarise(
+        Pageviews = sum(pageviews),
+        .groups = "keep"
+      ) |>
+      ungroup()
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "page_type",
+      y = "Pageviews",
+      flip = TRUE,
+      height = 3
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
+
+  # Summary of events ---------------------------------------------------------
+
+  content_interactions_summary_full <- reactive({
+    message("Reading publication summary")
+
+    read_delta_lake("ees_publication_summary", Sys.getenv("TESTTHAT"))
+  }) |>
+    bindCache(last_updated_date())
+
+  content_interactions_summary_by_date <- reactive({
+    content_interactions_summary_full() |>
+      filter_on_date(input$pub_date_choice) |>
+      filter(publication == input$pub_name_choice)
+  }) |>
+    bindCache(content_interactions_summary_full(), input$pub_date_choice, input$pub_name_choice)
+
+  # Download ------------------------------------------------------------------
+  output$content_interactions_summary_download <- downloadHandler(
+    filename = function() {
+      paste0(Sys.Date(), "_pub_content_interactions_summary.csv")
+    },
+    content = function(file) {
+      duckplyr::compute_csv(content_interactions_summary_full(), file)
+    }
+  )
+
+  # Table ---------------------------------------------------------------------
+
+  pub_interactions_summary_metric_labels <- c(
+    total_session_starts = "Total sessions starts on release page",
+    total_accordion_events = "Total accordion click events on release page",
+    total_download_events = "Total data and file downloads",
+    total_featured_tables = "Total featured table clicks",
+    total_search_events = "Total search events on release page",
+    total_tables_created = "Total tables created"
+  )
+
+  output$pub_content_interactions_summary_table <- renderReactable({
+    content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        sessions = sum(sessions),
+        total_session_starts = sum(total_session_starts),
+        total_accordion_events = sum(total_accordion_events),
+        total_download_events = sum(total_download_events),
+        total_featured_tables = sum(total_featured_tables),
+        total_search_events = sum(total_search_events),
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication, -pageviews, -sessions) |>
+      tidyr::pivot_longer(
+        cols = everything(),
+        names_to = "metric",
+        values_to = "value"
+      ) |>
+      mutate(metric = pub_interactions_summary_metric_labels[metric]) |>
+      dfe_reactable()
+  }) |>
+    bindCache(content_interactions_summary_by_date())
+
+  # pub_content_interactions_summary_table
+
+  output$pub_content_interactions_summary_plot <- renderGirafe({
+    data_for_chart <- content_interactions_summary_by_date() |>
+      group_by(publication) |>
+      summarise(
+        pageviews = sum(pageviews),
+        sessions = sum(sessions),
+        total_session_starts = sum(total_session_starts),
+        total_accordion_events = sum(total_accordion_events),
+        total_download_events = sum(total_download_events),
+        total_featured_tables = sum(total_featured_tables),
+        total_search_events = sum(total_search_events),
+        total_tables_created = sum(total_tables_created),
+        .groups = "keep"
+      ) |>
+      ungroup() |>
+      select(-publication, -pageviews, -sessions) |>
+      tidyr::pivot_longer(
+        cols = everything(),
+        names_to = "metric",
+        values_to = "value"
+      ) |>
+      mutate(metric = pub_interactions_summary_metric_labels[metric])
+
+    simple_bar_chart(
+      data = data_for_chart,
+      x = "metric",
+      y = "value",
+      flip = TRUE,
+      height = 2.5,
+      fontSize = 7
+    )
+  }) |>
+    bindCache(pub_summary_by_date())
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Reading time ==============================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

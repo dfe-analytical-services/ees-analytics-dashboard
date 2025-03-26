@@ -134,7 +134,7 @@ server <- function(input, output, session) {
     service_device_by_date() |>
       mutate(device = case_when(
         device %in% c("mobile", "desktop", "tablet") ~ device,
-        TRUE ~ "Other"
+        TRUE ~ "other"
       )) |>
       group_by(page_type, device) |>
       summarise(
@@ -142,10 +142,24 @@ server <- function(input, output, session) {
         .groups = "drop"
       ) |>
       pivot_wider(names_from = device, values_from = Sessions, values_fill = list(Sessions = 0)) |>
+      arrange(desc(desktop)) |>
+      select(page_type, desktop, mobile, tablet, other) |>
+      mutate(
+        "desktop" = dfeR::comma_sep(desktop),
+        "mobile" = dfeR::comma_sep(mobile),
+        "tablet" = dfeR::comma_sep(tablet),
+        "other" = dfeR::comma_sep(other)
+      ) |>
+      rename(
+        "Page type" = page_type,
+        "Desktop" = desktop,
+        "Mobile" = mobile,
+        "Tablet" = tablet,
+        "Other" = other
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())
-
 
   output$service_browser_table <- renderReactable({
     service_device_by_date() |>
@@ -159,6 +173,17 @@ server <- function(input, output, session) {
         .groups = "drop"
       ) |>
       pivot_wider(names_from = browser, values_from = Sessions, values_fill = list(Sessions = 0)) |>
+      arrange(desc(Chrome)) |>
+      select(page_type, Chrome, Edge, Safari, Other) |>
+      mutate(
+        "Chrome" = dfeR::comma_sep(Chrome),
+        "Edge" = dfeR::comma_sep(Edge),
+        "Safari" = dfeR::comma_sep(Safari),
+        "Other" = dfeR::comma_sep(Other)
+      ) |>
+      rename(
+        "Page type" = page_type
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_device_by_date())

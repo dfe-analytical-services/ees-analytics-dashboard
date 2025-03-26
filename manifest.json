@@ -4831,10 +4831,7 @@
       "checksum": "3307d3d86abae460e61e1fe6b89f155d"
     },
     ".Rprofile": {
-      "checksum": "dbf20745a1aad987fe20e8af6497dd91"
-    },
-    ".vscode/settings.json": {
-      "checksum": "bfe50e4aec9432cfb202ddba53cfbde7"
+      "checksum": "52aeb13662dbd311c006eaf8e547653a"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"
@@ -4861,7 +4858,7 @@
       "checksum": "0d1b1d747f0998d032f04612dcfeca8d"
     },
     "R/utils.R": {
-      "checksum": "16768a9e78f62be63ec3bd23446b3e88"
+      "checksum": "0eed23f2184940a018ced1517069ba9f"
     },
     "README.md": {
       "checksum": "1f2309262b853fbdfb888eeec78f31d1"

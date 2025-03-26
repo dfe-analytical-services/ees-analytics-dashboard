@@ -345,6 +345,15 @@ server <- function(input, output, session) {
 
   output$service_source_table <- renderReactable({
     service_source_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Source" = source,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_source_summarised())
@@ -364,6 +373,15 @@ server <- function(input, output, session) {
 
   output$service_medium_table <- renderReactable({
     service_medium_summarised() |>
+      mutate(
+        "pageviews" = dfeR::comma_sep(pageviews),
+        "sessions" = dfeR::comma_sep(sessions)
+      ) |>
+      rename(
+        "Medium" = medium,
+        "Views" = pageviews,
+        "Sessions" = sessions
+      ) |>
       dfe_reactable()
   }) |>
     bindCache(service_medium_summarised())

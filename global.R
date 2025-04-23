@@ -88,7 +88,9 @@ options(
 # TODO: Cache to temporary place on disk, should make sure it is
 # - wiped out with each deploy on server
 # - wiped out easily when developing locally
-# shinyOptions(cache = cachem::cache_disk(file.path(dirname(tempdir()), "ees-analytics-cache")))
+# shinyOptions(cache = cachem::cache_disk(file.path(getwd(), "ees-analytics-cache")))
+# Wipe cache when running global.R
+
 
 # Custom functions ============================================================
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)

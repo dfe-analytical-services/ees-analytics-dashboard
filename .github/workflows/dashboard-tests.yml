@@ -4,9 +4,6 @@ on:
       - main
   pull_request:  
 
-permissions:
-  contents: read
-
 name: Dashboard tests
 
 jobs:

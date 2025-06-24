@@ -4998,7 +4998,7 @@
       "checksum": "ff9c4f4c5f229f65b7d10a50dc11e0f7"
     },
     ".github/workflows/lintr.yml": {
-      "checksum": "9c00ba85e303e82375a944a2ef5573d1"
+      "checksum": "14b00a6574d47671f19069a2178643fb"
     },
     ".hooks/pre-commit.R": {
       "checksum": "e8d96d5ffd16a6867fd6d7458bd2f905"
@@ -5013,7 +5013,7 @@
       "checksum": "83d2c70a083d2b0bfd2116d7fb48c811"
     },
     ".Rprofile": {
-      "checksum": "329d337af5e32e09b5aa7ca075634ddf"
+      "checksum": "52c097a8a7f5fc109231564b75c1568e"
     },
     "azure-pipelines.yml": {
       "checksum": "2bf5ff7c7451fc12c1a65d29c7725556"

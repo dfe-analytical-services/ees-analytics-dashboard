@@ -9,10 +9,6 @@ on:
 
 name: lintr
 
-permissions:
-  contents: read
-  security-events: write
-
 jobs:
   lint:
     uses: dfe-analytical-services/dfeshiny/.github/workflows/lintr_reusable.yaml@main

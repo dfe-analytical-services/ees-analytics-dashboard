@@ -1,20 +1,14 @@
+name: Dashboard tests
+
 on:
   push:
     branches:
       - main
-  
-  pull_request:
-  
-  name: Dashboard tests
-  permissions:
+  pull_request:  
+
+permissions:
   contents: read
 
-  name: Automated tests
-  jobs:
-    automatedTests:
-      uses: dfe-analytical-services/dfeshiny/.github/workflows/automated_tests_template.yaml@main
-
-
-  
-
-          
+jobs:
+  automatedTests:
+    uses: dfe-analytical-services/dfeshiny/.github/workflows/automated_tests_template.yaml@main

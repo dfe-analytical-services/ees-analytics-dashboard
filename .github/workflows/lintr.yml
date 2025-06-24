@@ -1,25 +1,22 @@
-name: update locale and lint
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
+    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '20 3 * * 0'
+    
+- name: install system dependencies
+  run: |
+      apt-get update
+      apt-get install -y libssl-dev libcurl4-opssldev libxml2-dev build-esstential
+
+
+name: lintr
 
 jobs:
-  setup-locale:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate en_GB.UTF-8 locale
-        run: |
-          sudo locale-gen en_GB.UTF-8
-          sudo update-locale LANG=en_GB.UTF-8
-          echo "Locale set to en_GB.UTF-8"
-
   lint:
-    needs: setup-locale
     uses: dfe-analytical-services/dfeshiny/.github/workflows/lintr_reusable.yaml@main
     with:
       is_package: "false"

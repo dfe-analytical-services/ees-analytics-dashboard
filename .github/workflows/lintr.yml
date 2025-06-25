@@ -7,11 +7,6 @@ on:
   schedule:
     - cron: '20 3 * * 0'
     
-name: install system dependencies
-  run: |
-      apt-get update
-      apt-get install -y libssl-dev libcurl4-opssldev libxml2-dev build-esstential
-
 
 name: lintr
 

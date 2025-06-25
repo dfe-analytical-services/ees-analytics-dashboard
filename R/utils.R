@@ -63,7 +63,9 @@ aggregate_total <- function(data, metric) {
 #' @param suffix character string to append to y values in axis label and tooltips
 #' @param reorder boolean to reorder the data by y values
 #' @param font-size font size for the chart
-simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = "", reorder = FALSE, fontSize = 10) {
+simple_bar_chart <- function(
+    data, x, y, height = 1.7, flip = FALSE, suffix = "",
+    reorder = FALSE, fontSize = 10) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -110,7 +112,13 @@ simple_bar_chart <- function(data, x, y, height = 1.7, flip = FALSE, suffix = ""
     height_svg = height
   )
 
-  girafe_options(g, opts_toolbar(saveaspng = FALSE, hidden = c("selection", "zoom", "misc")), opts_sizing(rescale = TRUE))
+  girafe_options(
+    g, opts_toolbar(
+      saveaspng = FALSE,
+      hidden = c("selection", "zoom", "misc")
+    ),
+    opts_sizing(rescale = TRUE)
+  )
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

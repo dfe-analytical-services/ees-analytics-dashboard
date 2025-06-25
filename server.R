@@ -61,10 +61,9 @@ server <- function(input, output, session) {
     bindCache(service_summary_by_date())
 
   output$service_pageviews_per_session_box <- renderText({
-    paste(round(
-      sum(service_summary_by_date()$pageviews, na.rm = TRUE) /
-        sum(service_summary_by_date()$sessions, na.rm = TRUE), 1
-    ))
+    paste(
+      round(sum(service_summary_by_date()$pageviews, na.rm = TRUE) / sum(service_summary_by_date()$sessions, na.rm = TRUE), 1)
+    )
   }) |>
     bindCache(service_summary_by_date())
 
@@ -326,12 +325,7 @@ server <- function(input, output, session) {
 
   output$service_avg_session_duration_box <- renderText({
     paste(
-      round(sum(service_time_on_page_by_date()$engagementDuration,
-        na.rm = TRUE
-      )
-      / sum(service_time_on_page_by_date()$sessions,
-          na.rm = TRUE
-        ), 1),
+      round(sum(service_time_on_page_by_date()$engagementDuration, na.rm = TRUE) / sum(service_time_on_page_by_date()$sessions, na.rm = TRUE), 1),
       "seconds"
     )
   }) |>
@@ -822,10 +816,7 @@ server <- function(input, output, session) {
       filter_on_date(input$pub_date_choice) |>
       filter(publication == input$pub_name_choice)
   }) |>
-    bindCache(
-      content_interactions_summary_full(), input$pub_date_choice,
-      input$pub_name_choice
-    )
+    bindCache(content_interactions_summary_full(), input$pub_date_choice, input$pub_name_choice)
 
   # Download ------------------------------------------------------------------
   output$content_interactions_summary_download <- downloadHandler(

@@ -65,7 +65,7 @@ aggregate_total <- function(data, metric) {
 #' @param font-size font size for the chart
 simple_bar_chart <- function(
     data, x, y, height = 1.7, flip = FALSE, suffix = "",
-    reorder = FALSE, fontSize = 10) {
+    reorder = FALSE, font_size = 10) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 
@@ -86,8 +86,8 @@ simple_bar_chart <- function(
     ) +
     theme_af() +
     theme(
-      text = element_text(size = fontSize),
-      axis.text = element_text(size = fontSize)
+      text = element_text(size = font_size),
+      axis.text = element_text(size = font_size)
     ) +
     scale_y_continuous(labels = comma) +
     labs(
@@ -192,7 +192,7 @@ dfe_reactable <- function(data,
     highlight = TRUE,
     borderless = TRUE,
     showSortIcon = FALSE,
-    style = list(fontSize = "16px", display = "block"),
+    style = list(font_size = "16px", display = "block"),
     defaultColDef = colDef(headerClass = "bar-sort-header"),
 
     # Customiseable settings

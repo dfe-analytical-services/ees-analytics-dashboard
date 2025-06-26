@@ -88,7 +88,7 @@ server <- function(input, output, session) {
       data = service_summary_by_date(),
       x = "date",
       y = "sessions",
-      fontSize = 5
+      font_size = 5
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -98,7 +98,7 @@ server <- function(input, output, session) {
       data = service_summary_by_date(),
       x = "date",
       y = "pageviews",
-      fontSize = 5
+      font_size = 5
     )
   }) |>
     bindCache(service_summary_by_date())
@@ -314,7 +314,7 @@ server <- function(input, output, session) {
       x = "page_type",
       y = "pageviews",
       height = 4,
-      fontSize = 8,
+      font_size = 8,
       flip = TRUE,
       reorder = TRUE
     )

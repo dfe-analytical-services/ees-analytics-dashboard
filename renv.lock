@@ -567,14 +567,14 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.36",
+      "Version": "0.6.37",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "fd6824ad91ede64151e93af67df6376b"
+      "Hash": "33698c4b3127fc9f506654607fb73676"
     },
     "dplyr": {
       "Package": "dplyr",
@@ -1934,7 +1934,7 @@
       "Requirements": [
         "xfun"
       ],
-      "Hash": "6899af1a3ca6f18f238a1e746ab425c5"
+      "Hash": "66e12b890b4862c90c2e955280e6ab5f"
     },
     "tzdb": {
       "Package": "tzdb",

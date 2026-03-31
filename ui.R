@@ -586,9 +586,18 @@ ui <- page_navbar(
     title = "Downloads",
     bslib::layout_column_wrap(
       width = 1 / 2,
-      downloads_content() # defined in R/pages/technical_notes.R
+      downloads_content() # defined in R/pages/downloads.R
     )
   ),
+  nav_panel(
+    title = "Portfolio",
+    bslib::layout_column_wrap(
+      width = 1 / 2,
+      portfolio_content() # defined in R/pages/portfoli.R
+    )
+  ),
+
+
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Technical notes ===========================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

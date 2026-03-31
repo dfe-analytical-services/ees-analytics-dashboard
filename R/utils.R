@@ -64,9 +64,8 @@ aggregate_total <- function(data, metric) {
 #' @param reorder boolean to reorder the data by y values
 #' @param font-size font size for the chart
 simple_bar_chart <- function(
-  data, x, y, height = 1.7, flip = FALSE, suffix = "",
-  reorder = FALSE, font_size = 10
-) {
+    data, x, y, height = 1.7, flip = FALSE, suffix = "",
+    reorder = FALSE, font_size = 10) {
   x_var <- as.character(rlang::as_name(x))
   y_var <- as.character(rlang::as_name(y))
 

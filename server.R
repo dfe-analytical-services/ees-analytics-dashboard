@@ -566,7 +566,7 @@ server <- function(input, output, session) {
   )
 
 
-  # portfolio tab =============================================================
+  # Portfolio tab =============================================================
 
   output$portfolio_pub_table_with_spark <- renderReactable({
     df <- pub_summary_full() |>

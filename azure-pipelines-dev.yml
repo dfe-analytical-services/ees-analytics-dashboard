@@ -1,0 +1,32 @@
+name: ees-analytics-dashboard-dev-$(rev:r)
+
+pool:
+  name: RSConnect
+  
+trigger:
+  branches:
+    include:
+    - portfolio-tab
+
+  paths:
+    exclude:
+    - azure-pipelines.yml
+    - azure-pipelines-dev.yml
+
+resources:
+  repositories:
+    - repository: posit-deploy
+      type: git
+      name: ESFA-Data-Science/posit-deploy
+      
+extends:
+  template: deploy.yml@posit-deploy
+  parameters:
+    appName: ees-analytics-dashboard
+    environments:
+    - name: Pre-Production
+      appId: none
+    approvers: |
+     cameron.race@education.gov.uk
+     richard.bielby@education.gov.uk
+     laura.selby@education.gov.uk

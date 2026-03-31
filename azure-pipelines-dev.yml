@@ -25,7 +25,7 @@ extends:
     appName: ees-analytics-dashboard
     environments:
     - name: Pre-Production
-      appId: none
+      appId: 1079
     approvers: |
      cameron.race@education.gov.uk
      richard.bielby@education.gov.uk

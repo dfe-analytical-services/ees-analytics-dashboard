@@ -237,8 +237,6 @@ server <- function(input, output, session) {
     bindCache(service_summary_by_date())
 
 
-
-
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Page types ================================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -474,7 +472,6 @@ server <- function(input, output, session) {
     bindCache(service_medium_summarised())
 
 
-
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Download types =====================================================
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -536,7 +533,6 @@ server <- function(input, output, session) {
       arrange(desc(eventCount))
 
 
-
     simple_bar_chart(
       data = data_for_chart,
       x = "Download",
@@ -547,10 +543,6 @@ server <- function(input, output, session) {
     )
   }) |>
     bindCache(service_downloads_by_date())
-
-
-
-
 
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -572,6 +564,51 @@ server <- function(input, output, session) {
       duckplyr::compute_csv(pub_summary_full(), file)
     }
   )
+
+
+  # portfolio tab =============================================================
+
+  output$portfolio_pub_table_with_spark <- renderReactable({
+    df <- pub_summary_full() |>
+      filter(date >= as.Date("2026-01-01")) |> # filter to keep table smaller for demo purposes
+      mutate(month = format(date, "%Y-%m")) |>
+      group_by(publication, month) |>
+      summarise(Views = sum(pageviews), .groups = "drop") |>
+      tidyr::pivot_wider(
+        names_from = month,
+        values_from = Views,
+        values_fill = 0
+      ) |>
+      arrange(publication) |>
+      mutate(Trend = NA) # column must exist
+
+    month_cols <- grep("^\\d{4}-\\d{2}$", names(df), value = TRUE)
+
+    reactable(
+      df,
+      columns = list(
+        Trend = reactable::colDef(
+          html = TRUE,
+          cell = function(value, index) {
+            values <- as.numeric(df[index, month_cols])
+
+            # ✅ Use the htmlwidget sparkline (NOT spk_chr)
+            spark <- sparkline::sparkline(
+              values,
+              type = "line",
+              width = 100,
+              height = 30
+            )
+
+            # ✅ Wrap widget with tagList so reactable can render it
+            htmltools::tagList(spark)
+          }
+        )
+      ),
+      defaultPageSize = 10
+    )
+  })
+
 
   # Dropdown options =========================================================
   # TODO: Could get this from a separate smaller table to save needing to load

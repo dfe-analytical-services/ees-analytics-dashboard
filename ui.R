@@ -593,7 +593,7 @@ ui <- page_navbar(
     title = "Portfolio",
     bslib::layout_column_wrap(
       width = 1 / 2,
-      portfolio_content() # defined in R/pages/portfoli.R
+      portfolio_content() # defined in R/pages/portfolio.R
     )
   ),
 

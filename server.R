@@ -566,49 +566,6 @@ server <- function(input, output, session) {
   )
 
 
-  # Portfolio tab =============================================================
-
-  output$portfolio_pub_table_with_spark <- renderReactable({
-    df <- pub_summary_full() |>
-      filter(date >= as.Date("2026-01-01")) |> # filter to keep table smaller for demo purposes
-      mutate(month = format(date, "%Y-%m")) |>
-      group_by(publication, month) |>
-      summarise(Views = sum(pageviews), .groups = "drop") |>
-      tidyr::pivot_wider(
-        names_from = month,
-        values_from = Views,
-        values_fill = 0
-      ) |>
-      arrange(publication) |>
-      mutate(Trend = NA) # column must exist
-
-    month_cols <- grep("^\\d{4}-\\d{2}$", names(df), value = TRUE)
-
-    reactable(
-      df,
-      columns = list(
-        Trend = reactable::colDef(
-          html = TRUE,
-          cell = function(value, index) {
-            values <- as.numeric(df[index, month_cols])
-
-            # ✅ Use the htmlwidget sparkline (NOT spk_chr)
-            spark <- sparkline::sparkline(
-              values,
-              type = "line",
-              width = 100,
-              height = 30
-            )
-
-            # ✅ Wrap widget with tagList so reactable can render it
-            htmltools::tagList(spark)
-          }
-        )
-      ),
-      defaultPageSize = 10
-    )
-  })
-
 
   # Dropdown options =========================================================
   # TODO: Could get this from a separate smaller table to save needing to load
@@ -1451,4 +1408,73 @@ server <- function(input, output, session) {
       dfe_reactable()
   }) |>
     bindCache(pub_created_tables_by_date())
+
+
+
+  # Portfolio tab =============================================================
+
+  output$portfolio_pub_table_with_spark <- renderReactable({
+    req(pub_summary_full())
+
+    # --- Decide publication subset ---
+    selected_pubs <- if (input$pub_subset == "All") {
+      unique(pub_summary_full()$publication)
+    } else if (input$pub_subset == "Vector A") {
+      vectorA
+    } else if (input$pub_subset == "Vector B") {
+      vectorB
+    }
+
+    # ---- 1. Base data ----
+    df <- pub_summary_full() |>
+      filter_on_date(input$min_date)
+
+    # ---- 2. Publication subset filtering ----
+    df <- df |>
+      filter(publication %in% selected_pubs)
+
+    # ---- 3. Dynamic time grouping ----
+    df <- df |>
+      mutate(
+        group_period = dplyr::case_when(
+          input$group_level == "month" ~ format(date, "%Y-%m"),
+          input$group_level == "year" ~ format(date, "%Y")
+        )
+      ) |>
+      group_by(publication, group_period) |>
+      summarise(Views = sum(pageviews), .groups = "drop")
+
+    # ---- 4. Pivot wider ----
+    df <- df |>
+      tidyr::pivot_wider(
+        names_from = group_period,
+        values_from = Views,
+        values_fill = 0
+      ) |>
+      arrange(publication) |>
+      mutate(Trend = NA)
+
+    month_cols <- grep("^[0-9]{4}", names(df), value = TRUE)
+
+    # ---- 5. Render reactable + sparklines ----
+    reactable(
+      df,
+      columns = list(
+        Trend = colDef(
+          html = TRUE,
+          cell = function(value, index) {
+            vals <- as.numeric(df[index, month_cols])
+            spark <- sparkline::sparkline(
+              vals,
+              type = "line",
+              width = 100,
+              height = 30
+            )
+            htmltools::tagList(spark)
+          }
+        )
+      ),
+      defaultPageSize = 10
+    )
+  })
 }

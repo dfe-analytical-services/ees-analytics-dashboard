@@ -589,11 +589,52 @@ ui <- page_navbar(
       downloads_content() # defined in R/pages/downloads.R
     )
   ),
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Portfolio =================================================================
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   nav_panel(
     title = "Portfolio",
     bslib::layout_column_wrap(
       width = 1 / 2,
-      portfolio_content() # defined in R/pages/portfolio.R
+      #  portfolio_content() # defined in R/pages/portfolio.R
+
+      shiny::tagList(
+        tags$h1("Comparison across statistics portfolio"),
+        tags$p("Description.")
+      ),
+
+
+      # ---- 1. Date Filter ----
+
+      selectInput(
+        "min_date",
+        "Choose date range",
+        names(date_options),
+        selected = "Last year"
+      ),
+
+      # ---- 2. Grouping Level ----
+      selectInput(
+        inputId = "group_level",
+        label = "Group by:",
+        choices = c("Monthly" = "month", "Yearly" = "year"),
+        selected = "month"
+      ),
+
+      # ---- 3. Publication Subset ----
+      selectInput(
+        inputId = "pub_subset",
+        label = "Publication subset:",
+        choices = c(
+          "All",
+          "Vector A",
+          "Vector B"
+        ),
+        selected = "All"
+      ),
+      reactable::reactableOutput("portfolio_pub_table_with_spark")
     )
   ),
 

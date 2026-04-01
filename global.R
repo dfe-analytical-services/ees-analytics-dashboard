@@ -96,3 +96,22 @@ options(
 lapply(paste0("R/", list.files("R/", recursive = TRUE)), source)
 
 message("...global variables set!")
+
+
+# Publication subsets
+
+
+vectorA <- c(
+  "Key Stage 1 And Phonics Screening Check Attainment",
+  "Leo Graduate And Postgraduate Outcomes",
+  "School Finances During The Covid-19 Pandemic",
+  "Childcare And Early Years Survey Of Parents",
+  "Key Stage 2 Attainment: National Headlines"
+)
+
+vectorB <- c(
+  "Key Stage 1 And Phonics Screening Check Attainment",
+  "Leo Graduate And Postgraduate Outcomes"
+)
+
+# vectorB <- read.csv("data/vectorB.csv")$publicatio

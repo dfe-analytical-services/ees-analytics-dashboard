@@ -604,7 +604,7 @@ ui <- page_navbar(
 
     # Title + intro
     tags$h1("Comparison across statistics portfolio"),
-    tags$p("Description."),
+    tags$p("Pageviews overtime for all DfE publications."),
 
     # Input options
     bslib::layout_columns(

@@ -1459,6 +1459,7 @@ server <- function(input, output, session) {
     # ---- 5. Render reactable + sparklines ----
     reactable(
       df,
+      pagination = FALSE,
       columns = list(
         Trend = colDef(
           html = TRUE,
@@ -1473,8 +1474,7 @@ server <- function(input, output, session) {
             htmltools::tagList(spark)
           }
         )
-      ),
-      defaultPageSize = 10
+      )
     )
   })
 }
